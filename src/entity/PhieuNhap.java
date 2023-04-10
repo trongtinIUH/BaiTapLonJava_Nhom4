@@ -15,12 +15,12 @@ public class PhieuNhap extends HoaDonHang implements Serializable {
 	private LocalDate ngayTao;
 	private int soLuong;
 	public PhieuNhap(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD) {
-		super(mh, kh, nv, ngayGD);
+		super(mh, nv, ngayGD);
 		// TODO Auto-generated constructor stub
 	}
 	public PhieuNhap(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD, String tenNCC, String soPhieu,
 			LocalDate ngayTao, int soLuong) {
-		super(mh, kh, nv, ngayGD);
+		super(mh, nv, ngayGD);
 		this.tenNCC = tenNCC;
 		this.soPhieu = soPhieu;
 		this.ngayTao = ngayTao;
