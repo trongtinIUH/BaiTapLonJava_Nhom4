@@ -29,12 +29,17 @@ public class TrangDangNhap extends JFrame implements Serializable,ActionListener
 	private JLabel lblUser;
 	private JLabel lblmk;
 	private JLabel lblma;
+	private String user="21054421";
+	private String pass= "tin";
+	
+	
 
 	public TrangDangNhap() {
 		super("Đăng Nhập");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(400,200);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		
 		taoGui();
 }
@@ -83,9 +88,19 @@ public class TrangDangNhap extends JFrame implements Serializable,ActionListener
 	public void actionPerformed(ActionEvent e) {
 	Object o = e.getSource();
 	if(o.equals(btnLogin)) {
-		JOptionPane.showMessageDialog(this, "Đăng nhập thành công !");
-		TrangChu trangchu= new TrangChu();
+		String username= textFN.getText();
+		char[] mk = textLN.getPassword();
+		String mkstr=new String(mk);
+		if(username.equals(user)&& mkstr.equals(pass)) {
+			TrangChu trangchu= new TrangChu();
 		trangchu.setVisible(true);
+		dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Sai tài khoản | mật khẩu");
+		}
+		
+		
 		//thì chuyển qua trang chủ
 	}
 	
