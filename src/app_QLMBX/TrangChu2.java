@@ -19,211 +19,51 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
-public class FrmCuaHang  extends JFrame{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	 JLabel btnDoiMatKhau;
-	    JPanel pnTitle, pnMenuLeft, pnCard, pnBanHang, pnKhuyenMai, pnNhapHang, pnSanPham, pnNhanVien, pnKhachHang, pnThongKe;
-//	    PnQuanLyBanHangGUI banHangPanel;
-//	    PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
-//	    PnQuanLyNhapHangGUI nhapHangPanel;
-//	    PnQuanLySanPhamGUI sanPhamPanel;
-//	    PnQuanLyNhanVienGUI nhanVienPanel;
-//	    PnQuanLyKhachHangGUI khachHangPanel;
-//	    PnQuanLyThongKeGUI thongKePanel;
 
-	    JLabel btnClose, btnMinimize, lblBanHang, lblKhuyenMai, lblNhapHang, lblSanPham, lblNhanVien, lblKhachHang, lblThongKe;
-	    final Color clLeftItem = new Color(63, 74, 89);
-	    final Color clLeftItemHover = new Color(72, 88, 107);
-	    final Color clLeftItemSelected = new Color(51, 202, 187);
-	    ArrayList<JLabel> listMenuLeft;
-	    CardLayout cardMenuLeftGroup = new CardLayout();
-
-	public FrmCuaHang () {
-	      this.setTitle("Phần mềm quản lý cửa hàng pizza");
-	        this.setSize(1280, 720);
-	        Image icon = Toolkit.getDefaultToolkit().getImage("img\\settings_FILL0_wght400_GRAD0_opsz48.png");
-	        this.setIconImage(icon);
-	        addControls();
-	        addEvents();
-	}
-	public static void main(String[] args) {
-		 new FrmCuaHang().setVisible(true);
+public class TrangChu2  extends JFrame{
+	public TrangChu2() {
+        this.setTitle("Phần mềm quản lý cửa hàng pizza");
+        this.setSize(1280, 900);
+        Image icon = Toolkit.getDefaultToolkit().getImage("logo-cua-hang-xe-may (16).jpg");
+        this.setIconImage(icon);
+        addControls();
+        addEvents();
+    }
+    public static void main(String[] args) {
+		new TrangChu2().setVisible(true);
 	}
 
+    public void showWindow() {
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setUndecorated(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
 
-	 int xMouse, yMouse;
+    JLabel btnDoiMatKhau;
+    JPanel pnTitle, pnMenuLeft, pnCard, pnBanHang, pnKhuyenMai, pnNhapHang, pnSanPham, pnNhanVien, pnKhachHang, pnThongKe;
+//    PnQuanLyBanHangGUI banHangPanel;
+//    PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
+//    PnQuanLyNhapHangGUI nhapHangPanel;
+//    PnQuanLySanPhamGUI sanPhamPanel;
+//    PnQuanLyNhanVienGUI nhanVienPanel;
+//    PnQuanLyKhachHangGUI khachHangPanel;
+//    PnQuanLyThongKeGUI thongKePanel;
 
-	    private void addEvents() {
-	        this.addMouseMotionListener(new MouseMotionListener() {
-	            @Override
-	            public void mouseDragged(MouseEvent e) {
-	                moverFrame(e.getXOnScreen(), e.getYOnScreen());
-	            }
-
-	            @Override
-	            public void mouseMoved(MouseEvent e) {
-	                xMouse = e.getX();
-	                yMouse = e.getY();
-	            }
-	        });
-
-	        btnDoiMatKhau.addMouseListener(new MouseListener() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	         //       new DlgDoiMatKhau().setVisible(true);
-	            }
-
-	            @Override
-	            public void mousePressed(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseReleased(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnDoiMatKhau.setOpaque(true);
-	                btnDoiMatKhau.setBackground(clLeftItemHover);
-	            }
-
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnDoiMatKhau.setOpaque(false);
-	                btnDoiMatKhau.setBackground(new Color(0, 0, 0, 0));
-	            }
-	        });
-
-	        btnMinimize.addMouseListener(new MouseListener() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                thuNhoFrame();
-	            }
-
-	            @Override
-	            public void mousePressed(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseReleased(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnMinimize.setIcon(new ImageIcon("image/ManagerUI/btn-minimize--hover.png"));
-	            }
-
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnMinimize.setIcon(new ImageIcon("image/ManagerUI/btn-minimize.png"));
-	            }
-	        });
-
-	        btnClose.addMouseListener(new MouseListener() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                thoatChuongTrinh();
-	            }
-
-	            @Override
-	            public void mousePressed(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseReleased(MouseEvent e) {
-	            }
-
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                btnClose.setIcon(new ImageIcon("image/ManagerUI/btn-close--hover.png"));
-	            }
-
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                btnClose.setIcon(new ImageIcon("image/ManagerUI/btn-close.png"));
-	            }
-	        });
-
-	        for (JLabel lbl : listMenuLeft) {
-	            lbl.addMouseListener(new MouseListener() {
-	                @Override
-	                public void mouseClicked(MouseEvent e) {
-	                    for (JLabel lblDisable : listMenuLeft) {
-	                        lblDisable.setBackground(clLeftItem);
-	                    }
-	                    lbl.setBackground(clLeftItemSelected);
-
-	                    // Xử lý lật trang theo menu
-	                    String cardName = "";
-	                    if (lbl == lblBanHang) {
-	                        cardName = "1";
-	                    } else if (lbl == lblKhuyenMai) {
-	                        cardName = "2";
-	                    } else if (lbl == lblNhapHang) {
-	                        cardName = "3";
-	                    } else if (lbl == lblSanPham) {
-	                        cardName = "4";
-	                    } else if (lbl == lblNhanVien) {
-	                        cardName = "5";
-	                    } else if (lbl == lblKhachHang) {
-	                        cardName = "6";
-	                    } else {
-	                        cardName = "7";
-	                    }
-	                    cardMenuLeftGroup.show(pnCard, cardName);
-	                }
-
-	                @Override
-	                public void mousePressed(MouseEvent e) {
-	                }
-
-	                @Override
-	                public void mouseReleased(MouseEvent e) {
-	                }
-
-	                @Override
-	                public void mouseEntered(MouseEvent e) {
-	                    if (lbl.getBackground().equals(clLeftItem)) {
-	                        lbl.setBackground(clLeftItemHover);
-	                    }
-	                }
-
-	                @Override
-	                public void mouseExited(MouseEvent e) {
-	                    if (lbl.getBackground().equals(clLeftItemHover)) {
-	                        lbl.setBackground(clLeftItem);
-	                    }
-	                }
-	            });
-	        }
-
-	    }
-
-	    private void moverFrame(int x, int y) {
-	        this.setLocation(x - xMouse, y - yMouse);
-	    }
-
-	    private void thuNhoFrame() {
-	        this.setState(Frame.ICONIFIED);
-	    }
-
-	    private void thoatChuongTrinh() {
-	     //   banHangPanel.xuLyThoat();
-	      //  Main.Main.changLNF("Nimbus");
-	        System.exit(0);
-	    }
+    JLabel btnClose, btnMinimize, lblBanHang, lblKhuyenMai, lblNhapHang, lblSanPham, lblNhanVien, lblKhachHang, lblThongKe;
+    final Color clLeftItem = new Color(63, 74, 89);
+    final Color clLeftItemHover = new Color(72, 88, 107);
+    final Color clLeftItemSelected = new Color(51, 202, 187);
+    ArrayList<JLabel> listMenuLeft;
+    CardLayout cardMenuLeftGroup = new CardLayout();
 
 
-
-	private void addControls() {
-     int width = this.getWidth();
-     int height = this.getHeight();
+    private void addControls() {
+        int width = this.getWidth();
+        int height = this.getHeight();
 
         Container con = getContentPane();
 
@@ -382,7 +222,168 @@ public class FrmCuaHang  extends JFrame{
         ============================================================
          */
         con.add(pnMain);
-		
-	}
+    }
+
+    int xMouse, yMouse;
+
+    private void addEvents() {
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                moverFrame(e.getXOnScreen(), e.getYOnScreen());
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                xMouse = e.getX();
+                yMouse = e.getY();
+            }
+        });
+
+        btnDoiMatKhau.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+         //       new DlgDoiMatKhau().setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnDoiMatKhau.setOpaque(true);
+                btnDoiMatKhau.setBackground(clLeftItemHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnDoiMatKhau.setOpaque(false);
+                btnDoiMatKhau.setBackground(new Color(0, 0, 0, 0));
+            }
+        });
+
+        btnMinimize.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                thuNhoFrame();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnMinimize.setIcon(new ImageIcon("image/ManagerUI/btn-minimize--hover.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnMinimize.setIcon(new ImageIcon("image/ManagerUI/btn-minimize.png"));
+            }
+        });
+
+        btnClose.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                thoatChuongTrinh();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnClose.setIcon(new ImageIcon("image/ManagerUI/btn-close--hover.png"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnClose.setIcon(new ImageIcon("image/ManagerUI/btn-close.png"));
+            }
+        });
+
+        for (JLabel lbl : listMenuLeft) {
+            lbl.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    for (JLabel lblDisable : listMenuLeft) {
+                        lblDisable.setBackground(clLeftItem);
+                    }
+                    lbl.setBackground(clLeftItemSelected);
+
+                    // Xử lý lật trang theo menu
+                    String cardName = "";
+                    if (lbl == lblBanHang) {
+                        cardName = "1";
+                    } else if (lbl == lblKhuyenMai) {
+                        cardName = "2";
+                    } else if (lbl == lblNhapHang) {
+                        cardName = "3";
+                    } else if (lbl == lblSanPham) {
+                        cardName = "4";
+                    } else if (lbl == lblNhanVien) {
+                        cardName = "5";
+                    } else if (lbl == lblKhachHang) {
+                        cardName = "6";
+                    } else {
+                        cardName = "7";
+                    }
+                    cardMenuLeftGroup.show(pnCard, cardName);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    if (lbl.getBackground().equals(clLeftItem)) {
+                        lbl.setBackground(clLeftItemHover);
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    if (lbl.getBackground().equals(clLeftItemHover)) {
+                        lbl.setBackground(clLeftItem);
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void moverFrame(int x, int y) {
+        this.setLocation(x - xMouse, y - yMouse);
+    }
+
+    private void thuNhoFrame() {
+        this.setState(Frame.ICONIFIED);
+    }
+
+    private void thoatChuongTrinh() {
+     //   banHangPanel.xuLyThoat();
+      //  Main.Main.changLNF("Nimbus");
+        System.exit(0);
+    }
 
 }

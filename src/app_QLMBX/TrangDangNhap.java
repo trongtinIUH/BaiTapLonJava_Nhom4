@@ -29,6 +29,8 @@ public class TrangDangNhap extends JFrame implements Serializable,ActionListener
 	private JLabel lblUser;
 	private JLabel lblmk;
 	private JLabel lblma;
+	
+	//pass user phải tạo trong sql ***
 	private String user="21054421";
 	private String pass= "tin";
 	
