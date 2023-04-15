@@ -80,6 +80,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		if (o.equals(btnLogin)) {
 			String username = txtUsername.getText();
 			char[] mk = ((JPasswordField) txtPassword).getPassword();
+<<<<<<< HEAD
 			String mkstr = new String(mk);
 			if (username.equals(user) && mkstr.equals(pass)) {
 				TrangChu trangchu = new TrangChu();
@@ -87,6 +88,16 @@ public class LoginForm extends JFrame implements ActionListener {
 				dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng");
+=======
+			String mkstr=new String(mk);
+			if(username.equals(user)&& mkstr.equals(pass)) {
+				TrangChu trangchu= new TrangChu();
+				trangchu.setVisible(true);	
+				dispose();
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "Sai tài khoản | mật khẩu");
+>>>>>>> main
 			}
 
 		}

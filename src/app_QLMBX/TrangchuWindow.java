@@ -18,6 +18,20 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.Component;
 import javax.swing.border.CompoundBorder;
+import javax.swing.JMenu;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.CardLayout;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JTabbedPane;
+import javax.swing.border.BevelBorder;
 
 public class TrangchuWindow {
 
@@ -53,12 +67,12 @@ public class TrangchuWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 800);
+		frame.setBounds(100, 100, 1280, 650);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 255, 255));
+		panel.setBackground(new Color(255, 140, 0));
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		lblNewLabel.setBackground(new Color(128, 255, 255));
 		lblNewLabel.setForeground(new Color(0, 0, 0));
@@ -73,19 +87,121 @@ public class TrangchuWindow {
 		panel_1.setLayout(new GridLayout(0, 1, 8, 1));
 		
 		Panel panel_2 = new Panel();
-		panel_2.setBackground(Color.CYAN);
-		panel_2.setForeground(Color.CYAN);
+		panel_2.setBackground(Color.WHITE);
+		panel_2.setForeground(Color.WHITE);
 		panel_1.add(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setAlignmentY(Component.TOP_ALIGNMENT);
-		lblNewLabel_1.setBackground(Color.CYAN);
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_1.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\logo-cua-hang-xe-may (16).jpg"));
-		panel_2.add(lblNewLabel_1);
+		JButton btnBanHang = new JButton("Bán Hàng");
+		btnBanHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnBanHang.setForeground(Color.BLACK);
+		btnBanHang.setBackground(new Color(255, 255, 255));
+		btnBanHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\banhang.png"));
+		btnBanHang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
+		JButton btnKhuyenMai = new JButton("Khuyến Mãi");
+		btnKhuyenMai.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khuyenmai.png"));
+		btnKhuyenMai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnKhuyenMai.setForeground(Color.BLACK);
+		btnKhuyenMai.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnKhuyenMai.setBackground(new Color(255, 255, 255));
+		
+		JButton btnSanPham = new JButton("Sản Phẩm");
+		btnSanPham.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\sanpham.png"));
+		btnSanPham.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSanPham.setForeground(Color.BLACK);
+		btnSanPham.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnSanPham.setBackground(Color.WHITE);
+		
+		JButton btnNhanVien = new JButton("Nhân Viên");
+		btnNhanVien.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhanvien.png"));
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNhanVien.setForeground(Color.BLACK);
+		btnNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnNhanVien.setBackground(Color.WHITE);
 		
 		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
+		panel_3.setBackground(Color.WHITE);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBackground(new Color(255, 165, 0));
+		lblNewLabel_1.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\logo-cua-hang-xe-may (16).jpg"));
+		panel_3.add(lblNewLabel_1);
+		
+		JButton btnKhachHang = new JButton("Khách Hàng");
+		btnKhachHang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnKhachHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khachhang.png"));
+		btnKhachHang.setForeground(Color.BLACK);
+		btnKhachHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnKhachHang.setBackground(Color.WHITE);
+		
+		JButton btnNhaphang = new JButton("Nhập Hàng");
+		btnNhaphang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNhaphang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhaphang.png"));
+		btnNhaphang.setForeground(Color.BLACK);
+		btnNhaphang.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		btnNhaphang.setBackground(Color.WHITE);
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addGap(14)
+							.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(btnKhuyenMai, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnBanHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnSanPham, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnNhanVien, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnNhaphang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+					.addContainerGap())
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnBanHang, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnKhuyenMai, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSanPham, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNhanVien, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnKhachHang, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNhaphang, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addGap(235))
+		);
+		panel_2.setLayout(gl_panel_2);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\hinhgioithieu.jpg"));
+		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
 	}
 }
