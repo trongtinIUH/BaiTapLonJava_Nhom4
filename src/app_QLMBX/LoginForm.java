@@ -84,8 +84,8 @@ public class LoginForm extends JFrame implements ActionListener{
 			String mkstr=new String(mk);
 			if(username.equals(user)&& mkstr.equals(pass)) {
 				TrangChu trangchu= new TrangChu();
-			trangchu.setVisible(true);
-			dispose();
+				trangchu.setVisible(true);	
+				dispose();
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "Sai tài khoản | mật khẩu");
