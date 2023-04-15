@@ -8,23 +8,17 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
-
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 
@@ -94,14 +88,14 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnBanHang.setForeground(Color.BLACK);
 		btnBanHang.setBackground(Color.pink);
 		btnBanHang.setBorderPainted(false);
-		btnBanHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\banhang.png"));
+		btnBanHang.setIcon(new ImageIcon("icon\\banhang.png"));
 		btnBanHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
 		 btnKhuyenMai = new JButton("Khuyến Mãi");
-		btnKhuyenMai.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khuyenmai.png"));
+		btnKhuyenMai.setIcon(new ImageIcon("icon\\khuyenmai.png"));
 		btnKhuyenMai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -111,7 +105,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnKhuyenMai.setBackground(Color.WHITE);
 		
 		btnSanPham = new JButton("Sản Phẩm");
-		btnSanPham.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\sanpham.png"));
+		btnSanPham.setIcon(new ImageIcon("icon\\sanpham.png"));
 		btnSanPham.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -121,7 +115,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnSanPham.setBackground(Color.WHITE);
 		
 		 btnNhanVien = new JButton("Nhân Viên");
-		btnNhanVien.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhanvien.png"));
+		btnNhanVien.setIcon(new ImageIcon("icon\\nhanvien.png"));
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -135,7 +129,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(255, 165, 0));
-		lblNewLabel_1.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\logo-cua-hang-xe-may (16).jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("img\\logo-cua-hang-xe-may (16).jpg"));
 		panel_3.add(lblNewLabel_1);
 		
 		 btnKhachHang = new JButton("Khách Hàng");
@@ -143,7 +137,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnKhachHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khachhang.png"));
+		btnKhachHang.setIcon(new ImageIcon("icon\\khachhang.png"));
 		btnKhachHang.setForeground(Color.BLACK);
 		btnKhachHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnKhachHang.setBackground(Color.WHITE);
@@ -153,7 +147,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNhaphang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhaphang.png"));
+		btnNhaphang.setIcon(new ImageIcon("icon\\nhaphang.png"));
 		btnNhaphang.setForeground(Color.BLACK);
 		btnNhaphang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNhaphang.setBackground(Color.WHITE);
@@ -201,7 +195,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		hinhgt= new ImageIcon("D:\\QuanLyMuaBanXe\\img\\hinhgioithieu.jpg");
+		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
 		Image image = hinhgt.getImage();
 		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
 		hinhgt= new ImageIcon(newImage);

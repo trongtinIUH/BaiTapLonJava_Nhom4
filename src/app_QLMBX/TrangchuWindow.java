@@ -12,24 +12,13 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import java.awt.Panel;
-import java.awt.Canvas;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Component;
 import javax.swing.border.CompoundBorder;
-import javax.swing.JMenu;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.CardLayout;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.border.BevelBorder;
 
@@ -95,14 +84,14 @@ public class TrangchuWindow {
 		btnBanHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnBanHang.setForeground(Color.BLACK);
 		btnBanHang.setBackground(new Color(255, 255, 255));
-		btnBanHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\banhang.png"));
+		btnBanHang.setIcon(new ImageIcon("icon\\banhang.png"));
 		btnBanHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
 		JButton btnKhuyenMai = new JButton("Khuyến Mãi");
-		btnKhuyenMai.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khuyenmai.png"));
+		btnKhuyenMai.setIcon(new ImageIcon("icon\\khuyenmai.png"));
 		btnKhuyenMai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -112,7 +101,7 @@ public class TrangchuWindow {
 		btnKhuyenMai.setBackground(new Color(255, 255, 255));
 		
 		JButton btnSanPham = new JButton("Sản Phẩm");
-		btnSanPham.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\sanpham.png"));
+		btnSanPham.setIcon(new ImageIcon("icon\\sanpham.png"));
 		btnSanPham.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -122,7 +111,7 @@ public class TrangchuWindow {
 		btnSanPham.setBackground(Color.WHITE);
 		
 		JButton btnNhanVien = new JButton("Nhân Viên");
-		btnNhanVien.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhanvien.png"));
+		btnNhanVien.setIcon(new ImageIcon("icon\\nhanvien.png"));
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -136,7 +125,7 @@ public class TrangchuWindow {
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBackground(new Color(255, 165, 0));
-		lblNewLabel_1.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\logo-cua-hang-xe-may (16).jpg"));
+		lblNewLabel_1.setIcon(new ImageIcon("img\\logo-cua-hang-xe-may (16).jpg"));
 		panel_3.add(lblNewLabel_1);
 		
 		JButton btnKhachHang = new JButton("Khách Hàng");
@@ -144,7 +133,7 @@ public class TrangchuWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnKhachHang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\khachhang.png"));
+		btnKhachHang.setIcon(new ImageIcon("icon\\khachhang.png"));
 		btnKhachHang.setForeground(Color.BLACK);
 		btnKhachHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnKhachHang.setBackground(Color.WHITE);
@@ -154,7 +143,7 @@ public class TrangchuWindow {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNhaphang.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\icon\\nhaphang.png"));
+		btnNhaphang.setIcon(new ImageIcon("icon\\nhaphang.png"));
 		btnNhaphang.setForeground(Color.BLACK);
 		btnNhaphang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNhaphang.setBackground(Color.WHITE);
@@ -201,7 +190,7 @@ public class TrangchuWindow {
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("D:\\QuanLyMuaBanXe\\img\\hinhgioithieu.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon("img\\hinhgioithieu.jpg"));
 		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
 	}
 }

@@ -5,7 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class LoginForm extends JFrame implements ActionListener{
-    private JLabel lblTitle, lblUsername, lblPassword;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel lblTitle, lblUsername, lblPassword;
     private JTextField txtUsername, txtPassword;
     private JButton btnLogin, btnExit;
     private String user="123";
