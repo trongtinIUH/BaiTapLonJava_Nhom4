@@ -7,12 +7,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.Serializable;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +30,15 @@ public class TrangChu extends JFrame implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane tabPane= new JTabbedPane();
-	private JLabel lblBanHang;
+	private JLabel lblhinhchinh;
+	private JButton btnbanhang;
+	private JButton btnkhuyenmai;
+	private JButton btnsanpham;
+	private JButton btnnhanvien;
+	private JButton btnkhachhang;
+	private Component btnnhaphang;
+	private JButton btnthongke;
+	private ImageIcon hinhchinh;
 	
 	//văng các frm vào đây
 	
@@ -36,7 +47,7 @@ public class TrangChu extends JFrame implements Serializable{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
         Image icon = Toolkit.getDefaultToolkit().getImage("img\\settings_FILL0_wght400_GRAD0_opsz48.png");
         this.setIconImage(icon);
-		setSize(900, 800);
+		setSize(1280, 720);
 		setLocationRelativeTo(null);
 		//setResizable(false);
 		
@@ -50,35 +61,79 @@ public class TrangChu extends JFrame implements Serializable{
 		pNorth.setBackground(new Color(191,247,249));
 		add(pNorth, BorderLayout.NORTH);
 		
+	
 		
-//		JPanel pnEast = new JPanel();
-//		JPanel pnWest = new JPanel();
-//		add(pnEast,BorderLayout.EAST);
-//		add(pnWest,BorderLayout.WEST);
-//		JPanel pnSoth = new JPanel();
-//		add(pnSoth,BorderLayout.SOUTH);
-		
-		
-		
-		Box b= Box.createVerticalBox();
-		Box b1= Box.createHorizontalBox();
-		Box b2= Box.createHorizontalBox();
-		Box b3= Box.createHorizontalBox();
-		b.add(b1);
-		b.add(Box.createVerticalStrut(5));
-		b.add(b2);
-		b.add(Box.createVerticalStrut(5));
-		b.add(b3);
-		b.add(Box.createVerticalStrut(5));
 		
 		JPanel pnWEST = new JPanel();
-		pnWEST.add(b);
+		pnWEST.setBackground(Color.blue);
+		pnWEST.setLayout(new GridLayout(9, 1));
+		
 //		label.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage("img\\logo-cua-hang-xe-may (16).jpg")));
 		//pnWEST.add(label);
 		add(pnWEST,BorderLayout.WEST);
 		
-		  lblBanHang = new JLabel(new ImageIcon("image/ManagerUI/lblBanHang.png"));
-		  b1.add(lblBanHang);
+		
+		 lblhinhchinh = new JLabel(hinhchinh =new ImageIcon("img//logo-cua-hang-xe-may (16).jpg"));
+		 pnWEST.add(lblhinhchinh);	
+		
+		 //làm tiếp này...
+		 ImageIcon iicon= new ImageIcon("icon/banhang.png");
+		 btnbanhang= new JButton("Bán Hàng");
+		 btnbanhang.setFont(new Font("Times New Roman",0,25));
+		 btnbanhang.setIcon(iicon);
+		 pnWEST.add(btnbanhang);
+		 
+		 
+		 ImageIcon iicon1= new ImageIcon("icon/khuyenmai.png");
+		 btnkhuyenmai= new JButton("Khuyến Mãi");
+		 btnkhuyenmai.setFont(new Font("Times New Roman",0,25));
+		 btnkhuyenmai.setIcon(iicon1);
+		 pnWEST.add(btnkhuyenmai);
+		
+		 
+		 ImageIcon iicon2= new ImageIcon("icon/sanpham.png");
+		 btnsanpham= new JButton("Sản Phẩm");
+		 btnsanpham.setFont(new Font("Times New Roman",0,25));
+		 btnsanpham.setIcon(iicon2);
+		 pnWEST.add(btnsanpham);
+		 
+		 ImageIcon iicon3= new ImageIcon("icon/nhanvien.png");
+		 btnnhanvien= new JButton("Nhân Viên");
+		 btnnhanvien.setFont(new Font("Times New Roman",0,25));
+		 btnnhanvien.setIcon(iicon3);
+		 pnWEST.add(btnnhanvien);
+		 
+		 ImageIcon iicon4= new ImageIcon("icon/khachhang.png");
+		 btnkhachhang= new JButton("Khách Hàng");
+		 btnkhachhang.setFont(new Font("Times New Roman",0,25));
+		 btnkhachhang.setIcon(iicon4);
+		 pnWEST.add(btnkhachhang);
+		 
+		 ImageIcon iicon5= new ImageIcon("icon/nhaphang.png");
+		 btnnhaphang= new JButton("Nhập Hàng");
+		 btnnhaphang.setFont(new Font("Times New Roman",0,25));
+		 btnnhaphang.setPreferredSize(new Dimension(50, 50));
+		 ((AbstractButton) btnnhaphang).setIcon(iicon5);
+		 pnWEST.add(btnnhaphang);
+		 
+		 ImageIcon iicon6= new ImageIcon("icon/thongke.png");
+		 btnthongke= new JButton("Thống Kê");
+		 btnthongke.setFont(new Font("Times New Roman",0,25));
+		 btnthongke.setIcon(iicon6);
+		 pnWEST.add(btnthongke);
+		  
+//		  lblkhuyenmai = new JLabel(new ImageIcon("image/ManagerUI/lblKhuyenMai.png"));
+//		  b2.add(lblkhuyenmai);
+//		  lblsanpham = new JLabel(new ImageIcon("image/ManagerUI/lblSanPham.png"));
+//		  b3.add(lblsanpham);
+//		  lblnhanvien = new JLabel(new ImageIcon("image/ManagerUI/lblNhanVien.png"));
+//		  b4.add(lblnhanvien);
+//		  lblkhachhang = new JLabel(new ImageIcon("image/ManagerUI/lblKhachHang.png"));
+//		  b5.add(lblkhachhang);
+//		  lblnhaphang = new JLabel(new ImageIcon("image/ManagerUI/lblNhapHang.png"));
+//		  b6.add(lblnhaphang);
+//		  lblthongke = new JLabel(new ImageIcon("image/ManagerUI/lblThongKe.png"));
+//		  b7.add(lblthongke);
 		  
 		
 		
