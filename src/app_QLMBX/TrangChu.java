@@ -8,9 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Panel;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
@@ -30,14 +31,22 @@ public class TrangChu extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private final JLabel lblNewLabel = new JLabel("HỆ THỐNG QUẢN LÍ MUA BÁN XE MÁY");
 	private final JPanel panel_1 = new JPanel();
-	private ImageIcon hinhgt;
 	private JButton btnBanHang;
 	private JButton btnKhuyenMai;
 	private JButton btnNhanVien;
 	private JButton btnKhachHang;
 	private JButton btnNhaphang;
-	private JTabbedPane tabbedPane;
+	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JButton btnSanPham;
+
+	//thêm các frm
+	FrmBanHang banHang = new FrmBanHang();
+	FrmKhachHang khachHang = new FrmKhachHang();
+	FrmKhuyenMai khuyenMai = new FrmKhuyenMai();
+	FrmNhanVien nhanVien = new FrmNhanVien();
+	FrmNhapHang nhapHang = new FrmNhapHang();
+	FrmSanPham sanPham = new FrmSanPham();
+	
 
 	/**
 	 * Launch the application.
@@ -190,17 +199,25 @@ public class TrangChu extends JFrame implements ActionListener{
 		panel_2.setLayout(gl_panel_2);
 		
 		
+//		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+//		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+//		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+//		
+//		JLabel lblNewLabel_2 = new JLabel("");
+//		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
+//		Image image = hinhgt.getImage();
+//		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
+//		hinhgt= new ImageIcon(newImage);
+//		lblNewLabel_2.setIcon(hinhgt);
+//		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
+//	
+//		tabbedPane.addTab("tab_GioiThieu\r\n", null, frmThuoc, null);
+		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
-		Image image = hinhgt.getImage();
-		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
-		hinhgt= new ImageIcon(newImage);
-		lblNewLabel_2.setIcon(hinhgt);
-		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
+	
 		
 		
 		
@@ -219,17 +236,10 @@ public class TrangChu extends JFrame implements ActionListener{
 			setBackground();
 		btnKhachHang.setBackground(Color.pink);
 		
-//		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-//		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-//		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-//		
-//		
-//		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
-//		Image image = hinhgt.getImage();
-//		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
-//		hinhgt= new ImageIcon(newImage);
-//		lblNewLabel_2.setIcon(hinhgt);
-//		tabbedPane.addTab("tab_khachhang\r\n", null, lblNewLabel_2, null);
+		
+		//tabbedPane.addTab("tab_GioiThieu\r\n", null, khachHang, null);
+		
+
 		}
 		if(o.equals(btnBanHang)) {
 			setBackground();
