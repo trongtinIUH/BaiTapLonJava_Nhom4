@@ -86,8 +86,8 @@ public class TrangChu extends JFrame implements ActionListener{
 		 btnBanHang = new JButton("Bán Hàng");
 		btnBanHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnBanHang.setForeground(Color.BLACK);
-		btnBanHang.setBackground(Color.pink);
-		btnBanHang.setBorderPainted(false);
+		btnBanHang.setBackground(Color.white);
+		//btnBanHang.setBorderPainted(false);
 		btnBanHang.setIcon(new ImageIcon("icon\\banhang.png"));
 		btnBanHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,15 +216,49 @@ public class TrangChu extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o= e.getSource();
 		if(o.equals(btnKhachHang)) {
+			setBackground();
+		btnKhachHang.setBackground(Color.pink);
 		
+//		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+//		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+//		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+//		
+//		
+//		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
+//		Image image = hinhgt.getImage();
+//		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
+//		hinhgt= new ImageIcon(newImage);
+//		lblNewLabel_2.setIcon(hinhgt);
+//		tabbedPane.addTab("tab_khachhang\r\n", null, lblNewLabel_2, null);
 		}
 		if(o.equals(btnBanHang)) {
-			
+			setBackground();
+			btnBanHang.setBackground(Color.pink);
 		}
 		if(o.equals(btnKhuyenMai)) {
-			
+			setBackground();
+			btnKhuyenMai.setBackground(Color.pink);
 		}
+		if(o.equals(btnNhanVien)) {
+			setBackground();
+			btnNhanVien.setBackground(Color.pink);
+		}
+		if(o.equals(btnNhaphang)) {
+			setBackground();
+			btnNhaphang.setBackground(Color.pink);
+		}
+		if(o.equals(btnSanPham)) {
+			setBackground();
+			btnSanPham.setBackground(Color.pink);
+	}
 	}
 
-
+	public void setBackground() {
+		btnBanHang.setBackground(Color.white);
+		btnKhachHang.setBackground(Color.white);
+		btnKhuyenMai.setBackground(Color.white);
+		btnNhanVien.setBackground(Color.white);
+		btnNhaphang.setBackground(Color.white);
+		btnSanPham.setBackground(Color.white);
+	}
 }
