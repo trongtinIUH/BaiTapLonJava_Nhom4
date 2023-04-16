@@ -235,31 +235,32 @@ public class TrangChu extends JFrame implements ActionListener{
 		if(o.equals(btnKhachHang)) {
 			setBackground();
 		btnKhachHang.setBackground(Color.pink);
-		
-		
-		//tabbedPane.addTab("tab_GioiThieu\r\n", null, khachHang, null);
-		
-
+		tabbedPane.addTab("tab_Khách Hàng\r\n", null, khachHang, null);
 		}
 		if(o.equals(btnBanHang)) {
 			setBackground();
 			btnBanHang.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Bán Hàng\r\n", null, banHang, null);
 		}
 		if(o.equals(btnKhuyenMai)) {
 			setBackground();
 			btnKhuyenMai.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Khuyến Mãi\r\n", null, khuyenMai, null);
 		}
 		if(o.equals(btnNhanVien)) {
 			setBackground();
 			btnNhanVien.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Nhân Viên\r\n", null, nhanVien, null);
 		}
 		if(o.equals(btnNhaphang)) {
 			setBackground();
 			btnNhaphang.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Nhập Hàng\r\n", null, nhapHang, null);
 		}
 		if(o.equals(btnSanPham)) {
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Sản Phẩm\r\n", null, sanPham, null);
 	}
 	}
 

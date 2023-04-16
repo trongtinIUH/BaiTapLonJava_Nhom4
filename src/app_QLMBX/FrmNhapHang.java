@@ -1,5 +1,14 @@
 package app_QLMBX;
 
-public class FrmNhapHang {
+import javax.swing.JPanel;
 
+public class FrmNhapHang extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public FrmNhapHang() {
+		
+	}
 }
