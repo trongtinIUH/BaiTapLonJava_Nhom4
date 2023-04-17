@@ -23,6 +23,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import dao.NhanVien_DAO;
+import entity.NhanVien;
 
 public class FrmNhanVien extends JPanel implements Serializable,ActionListener,MouseListener {
 	/**
@@ -45,8 +47,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 
 	private JLabel lblTimKiem;
 	private JTextField txtTimkiem;
-	
-	
+	private NhanVien_DAO nv;
 	
 	
 	public FrmNhanVien() {
@@ -148,8 +149,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		
 		
 		TaoTable();
-			
-		
+		loadData();
 		//phần sự kiện
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
@@ -164,7 +164,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 			model= new DefaultTableModel(col,0);
 			tblNhanVien = new JTable(model);
 			JScrollPane pane = new JScrollPane(tblNhanVien);
-			pane.setPreferredSize(new Dimension(950, 350));
+			pane.setPreferredSize(new Dimension(950, 280));
 			
 			JComboBox jComboBox1= new JComboBox();
 			jComboBox1.addItem("Nam");
@@ -176,13 +176,18 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 			DefaultCellEditor de2 = new DefaultCellEditor(jComboBox2);
 			tblNhanVien.getColumnModel().getColumn(2).setCellEditor(de1);
 			tblNhanVien.getColumnModel().getColumn(7).setCellEditor(de2);
-			
+			tblNhanVien.setBackground(Color.pink);
 			add(pane,BorderLayout.CENTER);
 			
 		}
-//	public static void main(String[] args) {
-//		new FrmNhanVien().setVisible(true);
-//	}
+	
+	public void loadData() {
+		nv = new NhanVien_DAO();
+		for(NhanVien x : nv.getAllNhanVien()) {
+			Object[] row = {x.getMaNV(), x.getTenNV(), x.getGioiTinh(), x.getDiaChi(), x.getSdt(), x.geteMail(), x.getNgayVaoLam(), x.getChucVu(), x.getLuongCoBan(), x.getMaCH() };
+			model.addRow(row);
+		}
+	}
 
 
 

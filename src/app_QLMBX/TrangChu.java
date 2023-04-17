@@ -12,10 +12,13 @@ import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Panel;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
@@ -73,10 +76,10 @@ public class TrangChu extends JFrame implements ActionListener{
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 140, 0));
+		panel.setBackground(new Color(55, 129, 240));
 		this.getContentPane().add(panel, BorderLayout.NORTH);
 		lblNewLabel.setBackground(new Color(128, 255, 255));
-		lblNewLabel.setForeground(new Color(0, 0, 0));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		
@@ -202,6 +205,13 @@ public class TrangChu extends JFrame implements ActionListener{
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		JLabel lblNewLabel_2 = new JLabel("");
+		ImageIcon hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
+		Image image = hinhgt.getImage();
+		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
+		hinhgt = new ImageIcon(newImage);
+		lblNewLabel_2.setIcon(hinhgt);
+		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
 		
 		btnKhachHang.addActionListener(this);
 		btnSanPham.addActionListener(this);

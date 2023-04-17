@@ -73,7 +73,7 @@ public class FrmNhapHang extends JPanel{
 		model = new DefaultTableModel(cols, 0);
 		table = new JTable(model);
 		table.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		table.setBackground(new Color(255, 255, 255));
+		table.setBackground(Color.pink);
 		
 		table.getColumnModel().getColumn(0).setPreferredWidth(120);
 		table.getColumnModel().getColumn(1).setPreferredWidth(400);
