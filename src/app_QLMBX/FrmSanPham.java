@@ -107,6 +107,7 @@ public class FrmSanPham extends JPanel{
 		tblSanPham.getColumnModel().getColumn(1).setPreferredWidth(600);
 		tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(120);
 		tblSanPham.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tblSanPham.setBackground(Color.pink);
 		JScrollPane sp = new JScrollPane(tblSanPham);
 		width = 990; height = 400;
 		y+=50;

@@ -183,6 +183,7 @@ public class FrmBanHang extends JPanel {
 		
 		tblModel = new DefaultTableModel(col,0);
 		tblHopDong = new JTable(tblModel);
+		tblHopDong.setBackground(Color.pink);
 		scrollTable = new JScrollPane(tblHopDong);
 		scrollTable.setBounds(10, 25, 930, 170);
 		pnTable.add(scrollTable);

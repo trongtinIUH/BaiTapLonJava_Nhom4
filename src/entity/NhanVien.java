@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,19 +14,18 @@ public class NhanVien implements Serializable{
 	
 	private String maNV;
 	private String tenNV;
-	private boolean gioiTinh;
+	private String gioiTinh;
 	private String diaChi;
 	private String sdt;
 	private String eMail;
-	private LocalDate ngayVaoLam;
+	private Date ngayVaoLam;
 	private String chucVu;
 	private double luongCoBan;
-	public NhanVien() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public NhanVien(String maNV, String tenNV, boolean gioiTinh, String diaChi, String sdt, String eMail,
-			LocalDate ngayVaoLam, String chucVu, double luongCoBan) {
+	private String maCH;
+	
+	
+	public NhanVien(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
+			Date ngayVaoLam, String chucVu, double luongCoBan, String maCH) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -36,6 +36,21 @@ public class NhanVien implements Serializable{
 		this.ngayVaoLam = ngayVaoLam;
 		this.chucVu = chucVu;
 		this.luongCoBan = luongCoBan;
+		this.maCH = maCH;
+	}
+	
+	
+	public NhanVien() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public String getMaCH() {
+		return maCH;
+	}
+	public void setMaCH(String maCH) {
+		this.maCH = maCH;
 	}
 	public String getMaNV() {
 		return maNV;
@@ -49,12 +64,17 @@ public class NhanVien implements Serializable{
 	public void setTenNV(String tenNV) {
 		this.tenNV = tenNV;
 	}
-	public boolean isGioiTinh() {
+	
+	public String getGioiTinh() {
 		return gioiTinh;
 	}
-	public void setGioiTinh(boolean gioiTinh) {
+
+
+	public void setGioiTinh(String gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
+
+
 	public String getDiaChi() {
 		return diaChi;
 	}
@@ -73,10 +93,10 @@ public class NhanVien implements Serializable{
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
-	public LocalDate getNgayVaoLam() {
+	public Date getNgayVaoLam() {
 		return ngayVaoLam;
 	}
-	public void setNgayVaoLam(LocalDate ngayVaoLam) {
+	public void setNgayVaoLam(Date ngayVaoLam) {
 		this.ngayVaoLam = ngayVaoLam;
 	}
 	public String getChucVu() {
@@ -108,10 +128,11 @@ public class NhanVien implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return String.format(
-				"NhanVien [maNV=%s, tenNV=%s, gioiTinh=%s, diaChi=%s, sdt=%s, eMail=%s, ngayVaoLam=%s, chucVu=%s, luongCoBan=%s]",
-				maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan);
+		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", diaChi=" + diaChi
+				+ ", sdt=" + sdt + ", eMail=" + eMail + ", ngayVaoLam=" + ngayVaoLam + ", chucVu=" + chucVu
+				+ ", luongCoBan=" + luongCoBan + ", maCH=" + maCH + "]";
 	}
+	
 	
 	
 
