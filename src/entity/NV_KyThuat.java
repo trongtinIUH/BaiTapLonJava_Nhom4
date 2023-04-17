@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,17 +12,24 @@ public class NV_KyThuat extends NhanVien {
 	private static final long serialVersionUID = 1L;
 	private String bacTho;
 	private int soNamKN;
+	
+	
+	
+	
+
+	
 	public NV_KyThuat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public NV_KyThuat(String maNV, String tenNV, boolean gioiTinh, String diaChi, String sdt, String eMail,
-			LocalDate ngayVaoLam, String chucVu, double luongCoBan) {
-		super(maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan);
+	public NV_KyThuat(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
+			Date ngayVaoLam, String chucVu, double luongCoBan, String maCH) {
+		super(maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan, maCH);
 		// TODO Auto-generated constructor stub
 	}
-	public NV_KyThuat(String bacTho, int soNamKN) {
-		super();
+	public NV_KyThuat(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
+			Date ngayVaoLam, String chucVu, double luongCoBan, String maCH, String bacTho, int soNamKN) {
+		super(maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan, maCH);
 		this.bacTho = bacTho;
 		this.soNamKN = soNamKN;
 	}

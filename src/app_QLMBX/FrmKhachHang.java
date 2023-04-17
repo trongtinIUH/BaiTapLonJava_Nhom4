@@ -22,6 +22,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
+import entity.KhachHang;
+import entity.NhanVien;
+
 public class FrmKhachHang extends JPanel implements ActionListener {
 
 	/**
@@ -44,6 +49,7 @@ public class FrmKhachHang extends JPanel implements ActionListener {
 	private JButton btnXoa;
 	private JButton btnXoaTrang;
 	private JButton btnSua;
+	private KhachHang_DAO kh;
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,7 +97,7 @@ public class FrmKhachHang extends JPanel implements ActionListener {
 		Set<String> generatedCodes = new HashSet<>();
 		String code;
 		do {
-		    code = generateRandomCode(8);
+		    code = generateRandomCode();
 		} while (generatedCodes.contains(code));
 		generatedCodes.add(code);
 
@@ -179,6 +185,7 @@ public class FrmKhachHang extends JPanel implements ActionListener {
 		panelChucNang.add(btnSua = new JButton("Sửa"));
 		btnSua.setFont(font);
 		btnSua.setBounds(290, 160, 70, 25);
+		loadData();
 	}
 
 	@Override
@@ -197,13 +204,22 @@ public class FrmKhachHang extends JPanel implements ActionListener {
 		}
 	}
 	
-	private String generateRandomCode(int length) {
-	    String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	    StringBuilder sb = new StringBuilder(length);
-	    Random rnd = new Random();
-	    for (int i = 0; i < length; i++) {
-	        sb.append(chars.charAt(rnd.nextInt(chars.length())));
-	    }
-	    return sb.toString();
+	public void loadData() {
+		int i = 0;
+		kh = new KhachHang_DAO();
+		for(KhachHang x : kh.getAllKhachHang()) {
+			i++;
+			Object[] row = {i, x.getMaKH(), x.getTenKH(), x.getGioiTinh(), x.getDiaChi(), x.getSdt()};
+			model.addRow(row);
+		}
 	}
+
+	private String generateRandomCode() {
+	    String prefix = "KH";
+	    int maxNumber = 999999;
+	    int randomNum = new Random().nextInt(maxNumber);
+	    String suffix = String.format("%06d", randomNum);
+	    return prefix + suffix;
+	}
+
 }
