@@ -198,28 +198,10 @@ public class TrangChu extends JFrame implements ActionListener{
 		);
 		panel_2.setLayout(gl_panel_2);
 		
-		
-//		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-//		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-//		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-//		
-//		JLabel lblNewLabel_2 = new JLabel("");
-//		hinhgt= new ImageIcon("img\\hinhgioithieu.jpg");
-//		Image image = hinhgt.getImage();
-//		Image newImage = image.getScaledInstance(1050, 650, java.awt.Image.SCALE_SMOOTH);
-//		hinhgt= new ImageIcon(newImage);
-//		lblNewLabel_2.setIcon(hinhgt);
-//		tabbedPane.addTab("tab_GioiThieu\r\n", null, lblNewLabel_2, null);
-//	
-//		tabbedPane.addTab("tab_GioiThieu\r\n", null, frmThuoc, null);
-		
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane();
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-		
-	
-		
-		
 		
 		btnKhachHang.addActionListener(this);
 		btnSanPham.addActionListener(this);
@@ -234,34 +216,40 @@ public class TrangChu extends JFrame implements ActionListener{
 		Object o= e.getSource();
 		if(o.equals(btnKhachHang)) {
 			setBackground();
-		btnKhachHang.setBackground(Color.pink);
-		tabbedPane.addTab("tab_Khách Hàng\r\n", null, khachHang, null);
+			btnKhachHang.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Khách Hàng\r\n", null, khachHang, null);
+			tabbedPane.setSelectedIndex(getIndex(khachHang));
 		}
 		if(o.equals(btnBanHang)) {
 			setBackground();
 			btnBanHang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Bán Hàng\r\n", null, banHang, null);
+			tabbedPane.setSelectedIndex(getIndex(banHang));
 		}
 		if(o.equals(btnKhuyenMai)) {
 			setBackground();
 			btnKhuyenMai.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Khuyến Mãi\r\n", null, khuyenMai, null);
+			tabbedPane.setSelectedIndex(getIndex(khuyenMai));
 		}
 		if(o.equals(btnNhanVien)) {
 			setBackground();
 			btnNhanVien.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Nhân Viên\r\n", null, nhanVien, null);
+			tabbedPane.setSelectedIndex(getIndex(nhanVien));
 		}
 		if(o.equals(btnNhaphang)) {
 			setBackground();
 			btnNhaphang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Nhập Hàng\r\n", null, nhapHang, null);
+			tabbedPane.setSelectedIndex(getIndex(nhapHang));
 		}
 		if(o.equals(btnSanPham)) {
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Sản Phẩm\r\n", null, sanPham, null);
-	}
+			tabbedPane.setSelectedIndex(getIndex(sanPham));
+		}
 	}
 
 	public void setBackground() {
@@ -271,5 +259,9 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnNhanVien.setBackground(Color.white);
 		btnNhaphang.setBackground(Color.white);
 		btnSanPham.setBackground(Color.white);
+	}
+	
+	public int getIndex(Component obj) {
+		return tabbedPane.indexOfComponent(obj);
 	}
 }
