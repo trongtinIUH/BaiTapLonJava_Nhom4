@@ -1,16 +1,17 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import connectDB.ConnectDB;
 import entity.NhanVien;
 
 public class NhanVien_DAO {
+
 	public List<NhanVien> getAllNhanVien() {
 		List<NhanVien> dsNhanVien = new ArrayList<NhanVien>();
 		try {
@@ -32,5 +33,71 @@ public class NhanVien_DAO {
 			e.printStackTrace();
 		}
 		return dsNhanVien;
+	}
+	public void DeleteNV(String manv) throws SQLException {
+		ConnectDB.getInstance();
+		PreparedStatement pst = null;
+		 Connection con = ConnectDB.getConnection();
+		
+		 String sql ="DELETE FROM NhanVien WHERE maNV =?";
+		 try {
+			 pst = con.prepareStatement(sql);
+			pst.setString(1,manv);
+
+			 pst.executeUpdate() ;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			close(pst);
+		}
+	}
+	
+	//hàm thêm nv
+	public boolean addNhanVien(NhanVien lh) throws SQLException {
+		ConnectDB.getInstance();
+		 Connection con = ConnectDB.getConnection();
+		
+		 String sql ="insert into NhanVien VALUES(?,?,?,?,?,?,?,?,?,?)";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, lh.getMaNV());
+			pst.setString(2, lh.getTenNV());
+			pst.setString(3, lh.getGioiTinh());
+			pst.setString(4, lh.getDiaChi());
+			pst.setString(5, lh.getSdt());
+			pst.setString(6, lh.geteMail());
+			pst.setDate(7, lh.getNgayVaoLam());
+			pst.setString(8, lh.getChucVu());
+			pst.setFloat(9, lh.getLuongCoBan());
+			pst.setString(10, lh.getMaCH());
+			
+			return pst.executeUpdate() >0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	private void close(PreparedStatement pst) {
+		if (pst !=null) {
+			try {
+				pst.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	//hàm tìm kiếm trong table
+	public int timkiem(String manv) {
+		for (int i = 0; i < getAllNhanVien().size(); i++) {
+				if(getAllNhanVien().get(i).getMaNV().equalsIgnoreCase(manv)) {
+					return i;
+				}
+		} return -1;
 	}
 }
