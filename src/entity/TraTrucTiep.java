@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class TraTrucTiep extends HopDong implements Serializable{
@@ -14,14 +15,14 @@ public class TraTrucTiep extends HopDong implements Serializable{
 	private String  maUuDai;
 	private double phanTramMienGiam;
 	
-	public TraTrucTiep(String maHD, LocalDate ngaylapHD, NhanVien nvLapHD, KhachHang khachHang, CuaHang cuaHang) {
-		super(maHD, ngaylapHD, nvLapHD, khachHang, cuaHang);
+	public TraTrucTiep(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD, CuaHang cuaHang, KhachHang khachHang) {
+		super(maHD, ngaylapHD, thoiGianBH, loaiHD, nvLapHD, cuaHang, khachHang);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TraTrucTiep(String maHD, LocalDate ngaylapHD, NhanVien nvLapHD, KhachHang khachHang, CuaHang cuaHang,
+	public TraTrucTiep(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD,  CuaHang cuaHang,KhachHang khachHang,
 			String maUuDai, double phanTramMienGiam) {
-		super(maHD, ngaylapHD, nvLapHD, khachHang, cuaHang);
+		super(maHD, ngaylapHD, thoiGianBH, loaiHD, nvLapHD, cuaHang, khachHang);
 		this.maUuDai = maUuDai;
 		this.phanTramMienGiam = phanTramMienGiam;
 	}

@@ -44,6 +44,16 @@ public class NhanVien implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public NhanVien(String maNV) {
+		this.maNV = maNV;
+	}
+	
+	public NhanVien(String tenNV, String chucVu, String sdt) {
+		this.tenNV = tenNV;
+		this.chucVu = chucVu;
+		this.sdt = sdt;
+	}
 
 
 	public String getMaCH() {
