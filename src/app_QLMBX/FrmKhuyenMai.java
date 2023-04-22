@@ -123,7 +123,7 @@ public class FrmKhuyenMai extends JPanel implements ActionListener{
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.setBounds(370, 45, 190, 30);
 		datePicker.setBackground(new Color(248,248,248));
-		datePicker.setToolTipText("Chọn ngày sinh");
+		datePicker.setToolTipText("Chọn ngày lập");
 		modelNgaylap.setDate(1990, 0, 1);
 		modelNgaylap.setSelected(true);
 		panelSouth.add(datePicker);
