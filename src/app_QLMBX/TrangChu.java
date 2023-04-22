@@ -59,7 +59,7 @@ public class TrangChu extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * Create the application.
+	 * Create the application. 
 	 */
 	public TrangChu() {
 		initialize();

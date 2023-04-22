@@ -20,12 +20,12 @@ public class NhanVien implements Serializable{
 	private String eMail;
 	private Date ngayVaoLam;
 	private String chucVu;
-	private double luongCoBan;
+	private float luongCoBan;
 	private String maCH;
 	
 	
 	public NhanVien(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
-			Date ngayVaoLam, String chucVu, double luongCoBan, String maCH) {
+			Date ngayVaoLam, String chucVu, float luongCoBan, String maCH) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -115,10 +115,10 @@ public class NhanVien implements Serializable{
 	public void setChucVu(String chucVu) {
 		this.chucVu = chucVu;
 	}
-	public double getLuongCoBan() {
+	public float getLuongCoBan() {
 		return luongCoBan;
 	}
-	public void setLuongCoBan(double luongCoBan) {
+	public void setLuongCoBan(float luongCoBan) {
 		this.luongCoBan = luongCoBan;
 	}
 	@Override
