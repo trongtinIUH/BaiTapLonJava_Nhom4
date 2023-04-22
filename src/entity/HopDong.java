@@ -1,7 +1,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class HopDong implements Serializable{
@@ -12,56 +12,95 @@ public class HopDong implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String maHD;
-	private LocalDate ngaylapHD;
+	private Date ngaylapHD;
+	private int thoiGianBH;
+	private String loaiHD;
 	private NhanVien nvLapHD;
-	private KhachHang khachHang;
 	private CuaHang cuaHang;
+	private KhachHang khachHang;
+	
 	public HopDong() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public HopDong(String maHD, LocalDate ngaylapHD, NhanVien nvLapHD, KhachHang khachHang, CuaHang cuaHang) {
+
+	public HopDong(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD, CuaHang cuaHang,
+			KhachHang khachHang) {
 		super();
 		this.maHD = maHD;
 		this.ngaylapHD = ngaylapHD;
+		this.thoiGianBH = thoiGianBH;
+		this.loaiHD = loaiHD;
 		this.nvLapHD = nvLapHD;
-		this.khachHang = khachHang;
 		this.cuaHang = cuaHang;
+		this.khachHang = khachHang;
 	}
+	
+	public HopDong(String maHD) {
+		this.maHD = maHD;
+	}
+
+
 	public String getMaHD() {
 		return maHD;
 	}
+
 	public void setMaHD(String maHD) {
 		this.maHD = maHD;
 	}
-	public LocalDate getNgaylapHD() {
+
+	public Date getNgaylapHD() {
 		return ngaylapHD;
 	}
-	public void setNgaylapHD(LocalDate ngaylapHD) {
+
+	public void setNgaylapHD(Date ngaylapHD) {
 		this.ngaylapHD = ngaylapHD;
 	}
+
+	public int getThoiGianBH() {
+		return thoiGianBH;
+	}
+
+	public void setThoiGianBH(int thoiGianBH) {
+		this.thoiGianBH = thoiGianBH;
+	}
+
+	public String getLoaiHD() {
+		return loaiHD;
+	}
+
+	public void setLoaiHD(String loaiHD) {
+		this.loaiHD = loaiHD;
+	}
+
 	public NhanVien getNvLapHD() {
 		return nvLapHD;
 	}
+
 	public void setNvLapHD(NhanVien nvLapHD) {
 		this.nvLapHD = nvLapHD;
 	}
-	public KhachHang getKhachHang() {
-		return khachHang;
-	}
-	public void setKhachHang(KhachHang khachHang) {
-		this.khachHang = khachHang;
-	}
+
 	public CuaHang getCuaHang() {
 		return cuaHang;
 	}
+
 	public void setCuaHang(CuaHang cuaHang) {
 		this.cuaHang = cuaHang;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(maHD);
+
+	public KhachHang getKhachHang() {
+		return khachHang;
 	}
+
+	public void setKhachHang(KhachHang khachHang) {
+		this.khachHang = khachHang;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -73,11 +112,12 @@ public class HopDong implements Serializable{
 		HopDong other = (HopDong) obj;
 		return Objects.equals(maHD, other.maHD);
 	}
+
 	@Override
 	public String toString() {
-		return String.format("HopDong [maHD=%s, ngaylapHD=%s, nvLapHD=%s, khachHang=%s, cuaHang=%s]", maHD, ngaylapHD,
-				nvLapHD, khachHang, cuaHang);
+		return "HopDong [maHD=" + maHD + ", ngaylapHD=" + ngaylapHD + ", thoiGianBH=" + thoiGianBH + ", loaiHD="
+				+ loaiHD + ", nvLapHD=" + nvLapHD + ", cuaHang=" + cuaHang + ", khachHang=" + khachHang + "]";
 	}
-	
 
+	
 }

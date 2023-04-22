@@ -29,6 +29,9 @@ public class KhachHang implements Serializable {
 		this.sdt = sdt;
 	}
 	
+	public KhachHang(String maKH) {
+		this.maKH = maKH;
+	}
 	
 	public String getGioiTinh() {
 		return gioiTinh;

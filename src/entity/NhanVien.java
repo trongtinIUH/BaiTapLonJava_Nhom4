@@ -20,12 +20,12 @@ public class NhanVien implements Serializable{
 	private String eMail;
 	private Date ngayVaoLam;
 	private String chucVu;
-	private double luongCoBan;
+	private float luongCoBan;
 	private String maCH;
 	
 	
 	public NhanVien(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
-			Date ngayVaoLam, String chucVu, double luongCoBan, String maCH) {
+			Date ngayVaoLam, String chucVu, float luongCoBan, String maCH) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -43,6 +43,16 @@ public class NhanVien implements Serializable{
 	public NhanVien() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public NhanVien(String maNV) {
+		this.maNV = maNV;
+	}
+	
+	public NhanVien(String tenNV, String chucVu, String sdt) {
+		this.tenNV = tenNV;
+		this.chucVu = chucVu;
+		this.sdt = sdt;
 	}
 
 
@@ -105,10 +115,10 @@ public class NhanVien implements Serializable{
 	public void setChucVu(String chucVu) {
 		this.chucVu = chucVu;
 	}
-	public double getLuongCoBan() {
+	public float getLuongCoBan() {
 		return luongCoBan;
 	}
-	public void setLuongCoBan(double luongCoBan) {
+	public void setLuongCoBan(float luongCoBan) {
 		this.luongCoBan = luongCoBan;
 	}
 	@Override

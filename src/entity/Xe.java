@@ -1,5 +1,6 @@
 package entity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Xe extends MatHang{
@@ -8,23 +9,24 @@ public class Xe extends MatHang{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String maXe;
-	private String tenXe;
 	private String dongXe;
 	private String soKhung;
 	private String mauXe;
 	private int soPK;
 	private String soSuon;
+	private String xuatSu;
+	
 	public String getMaXe() {
 		return maXe;
 	}
 	public void setMaXe(String maXe) {
 		this.maXe = maXe;
 	}
-	public String getTenXe() {
-		return tenXe;
+	public String getXuatSu() {
+		return xuatSu;
 	}
-	public void setTenXe(String tenXe) {
-		this.tenXe = tenXe;
+	public void setXuatSu(String xuatSu) {
+		this.xuatSu = xuatSu;
 	}
 	public String getDongXe() {
 		return dongXe;
@@ -56,41 +58,55 @@ public class Xe extends MatHang{
 	public void setSoSuon(String soSuon) {
 		this.soSuon = soSuon;
 	}
+	
+	public Xe(String maXe, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
+		super();
+	}
 	public Xe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public Xe(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon, String loaiMH) {
+		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
+		// TODO Auto-generated constructor stub
+	}
 	
-	public Xe(String maMH, String dvt, String moTa, double donGia, int slTon, String maXe, String tenXe, String dongXe,
-			String soKhung, String mauXe, int soPK, String soSuon) {
-		super(maMH, dvt, moTa, donGia, slTon);
+	public Xe(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon, String loaiMH,
+			String maXe, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
+		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
 		this.maXe = maXe;
-		this.tenXe = tenXe;
 		this.dongXe = dongXe;
 		this.soKhung = soKhung;
 		this.mauXe = mauXe;
 		this.soPK = soPK;
 		this.soSuon = soSuon;
+		this.xuatSu = xuatSu;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Xe [dongXe=" + dongXe + ", soKhung=" + soKhung + ", mauXe=" + mauXe + ", soPK=" + soPK + ", soSuon="
+				+ soSuon + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(maXe);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(dongXe, mauXe, soKhung, soPK, soSuon);
+		return result;
 	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Xe other = (Xe) obj;
-		return Objects.equals(maXe, other.maXe);
-	}
-	@Override
-	public String toString() {
-		return String.format("Xe [maXe=%s, tenXe=%s, dongXe=%s, soKhung=%s, mauXe=%s, soPK=%s, soSuon=%s]", maXe, tenXe,
-				dongXe, soKhung, mauXe, soPK, soSuon);
+		return Objects.equals(dongXe, other.dongXe) && Objects.equals(mauXe, other.mauXe)
+				&& Objects.equals(soKhung, other.soKhung) && soPK == other.soPK && Objects.equals(soSuon, other.soSuon);
 	}
 	
 }

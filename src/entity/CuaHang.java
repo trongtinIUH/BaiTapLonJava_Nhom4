@@ -8,6 +8,7 @@ public class CuaHang  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String maCH;
 	private  String tenCuaHang;
 	private String diaChi;
 	private  String sdt;
@@ -16,11 +17,23 @@ public class CuaHang  implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CuaHang(String tenCuaHang, String diaChi, String sdt) {
+	public CuaHang(String maCH, String tenCuaHang, String diaChi, String sdt) {
 		super();
+		this.maCH = maCH;
 		this.tenCuaHang = tenCuaHang;
 		this.diaChi = diaChi;
 		this.sdt = sdt;
+	}
+	
+	public CuaHang(String maCH) {
+		this.maCH = maCH;
+	}
+	
+	public String getMaCH() {
+		return maCH;
+	}
+	public void setMaCH(String maCH) {
+		this.maCH = maCH;
 	}
 	public String getTenCuaHang() {
 		return tenCuaHang;
@@ -40,9 +53,10 @@ public class CuaHang  implements Serializable{
 	public void setSdt(String sdt) {
 		this.sdt = sdt;
 	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(tenCuaHang);
+		return Objects.hash(maCH);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -53,12 +67,13 @@ public class CuaHang  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		CuaHang other = (CuaHang) obj;
-		return Objects.equals(tenCuaHang, other.tenCuaHang);
+		return Objects.equals(maCH, other.maCH);
 	}
 	@Override
 	public String toString() {
-		return String.format("CuaHang [tenCuaHang=%s, diaChi=%s, sdt=%s]", tenCuaHang, diaChi, sdt);
+		return "CuaHang [maCH=" + maCH + ", tenCuaHang=" + tenCuaHang + ", diaChi=" + diaChi + ", sdt=" + sdt + "]";
 	}
+
 	
 	
 }
