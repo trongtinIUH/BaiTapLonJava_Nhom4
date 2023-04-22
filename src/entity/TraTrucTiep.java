@@ -11,7 +11,7 @@ public class TraTrucTiep extends HopDong implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	private HopDong hd;
 	private String  maUuDai;
 	private double phanTramMienGiam;
 	
@@ -21,10 +21,28 @@ public class TraTrucTiep extends HopDong implements Serializable{
 	}
 
 	public TraTrucTiep(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD,  CuaHang cuaHang,KhachHang khachHang,
-			String maUuDai, double phanTramMienGiam) {
+			HopDong hd, String maUuDai, double phanTramMienGiam) {
 		super(maHD, ngaylapHD, thoiGianBH, loaiHD, nvLapHD, cuaHang, khachHang);
+		this.hd = hd;
 		this.maUuDai = maUuDai;
 		this.phanTramMienGiam = phanTramMienGiam;
+	}
+
+	public TraTrucTiep(HopDong hd, String maUuDai, double phanTramMienGiam) {
+		super();
+		this.hd = hd;
+		this.maUuDai = maUuDai;
+		this.phanTramMienGiam = phanTramMienGiam;
+	}
+	
+	
+
+	public HopDong getHd() {
+		return hd;
+	}
+
+	public void setHd(HopDong hd) {
+		this.hd = hd;
 	}
 
 	public String getMaUuDai() {
@@ -45,10 +63,7 @@ public class TraTrucTiep extends HopDong implements Serializable{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(maUuDai);
-		return result;
+		return Objects.hash(hd);
 	}
 
 	@Override
@@ -60,15 +75,11 @@ public class TraTrucTiep extends HopDong implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TraTrucTiep other = (TraTrucTiep) obj;
-		return Objects.equals(maUuDai, other.maUuDai);
+		return Objects.equals(hd, other.hd);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("TraTrucTiep [maUuDai=%s, phanTramMienGiam=%s]", maUuDai, phanTramMienGiam);
+		return "TraTrucTiep [hd=" + hd + ", maUuDai=" + maUuDai + ", phanTramMienGiam=" + phanTramMienGiam + "]";
 	}
-	
-	
-	
-	
 }
