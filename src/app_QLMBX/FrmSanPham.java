@@ -88,6 +88,8 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		pnContent.add(txtsoLuong = new JTextField(20));
 		txtsoLuong.setBounds(620, y, width, height);
 		pnContent.add(txtDonViTinh = new JTextField(20));
+		txtDonViTinh.setText("VNĐ");
+		txtDonViTinh.setEditable(false);
 		y += 30;
 		txtDonViTinh.setBounds(x, y, width, height);
 		pnContent.add(txtDonGia = new JTextField(20));
