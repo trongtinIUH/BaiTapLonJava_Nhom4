@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /nbproject/private/
 /build/
 /.classpath
@@ -12,3 +13,7 @@
 /miglayout15-swing.jar
 /nbproject/
 /src/
+=======
+/app_QLMBX/
+/dao/
+>>>>>>> origin/nhanh1

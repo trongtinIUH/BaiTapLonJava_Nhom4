@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import connectDB.ConnectDB;
+import entity.CuaHang;
 import entity.KhachHang;
 import entity.NhanVien;
 
@@ -40,8 +41,13 @@ public class KhachHang_DAO {
 		return dsKhachHang;
 	}
 
-	public boolean create(KhachHang kh) throws SQLException {
-		ConnectDB.getInstance();
+	public boolean createKH(KhachHang kh) {
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stmt = null;
 		int n = 0;
@@ -75,17 +81,18 @@ public class KhachHang_DAO {
 		}
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stmt = null;
-
-		int n = 0;
+		int n=0;
 		try {
-			stmt = con.prepareStatement("update KhachHang set tenKH=?, gioiTinh=?, diaChi=?, sdt=? where maKH=? ");
-			stmt.setString(1, kh.getTenKH());
-			stmt.setString(2, kh.getGioiTinh());
-			stmt.setString(3, kh.getDiaChi());
-			stmt.setString(4, kh.getSdt());
-			stmt.setString(5, kh.getMaKH());
+			stmt = con.prepareStatement("insert into KhachHang values(?,?,?,?,?)");
+			
+			stmt.setString(1, kh.getMaKH());
+			stmt.setString(2, kh.getTenKH());
+			stmt.setString(3, kh.getGioiTinh());
+			stmt.setString(4, kh.getDiaChi());
+			stmt.setString(5, kh.getSdt());
 			n = stmt.executeUpdate();
-		} catch (SQLException e) {
+			} catch (SQLException e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
@@ -118,8 +125,8 @@ public class KhachHang_DAO {
 		return n > 0;
 	}
 
-	public ArrayList<KhachHang> getKHTheoMa(String id) {
-		ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
+	public KhachHang getKHTheoMa (String id) {
+		KhachHang kh = new KhachHang();
 		try {
 			ConnectDB.getInstance();
 		} catch (SQLException e1) {
@@ -137,21 +144,18 @@ public class KhachHang_DAO {
 				String phai = rs.getString(3);
 				String diaChi = rs.getString(4);
 				String sdt = rs.getString(5);
-				KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-				dskh.add(kh);
+				kh = new KhachHang(ma, ten, phai, diaChi, sdt);
 			}
-			if(dskh.size() == 0) {
-				return null;
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return dskh;
+		if(kh.getMaKH() == null)
+			return null;
+		return kh;
 	}
 
-	public ArrayList<KhachHang> getKHTheoSDT(String sdt) {
-		ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
+	public KhachHang getKHTheoSDT(String sdt) {
+		KhachHang kh = new KhachHang();
 		try {
 			ConnectDB.getInstance();
 		} catch (SQLException e1) {
@@ -168,20 +172,16 @@ public class KhachHang_DAO {
 				String ten = rs.getString(2);
 				String phai = rs.getString(3);
 				String diaChi = rs.getString(4);
-				String dt = rs.getString(5);
-				KhachHang kh = new KhachHang(ma, ten, phai, diaChi, dt);
-				dskh.add(kh);
+				String sdt1 = rs.getString(5);
+				kh = new KhachHang(ma, ten, phai, diaChi, sdt1);
 			}
-			if(dskh.size() == 0) {
-				return null;
-			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return dskh;
+		if(kh.getMaKH() == null)
+			return null;
+		return kh;
 	}
-	
 	public ArrayList<KhachHang> getKHTheoTen(String tenKH) {
 		ArrayList<KhachHang> dskh = new ArrayList<KhachHang>();
 		try {

@@ -45,7 +45,7 @@ public class TrangChu extends JFrame implements ActionListener{
 	//thêm các frm
 	FrmBanHang banHang = new FrmBanHang();
 	FrmKhachHang khachHang = new FrmKhachHang();
-	FrmKhuyenMai khuyenMai = new FrmKhuyenMai();
+	FrmBaoHanh khuyenMai = new FrmBaoHanh();
 	FrmNhanVien nhanVien = new FrmNhanVien();
 	FrmNhapHang nhapHang = new FrmNhapHang();
 	FrmSanPham sanPham = new FrmSanPham();
