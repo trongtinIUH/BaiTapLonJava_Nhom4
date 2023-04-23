@@ -37,6 +37,8 @@ import dao.KhachHang_DAO;
 import dao.MatHang_DAO;
 import dao.NhanVien_DAO;
 import dao.PhatSinhMa_DAO;
+import dao.TraGop_DAO;
+import dao.TraTrucTiep_DAO;
 import dao.Xe_DAO;
 import entity.ChiTietHopDong;
 import entity.CuaHang;
@@ -45,6 +47,8 @@ import entity.HopDong;
 import entity.KhachHang;
 import entity.MatHang;
 import entity.NhanVien;
+import entity.TraGop;
+import entity.TraTrucTiep;
 import entity.Xe;
 
 public class FrmBanHang extends JPanel implements ActionListener, ItemListener, MouseListener{
@@ -124,6 +128,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private JLabel lblTienDua;
 	private JTextField txtTienDua;
 	private int flag;
+	private TraGop_DAO traGop_dao;
+	private TraTrucTiep_DAO traTrucTiep_dao;
 
 	public FrmBanHang() {
 		
@@ -140,6 +146,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		ch_DAO = new CuaHang_DAO();
 		hd_dao = new HopDong_DAO();
 		cthd_dao = new ChiTietHopDong_DAO();
+		traGop_dao = new TraGop_DAO();
+		traTrucTiep_dao = new TraTrucTiep_DAO();
 		
 		setLayout(null);
 		int x = 10, y = 10, width = 400, height = 200;
@@ -322,20 +330,20 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		cbxHinhThucTT.setBounds(190, 5, 120, 20);
 		cbxHinhThucTT.addItem("Trả trực tiếp");
 		cbxHinhThucTT.addItem("Trả góp");
-		pnLoaiTT.add(lblGiam = new JLabel("Tiền giảm"));
-		lblGiam.setBounds(320, 5, 60, 20);
+		pnLoaiTT.add(lblGiam = new JLabel("Phần trăm giảm"));
+		lblGiam.setBounds(320, 5, 100, 20);
 		pnLoaiTT.add(txtGiam = new JTextField());
-		txtGiam.setBounds(390, 5, 60, 20);
+		txtGiam.setBounds(430, 5, 60, 20);
 		txtGiam.setEditable(false);
 		pnLoaiTT.add(lblLaiSuat = new JLabel("Lãi suất"));
-		lblLaiSuat.setBounds(470, 5, 60, 20);
+		lblLaiSuat.setBounds(510, 5, 60, 20);
 		pnLoaiTT.add(txtLaiSuat = new JTextField());
-		txtLaiSuat.setBounds(540, 5, 60, 20);
+		txtLaiSuat.setBounds(580, 5, 60, 20);
 		txtLaiSuat.setEditable(false);
 		pnLoaiTT.add(lblTienDua = new JLabel("Tiền phải đưa"));
-		lblTienDua.setBounds(620, 5, 90, 20);
+		lblTienDua.setBounds(660, 5, 90, 20);
 		pnLoaiTT.add(txtTienDua = new JTextField());
-		txtTienDua.setBounds(730, 5, 200, 20);
+		txtTienDua.setBounds(770, 5, 170, 20);
 		txtTienDua.setEditable(false);
 		add(pnLoaiTT);
 		
@@ -349,7 +357,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		btnThanhToan.addActionListener(this);
 		cbxTenNV.addItemListener(this);
 		cbxTenXe.addItemListener(this);
-		tblHopDong.addMouseListener(this);
+		cbxHinhThucTT.addItemListener(this);
+		tblHopDong.addMouseListener(this);;
 	}
 	
 	private void xoaTrangKH() {
@@ -360,13 +369,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		txtTenKH.requestFocus();
 	}
 	
-
-//	
-//	private String themXe() {
-//		String tenXe = (String)cbxTenXe.getSelectedItem();
-//		return tenXe;
-//	}
-//	
 	private void themNhanVien() {
 		String tenNV = (String)cbxTenNV.getSelectedItem();
 		txtTenNVTT.setText(tenNV);
@@ -480,7 +482,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	
 	//Thêm vào hợp đồng
 	private void themhd() {
-
 		if(txtBaoHanh.getText().equals(""))
 		{
 			JOptionPane.showMessageDialog(null, "Bạn chưa nhập TG bảo hành!!");
@@ -502,18 +503,37 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				JOptionPane.showMessageDialog(null, "Thời gian bảo hành không hợp lệ");
 			}
 			else {
-				//maHd = ma.generateRandomHopDong();
 				HopDong hd = new HopDong(maHd, ngaylap, tgBH, loaiHD, nvl, cuaHang, kh);
 				if(hd_dao.createHD(hd))
+					if(loaiHD.equalsIgnoreCase("Trả trực tiếp"))
+						themHDTraTrucTiep();
+					else if(loaiHD.equalsIgnoreCase("Trả góp"))
+						themHDTraGop();
+					
 					JOptionPane.showMessageDialog(this, "Thanh Toán thành công, hợp đồng đã được lưu vào CSDL!!");
 			}
 		}
 	}
 	
-	//Thêm vào hợp đồng trả trực tiếp(Chưa làm)
+	//Thêm vào hợp đồng trả trực tiếp
+	private void themHDTraTrucTiep() {
+		HopDong HD = new HopDong(maHd);
+		String maUuDai ="";
+		double PhanTramMienGiam =  Double.parseDouble(txtGiam.getText());
+		TraTrucTiep HDTraTrucTiep = new TraTrucTiep(HD, maUuDai, PhanTramMienGiam); 
+		traTrucTiep_dao.createHDTraTrucTiep(HDTraTrucTiep);
+	}
 	
-	
-	//Thêm vào hợp đồng trả góp(chưa làm)
+	//Thêm vào hợp đồng trả góp
+	private void themHDTraGop() {
+		HopDong HD = new HopDong(maHd);
+		Date ngayTra =(Date) datePicker.getModel().getValue();
+		double laiSuat = Double.parseDouble(txtLaiSuat.getText());
+		String nguoiTra = txtTenKH.getText() + "-" + txtSoDt.getText();
+		double soTienTra = Double.parseDouble(txtTienDua.getText());
+		TraGop HDTraGop = new TraGop(HD, ngayTra, laiSuat, nguoiTra, soTienTra);
+		traGop_dao.createHDTraGop(HDTraGop);
+	}
 
 	//	thêm vào chi tiết 
 	private void themCTHD(int vtRow) {
@@ -668,7 +688,14 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		txtTongTT.setText(" "+tong+ " VNĐ");
 	}
 	
-	
+	private int tongSoLuong() {
+		int row = tblHopDong.getRowCount();
+		int tongSL =0;
+		for(int i =0;i<row;i++) {
+			tongSL += Integer.parseInt(tblHopDong.getValueAt(i, 2).toString());
+		}
+		return tongSL;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -725,14 +752,54 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			int sl = xe.getSoLuongTheoTenXe(s);
 			txtSoLuongTon.setText(sl + "");
 		}
+		else if(e.getItem() == cbxHinhThucTT.getSelectedItem()) {
+			String s = (String) cbxHinhThucTT.getSelectedItem();
+			if(s.equalsIgnoreCase("Trả trực tiếp")) {
+				if(tblHopDong.getRowCount()>0)
+				{
+					int row = tblHopDong.getRowCount();
+					double tong =0;
+					for(int i =0;i<row;i++) {
+						tong += Double.parseDouble(tblHopDong.getValueAt(i, 4).toString());
+					}
+					
+					if(tongSoLuong() > 3)  //Tổng Số lượng lớn hơn 3 chiệc được giảm 5%
+					{
+						txtGiam.setText(0.05 + "");
+						txtLaiSuat.setText("");
+						txtTienDua.setText((tong-tong*0.05) + "");
+					}
+					else
+					{
+						txtGiam.setText(0.02 + "");
+						txtLaiSuat.setText("");
+						txtTienDua.setText((tong-tong*0.02) + "");
+					}
+				}
+			}
+			else if(s.equalsIgnoreCase("Trả góp")) {
+				if(tblHopDong.getRowCount()>0)
+				{
+					int row = tblHopDong.getRowCount();
+					double tong =0;
+					for(int i =0;i<row;i++) {
+						tong+= Double.parseDouble(tblHopDong.getValueAt(i, 4).toString());
+					}
+					
+					txtLaiSuat.setText(0.01 + "");
+					double tienKhachDua = tong/3+ (tong/3)*0.01;  //Trả 3 đợt
+					txtGiam.setText("");
+					txtTienDua.setText(tienKhachDua + "");
+				}
+			}
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int row = tblHopDong.getSelectedRow();
-		txtSoLuong.setText(tblModel.getValueAt(row, 2).toString());
-//		cbxTenNV.setSelectedItem(tblModel.getValueAt(row, 1));
+		txtSoLuongMua.setText(tblModel.getValueAt(row, 2).toString());
 		cbxTenXe.setSelectedItem(tblModel.getValueAt(row, 1));
 	}
 
