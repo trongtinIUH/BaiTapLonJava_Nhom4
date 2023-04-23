@@ -23,7 +23,11 @@ public class LinhKienPhuTung extends MatHang {
 	}
 
 
+<<<<<<< HEAD
 	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon,
+=======
+	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, BigDecimal donGia, int slTon,
+>>>>>>> origin/nhanh3
 			String loaiMH) {
 		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
 		// TODO Auto-generated constructor stub
