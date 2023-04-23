@@ -410,7 +410,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			}
 			else
 			{
-				if(kh_dao.getKhachHangTheoSDT(sDT) == null)
+				if(kh_dao.getKHTheoSDT(sDT) == null)
 					if(kh_dao.createKH(kh)) {
 						JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
 						txtMaKH.setText(kh.getMaKH());
@@ -492,7 +492,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			String loaiHD = cbxHinhThucTT.getSelectedItem().toString();
 			NhanVien nvl = nv_dao.getNhanVienTheoTen(cbxTenNV.getSelectedItem().toString());
 			CuaHang cuaHang = ch_DAO.getCuaHangTheoTen(cbxCuaHang.getSelectedItem().toString());
-			KhachHang kh = kh_dao.getKhachHangTheoSDT(txtSoDt.getText());
+			KhachHang kh = kh_dao.getKHTheoSDT(txtSoDt.getText());
 			//		ChiTietHopDong cthd = cthd_dao.getCTHDTheoMa(maCTHD);
 			int soDong = tblModel.getRowCount();
 			if(nvl==null || cuaHang==null || kh==null || soDong==0) {

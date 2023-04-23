@@ -389,7 +389,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 			} else if (selectedIndex == 1) {
 				KhachHang kh = null;
 				try {
-					kh = khdao.getKhachHangTheoSDT(txtTim.getText());
+					kh = khdao.getKHTheoSDT(txtTim.getText());
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
