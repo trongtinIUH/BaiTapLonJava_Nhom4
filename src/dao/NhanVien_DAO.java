@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import connectDB.ConnectDB;
+import entity.KhachHang;
 import entity.NhanVien;
 
 public class NhanVien_DAO {
@@ -204,5 +205,30 @@ public class NhanVien_DAO {
 					return i;
 				}
 		} return -1;
+	}
+	
+	public NhanVien getNVTheoMa(String id) {
+		NhanVien nv = new NhanVien();
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from NhanVien where maNV = '" + id + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				nv = new NhanVien(rs.getString("maNV"), rs.getString("tenNV"), rs.getString("gioiTinh"), rs.getString("diaChi"), 
+						rs.getString("sdt"), rs.getString("email"), rs.getDate("ngayVaoLam"), rs.getString("chucVu"),rs.getFloat("luongCoBan"), rs.getString("maCH"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(nv.getTenNV() == null)
+			return null;
+		return nv;
 	}
 }

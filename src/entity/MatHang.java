@@ -1,7 +1,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class MatHang implements Serializable {
@@ -41,7 +40,7 @@ public class MatHang implements Serializable {
 		this.moTa = moTa;
 	}
 
-	public Double getDonGia() {
+	public double getDonGia() {
 		return donGia;
 	}
 	public void setDonGia(Double donGia) {
@@ -69,6 +68,7 @@ public class MatHang implements Serializable {
 		this.maMH = maMH;
 	}
 	public MatHang(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon, String loaiMH) {
+		super();
 		this.maMH = maMH;
 		this.tenMH = tenMH;
 		this.dvt = dvt;

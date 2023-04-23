@@ -1,6 +1,4 @@
 package entity;
-
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class LinhKienPhuTung extends MatHang {
@@ -23,9 +21,9 @@ public class LinhKienPhuTung extends MatHang {
 	}
 
 
-
 	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon,
 			String loaiMH) {
+
 		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
 		// TODO Auto-generated constructor stub
 	}

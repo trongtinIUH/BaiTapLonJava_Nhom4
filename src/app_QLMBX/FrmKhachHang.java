@@ -316,7 +316,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			JOptionPane.showMessageDialog(this, "Hãy chọn khách hàng cần xóa");
 		} else {
 			int tl;
-			tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa nhân viên này không ?", "Cảnh báo",
+			tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa khách hàng này không ?", "Cảnh báo",
 					JOptionPane.YES_OPTION);
 			if (tl == JOptionPane.YES_OPTION) {
 				int index = table.getSelectedRow();
@@ -326,50 +326,40 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		}
 	}
-	
 
 	private void tim() {
 		int selectedIndex = cbTim.getSelectedIndex();
 		int i = 0;
 		if (btnTim.getText().equals("Tìm kiếm")) {
 			if (selectedIndex == 0) {
-				ArrayList<KhachHang> dskh = khDAO.getKHTheoMa(txtTim.getText());
-				if(dskh != null) {
+//				ArrayList<KhachHang> dskh = khDAO.getKHTheoMa(txtTim.getText());
+				KhachHang kh = khDAO.getKHTheoMa(txtTim.getText());
+				if (kh != null) {
 					btnTim.setText("Hủy tìm");
 					clearTable();
-					for(KhachHang kh : dskh) {				
-						if(dskh != null) {
-							model.addRow(new Object[] {++i , kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
-									kh.getDiaChi(), kh.getSdt() });
-						} 
-					}
+					model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
+							kh.getSdt() });
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
 				}
 			} else if (selectedIndex == 1) {
-				ArrayList<KhachHang> dskh = khDAO.getKHTheoSDT(txtTim.getText());
-				if(dskh != null) {
+				KhachHang kh = khDAO.getKHTheoSDT(txtTim.getText());
+				if (kh != null) {
 					btnTim.setText("Hủy tìm");
 					clearTable();
-					for(KhachHang kh : dskh) {				
-						if(dskh != null) {
-							model.addRow(new Object[] {++i , kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
-									kh.getDiaChi(), kh.getSdt() });
-						} 
-					}
+					model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
+							kh.getSdt() });
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
-				}	
+				}
 			} else if (selectedIndex == 2) {
 				ArrayList<KhachHang> dskh = khDAO.getKHTheoTen(txtTim.getText());
-				if(dskh != null) {
+				if (dskh != null) {
 					btnTim.setText("Hủy tìm");
 					clearTable();
-					for(KhachHang kh : dskh) {				
-						if(dskh != null) {
-							model.addRow(new Object[] {++i , kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
-									kh.getDiaChi(), kh.getSdt() });
-						} 
+					for (KhachHang kh : dskh) {
+						model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
+								kh.getSdt() });
 					}
 				} else {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
@@ -385,23 +375,22 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 
 	private void sua() {
 //		if (kiemTra()) {
-			String ma = txtMa.getText();
-			String ten = txtTen.getText();
-			String sdt = txtSdt.getText();
-			String phai = null;
-			if(rdoNam.isSelected())
-				phai = "Nam";
-			else
-				phai = "Nu";
-			String diaChi = txtDiaChi.getText();
-			KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-			if (khDAO.update(kh)) {
-				clearTable();
-				loadData();
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
-			} else
-				JOptionPane.showMessageDialog(this, "Mã nhân viên không tồn tại");
-//		}
+		String ma = txtMa.getText();
+		String ten = txtTen.getText();
+		String sdt = txtSdt.getText();
+		String phai = null;
+		if (rdoNam.isSelected())
+			phai = "Nam";
+		else
+			phai = "Nu";
+		String diaChi = txtDiaChi.getText();
+		KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
+		if (khDAO.update(kh)) {
+			clearTable();
+			loadData();
+			JOptionPane.showMessageDialog(this, "Sửa thành công");
+		} else
+			JOptionPane.showMessageDialog(this, "Mã khách hàng không tồn tại");
 	}
 
 	@Override

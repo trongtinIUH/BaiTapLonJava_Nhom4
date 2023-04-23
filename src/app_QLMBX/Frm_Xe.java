@@ -1,17 +1,20 @@
 package app_QLMBX;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.SanPham_DAO;
+import dao.Xe_DAO;
 import entity.Xe;
 
 public class Frm_Xe extends JFrame implements ActionListener {
@@ -21,10 +24,12 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel lblDongXe, lblsoKhung, lblmauXe, lblsoPK, lblSoSuon, lblxuatSu;
-	private JTextField txtDongXe, txtsoKhung, txtmauXe, txtsoPK, txtSoSuon, txtxuatSu;
+	private JTextField txtsoKhung, txtSoSuon, txtxuatSu;
 	private JButton btnLuu, btnXoaTrang, btnThoat;
-	private SanPham_DAO sp;
+	private Xe_DAO xe;
 	public String maXe = "";
+	private JComboBox<Integer> cboPK;
+	private JComboBox<String> cboDongXe, cboMauXe;
 	
 	public Frm_Xe() {
 		setSize(500, 600);
@@ -33,6 +38,11 @@ public class Frm_Xe extends JFrame implements ActionListener {
 		setResizable(false);
 		JPanel pnContent = new JPanel();
 		pnContent.setLayout(null);
+		JLabel lblTitle = new JLabel("Thông tin xe");
+		lblTitle.setForeground(Color.blue);
+		lblTitle.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+		pnContent.add(lblTitle);
+		lblTitle.setBounds(180, 0, 500, 50);
 		int x = 20, y = 30, width = 100, height = 30;
 		pnContent.add(lblDongXe = new JLabel("Dòng xe:"));
 		y+=50;
@@ -53,18 +63,36 @@ public class Frm_Xe extends JFrame implements ActionListener {
 		y+=50;
 		lblxuatSu.setBounds(x, y, width, height);
 		x = 120; y = 30; width = 300; height = 30;
-		pnContent.add(txtDongXe = new JTextField());
+		pnContent.add(cboDongXe = new JComboBox<String>());
+		cboDongXe.addItem("Yamaha");
+		cboDongXe.addItem("Honda");
+		cboDongXe.addItem("SYM");
+		cboDongXe.addItem("Kawasaki");
+		cboDongXe.addItem("Suzuki");
+		cboDongXe.addItem("Piaggio");
 		y+=50;
-		txtDongXe.setBounds(x, y, width, height);
+		cboDongXe.setBounds(x, y, width, height);
 		pnContent.add(txtsoKhung = new JTextField());
 		y+=50;
 		txtsoKhung.setBounds(x, y, width, height);
-		pnContent.add(txtmauXe = new JTextField());
+		pnContent.add(cboMauXe = new JComboBox<String>());
+		cboMauXe.addItem("đỏ");
+		cboMauXe.addItem("trắng");
+		cboMauXe.addItem("xanh da trời");
+		cboMauXe.addItem("đen");
+		cboMauXe.addItem("vàng");
+		cboMauXe.addItem("xám");
+		cboMauXe.addItem("kem");
 		y+=50;
-		txtmauXe.setBounds(x, y, width, height);
-		pnContent.add(txtsoPK = new JTextField());
+		cboMauXe.setBounds(x, y, width, height);
+		pnContent.add(cboPK = new JComboBox<Integer>());
+		cboPK.addItem(50);
+		cboPK.addItem(100);
+		cboPK.addItem(120);
+		cboPK.addItem(150);
+		cboPK.addItem(200);
 		y+=50;
-		txtsoPK.setBounds(x, y, width, height);
+		cboPK.setBounds(x, y, width, height);
 		pnContent.add(txtSoSuon = new JTextField());
 		y+=50;
 		txtSoSuon.setBounds(x, y, width, height);
@@ -89,10 +117,10 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	}
 	
 	public Xe revertTextToXe() {
-		String dongxe = txtDongXe.getText();
+		String dongxe = (String) cboDongXe.getSelectedItem();
 		String sokhung = txtsoKhung.getText();
-		String mauXe = txtmauXe.getText();
-		String sopk = txtsoPK.getText();
+		String mauXe = (String) cboMauXe.getSelectedItem();
+		String sopk = (String) cboPK.getSelectedItem();
 		String sosuon = txtSoSuon.getText();
 		String xuatsu = txtxuatSu.getText();
 		Xe x = new Xe(maXe, dongxe, sokhung, mauXe, Integer.parseInt(sopk), sosuon, xuatsu);
@@ -100,19 +128,16 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	}
 	
 	public void xoaTrang() {
-		txtDongXe.setText("");
 		txtsoKhung.setText("");
-		txtmauXe.setText("");
-		txtsoPK.setText("");
 		txtSoSuon.setText("");
 		txtxuatSu.setText("");
-		txtDongXe.requestFocus();
+		txtsoKhung.requestFocus();
 	}
 	
 	private void luu() throws SQLException {
-		sp = new SanPham_DAO();
+		xe = new Xe_DAO();
 		Xe x = revertTextToXe();
-		if(sp.addXe(x)) {
+		if(xe.addXe(x)) {
 			JOptionPane.showMessageDialog(null, "Lưu thành công");
 		}
 	}

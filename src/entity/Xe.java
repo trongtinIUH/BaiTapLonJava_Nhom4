@@ -81,7 +81,6 @@ public class Xe extends MatHang{
 		this.soSuon = soSuon;
 		this.xuatSu = xuatSu;
 	}
-	
 	@Override
 	public String toString() {
 		return "Xe [dongXe=" + dongXe + ", soKhung=" + soKhung + ", mauXe=" + mauXe + ", soPK=" + soPK + ", soSuon="
