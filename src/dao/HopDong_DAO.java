@@ -16,8 +16,13 @@ import entity.KhachHang;
 import entity.NhanVien;
 
 public class HopDong_DAO {
-	public boolean update(HopDong hd) throws SQLException {
-		ConnectDB.getInstance();
+	public boolean update(HopDong hd){
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stmt = null;
 		int n = 0;
@@ -31,7 +36,7 @@ public class HopDong_DAO {
 			stmt.setString(4, hd.getNvLapHD().getMaNV());
 			stmt.setString(5, hd.getCuaHang().getMaCH());
 			stmt.setString(6, hd.getKhachHang().getMaKH());
-//			stmt.setString(7, hd.getCtHD().getMaChiTietHD());
+			stmt.setString(7, hd.getMaHD());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO: handle exception

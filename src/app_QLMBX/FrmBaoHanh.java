@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -255,12 +256,62 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		} else if (o.equals(btnXoaTrang)) {
 			xoaTrang();
 		} else if (o.equals(btnXoa)) {
-
+			xoa();
 		} else if (o.equals(btnTim)) {
 			tim();
 		} else if (o.equals(btnSua)) {
-
+			sua();
 		}
+	}
+	
+	private void xoa() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Hãy chọn hợp đồng cần xóa");
+		} else {
+			int tl;
+			tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa hợp đồng này không ?", "Cảnh báo",
+					JOptionPane.YES_OPTION);
+			if (tl == JOptionPane.YES_OPTION) {
+				int index = table.getSelectedRow();
+				try {
+					hddao.xoaHD(model.getValueAt(table.getSelectedRow(), 1).toString());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				model.removeRow(index);
+				JOptionPane.showMessageDialog(this, "Xóa thành công");
+			}
+		}
+	}
+	
+	private void sua() {
+//		if (kiemTra()) {
+		String maHD = txtMa.getText();
+		int thoiGian = Integer.parseInt(txtThoiGian.getText());
+		String loaiHD = (String) cbloaiHD.getSelectedItem();
+		String maNV = txtmaNV.getText();
+		String maKH = txtmaKH.getText();
+		String maCH = txtmaCH.getText();
+		Date ngaylap = (Date) datePicker.getModel().getValue();
+		
+		KhachHang kh = new KhachHang(maKH);
+		NhanVien nv = new NhanVien(maNV);
+		CuaHang ch = new CuaHang(maCH);
+		HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
+		
+		if (hddao.update(hd)) {
+			clearTable();
+			loadData();
+			JOptionPane.showMessageDialog(this, "Sửa thành công");
+		} else {
+			if(nvdao.getNVTheoMa(maNV) == null)
+				JOptionPane.showMessageDialog(this, "Sửa không thành công mã nhân viên không tồn tại!");
+			else if(chdao.getCHTheoMa(maCH) == null)
+				JOptionPane.showMessageDialog(this, "Sửa không thành công mã cửa hàng không tồn tại");
+			else if(khdao.getKHTheoMa(maKH) == null)
+				JOptionPane.showMessageDialog(this, "Sửa không thành công mã khách hàng không tồn tại");
+		}		
 	}
 
 	private void them() {

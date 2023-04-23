@@ -316,7 +316,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			JOptionPane.showMessageDialog(this, "Hãy chọn khách hàng cần xóa");
 		} else {
 			int tl;
-			tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa nhân viên này không ?", "Cảnh báo",
+			tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa khách hàng này không ?", "Cảnh báo",
 					JOptionPane.YES_OPTION);
 			if (tl == JOptionPane.YES_OPTION) {
 				int index = table.getSelectedRow();
@@ -390,8 +390,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			loadData();
 			JOptionPane.showMessageDialog(this, "Sửa thành công");
 		} else
-			JOptionPane.showMessageDialog(this, "Mã nhân viên không tồn tại");
-//		}
+			JOptionPane.showMessageDialog(this, "Mã khách hàng không tồn tại");
 	}
 
 	@Override
