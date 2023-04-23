@@ -1,16 +1,37 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import entity.MatHang;
 import entity.Xe;
 
 public class Xe_DAO {
+	public boolean addXe(Xe x) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		
+		String sql ="insert into Xe(maXe, dongXe, soKhung, mauXe, soPK, soSuon, xuatXu) VALUES(?,?,?,?,?,?,?)";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, x.getMaMH());
+			pst.setString(2, x.getDongXe());
+			pst.setString(3, x.getSoKhung());
+			pst.setString(4, x.getMauXe());
+			pst.setInt(5, x.getSoPK());
+			pst.setString(6, x.getSoSuon());
+			pst.setString(7, x.getXuatSu());
+			return pst.executeUpdate() > 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public ArrayList<Xe> getAllXe() {
 		ArrayList<Xe> dsXe = new ArrayList<Xe>();
 		try {

@@ -22,7 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import dao.SanPham_DAO;
+import dao.MatHang_DAO;
 import entity.MatHang;
 
 public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
@@ -37,7 +37,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	private String[] cols = {"Mã SP", "Loại SP", "Tên SP", "Số lượng", "Đơn Vị Tính", "Đơn Giá", "Mô tả"};
 	private JButton btnThem, btnLuu, btnXoa, btnTim, btnSua;
 	private JComboBox<String> cboLoaiSP;
-	private SanPham_DAO sp;
+	private MatHang_DAO sp;
 	private Frm_Xe xe;
 	private Frm_LinhKien lk;
 	public FrmSanPham() {
@@ -138,8 +138,8 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	}
 	
 	public void loadData() {
-		sp = new SanPham_DAO();
-		for(MatHang x : sp.getAllSanPham()) {
+		sp = new MatHang_DAO();
+		for(MatHang x : sp.getAllMatHang()) {
 			Object[] row = {x.getMaMH(), x.getLoaiMH(), x.getTenMH(), x.getSlTon(), x.getDvt(), x.getDonGia(), x.getMoTa()};
 			model.addRow(row);
 		}
@@ -263,7 +263,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		String ten = txtTenSP.getText();
 		int sl = Integer.parseInt(txtsoLuong.getText());
 		String dvt = txtDonViTinh.getText();
-		BigDecimal donGia = new BigDecimal(txtDonGia.getText());
+		double donGia = Double.parseDouble(txtDonGia.getText());
 		String mota = txtMoTa.getText();
 		MatHang mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
 		return mh;

@@ -1,6 +1,4 @@
 package entity;
-
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class LinhKienPhuTung extends MatHang {
@@ -22,13 +20,7 @@ public class LinhKienPhuTung extends MatHang {
 		this.hangSX = hangSX;
 	}
 
-
-<<<<<<< HEAD
-	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon,
-=======
-	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, BigDecimal donGia, int slTon,
->>>>>>> origin/nhanh3
-			String loaiMH) {
+	public LinhKienPhuTung(String maMH, String tenMH, String dvt, String moTa, double donGia, int slTon,String loaiMH) {
 		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
 		// TODO Auto-generated constructor stub
 	}

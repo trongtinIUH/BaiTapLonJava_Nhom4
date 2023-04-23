@@ -1,6 +1,4 @@
 package entity;
-
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Xe extends MatHang{
@@ -8,10 +6,7 @@ public class Xe extends MatHang{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
 	private String maXe;
-=======
->>>>>>> origin/nhanh3
 	private String dongXe;
 	private String soKhung;
 	private String mauXe;
@@ -19,7 +14,6 @@ public class Xe extends MatHang{
 	private String soSuon;
 	private String xuatSu;
 	
-<<<<<<< HEAD
 	public String getMaXe() {
 		return maXe;
 	}
@@ -29,11 +23,6 @@ public class Xe extends MatHang{
 	public String getXuatSu() {
 		return xuatSu;
 	}
-=======
-	public String getXuatSu() {
-		return xuatSu;
-	}
->>>>>>> origin/nhanh3
 	public void setXuatSu(String xuatSu) {
 		this.xuatSu = xuatSu;
 	}
@@ -67,7 +56,6 @@ public class Xe extends MatHang{
 	public void setSoSuon(String soSuon) {
 		this.soSuon = soSuon;
 	}
-<<<<<<< HEAD
 	
 	public Xe(String maXe, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
 		super();
@@ -85,11 +73,6 @@ public class Xe extends MatHang{
 			String maXe, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
 		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
 		this.maXe = maXe;
-=======
-	
-	public Xe(String maMH, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
-		super(maMH);
->>>>>>> origin/nhanh3
 		this.dongXe = dongXe;
 		this.soKhung = soKhung;
 		this.mauXe = mauXe;
@@ -97,28 +80,6 @@ public class Xe extends MatHang{
 		this.soSuon = soSuon;
 		this.xuatSu = xuatSu;
 	}
-<<<<<<< HEAD
-
-	
-=======
-	public Xe() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Xe(String maMH, String tenMH, String dvt, String moTa, BigDecimal donGia, int slTon, String loaiMH) {
-		super(maMH, tenMH, dvt, moTa, donGia, slTon, loaiMH);
-		// TODO Auto-generated constructor stub
-	}
-	public Xe(String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
-		super();
-		this.dongXe = dongXe;
-		this.soKhung = soKhung;
-		this.mauXe = mauXe;
-		this.soPK = soPK;
-		this.soSuon = soSuon;
-		this.xuatSu = xuatSu;
-	}
->>>>>>> origin/nhanh3
 	@Override
 	public String toString() {
 		return "Xe [dongXe=" + dongXe + ", soKhung=" + soKhung + ", mauXe=" + mauXe + ", soPK=" + soPK + ", soSuon="

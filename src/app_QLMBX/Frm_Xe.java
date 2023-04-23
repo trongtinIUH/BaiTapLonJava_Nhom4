@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.SanPham_DAO;
+import dao.Xe_DAO;
 import entity.Xe;
 
 public class Frm_Xe extends JFrame implements ActionListener {
@@ -23,7 +23,7 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	private JLabel lblDongXe, lblsoKhung, lblmauXe, lblsoPK, lblSoSuon, lblxuatSu;
 	private JTextField txtDongXe, txtsoKhung, txtmauXe, txtsoPK, txtSoSuon, txtxuatSu;
 	private JButton btnLuu, btnXoaTrang, btnThoat;
-	private SanPham_DAO sp;
+	private Xe_DAO xe;
 	public String maXe = "";
 	
 	public Frm_Xe() {
@@ -110,9 +110,9 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	}
 	
 	private void luu() throws SQLException {
-		sp = new SanPham_DAO();
+		xe = new Xe_DAO();
 		Xe x = revertTextToXe();
-		if(sp.addXe(x)) {
+		if(xe.addXe(x)) {
 			JOptionPane.showMessageDialog(null, "Lưu thành công");
 		}
 	}

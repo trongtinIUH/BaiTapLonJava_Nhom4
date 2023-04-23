@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import dao.SanPham_DAO;
+import dao.LinhKien_DAO;
 import entity.LinhKienPhuTung;
 
 public class Frm_LinhKien extends JFrame implements ActionListener {
@@ -23,7 +23,7 @@ public class Frm_LinhKien extends JFrame implements ActionListener {
 	private JTextField txtHangSX;
 	private JButton btnLuu, btnThoat;
 	public String maLK = "";
-	private SanPham_DAO sp;
+	private LinhKien_DAO lk;
 	public Frm_LinhKien() {
 		setSize(300, 200);
 		setLocationRelativeTo(null);
@@ -48,16 +48,16 @@ public class Frm_LinhKien extends JFrame implements ActionListener {
 		new Frm_LinhKien().setVisible(true);
 	}
 	
-	private LinhKienPhuTung revertTextToXe() {
+	private LinhKienPhuTung revertTextToLK() {
 		String hangsx = txtHangSX.getText();
 		LinhKienPhuTung lk = new LinhKienPhuTung(maLK, hangsx);
 		return lk;
 	}
 	
 	private void luu() throws SQLException {
-		sp = new SanPham_DAO();
-		LinhKienPhuTung x = revertTextToXe();
-		if(sp.addLinhKien(x)) {
+		lk = new LinhKien_DAO();
+		LinhKienPhuTung x = revertTextToLK();
+		if(lk.addLinhKien(x)) {
 			JOptionPane.showMessageDialog(null, "Lưu thành công");
 		}
 	}
