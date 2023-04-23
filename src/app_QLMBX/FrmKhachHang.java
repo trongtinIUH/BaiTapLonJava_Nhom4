@@ -289,7 +289,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		else
 			phai = "Nu";
 		KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-		if (khDAO.create(kh)) {
+		if (khDAO.createKH(kh)) {
 			model.addRow(new Object[] { model.getRowCount() + 1, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
 					kh.getDiaChi(), kh.getSdt() });
 			JOptionPane.showMessageDialog(this, "Thêm thành công");

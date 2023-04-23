@@ -29,7 +29,7 @@ public class SanPham_DAO {
 			Statement sta = con.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			while(rs.next()) {
-				dsSanPham.add(new MatHang(rs.getString("maMH"), rs.getString("tenMH"), rs.getString("dvt"), rs.getString("moTa"), rs.getBigDecimal("donGia"), rs.getInt("slTon"), rs.getString("loaiMH")));
+				dsSanPham.add(new MatHang(rs.getString("maMH"), rs.getString("tenMH"), rs.getString("dvt"), rs.getString("moTa"), rs.getDouble("donGia"), rs.getInt("slTon"), rs.getString("loaiMH")));
 			}
 			
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class SanPham_DAO {
 			pst.setString(2, sp.getTenMH());
 			pst.setString(3, sp.getDvt());
 			pst.setString(4, sp.getMoTa());
-			pst.setBigDecimal(5, sp.getDonGia());
+			pst.setDouble(5, sp.getDonGia());
 			pst.setInt(6, sp.getSlTon());
 			pst.setString(7, sp.getLoaiMH());
 			return pst.executeUpdate() >0;
@@ -131,7 +131,7 @@ public class SanPham_DAO {
 				String ten = rs.getString(2);
 				String dvt = rs.getString(3);
 				String mota = rs.getString(4);
-				BigDecimal dg = rs.getBigDecimal(5);
+				double dg = rs.getDouble(5);
 				int sl = rs.getInt(6);
 				String loai = rs.getString(7);
 				MatHang mh = new MatHang(ma, ten, dvt, mota, dg, sl, loai);

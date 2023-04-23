@@ -39,7 +39,6 @@ public class KhachHang_DAO {
 		}
 		return dsKhachHang;
 	}
-<<<<<<< HEAD
 	
 	public KhachHang getKhachHangTheoSDT(String sdt) {
 		KhachHang kh= null;
@@ -85,52 +84,19 @@ public class KhachHang_DAO {
 		try {
 			stmt = con.prepareStatement("insert into KhachHang values(?,?,?,?,?)");
 			
-=======
-
-	public boolean create(KhachHang kh) throws SQLException {
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
-		PreparedStatement stmt = null;
-		int n = 0;
-		try {
-			stmt = con.prepareStatement("insert into KhachHang values (?, ?, ?, ?, ?)");
->>>>>>> origin/nhanh3
 			stmt.setString(1, kh.getMaKH());
 			stmt.setString(2, kh.getTenKH());
 			stmt.setString(3, kh.getGioiTinh());
 			stmt.setString(4, kh.getDiaChi());
 			stmt.setString(5, kh.getSdt());
-<<<<<<< HEAD
-			n = stmt.executeUpdate();
-			} catch (SQLException e) {
-			// TODO: handle exception
-=======
 
 			n = stmt.executeUpdate();
-		} catch (SQLException e) {
->>>>>>> origin/nhanh3
-			e.printStackTrace();
-		} finally {
-			try {
-				stmt.close();
-<<<<<<< HEAD
 			} catch (SQLException e2) {
 				// TODO: handle exception
 				e2.printStackTrace();
 			}
-			
-		}
 		return n>0;
 	}
-	
-=======
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return n > 0;
-	}
->>>>>>> origin/nhanh3
 
 	public boolean update(KhachHang kh) {
 		try {

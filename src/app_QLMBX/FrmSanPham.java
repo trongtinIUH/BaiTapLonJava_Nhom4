@@ -263,7 +263,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		String ten = txtTenSP.getText();
 		int sl = Integer.parseInt(txtsoLuong.getText());
 		String dvt = txtDonViTinh.getText();
-		BigDecimal donGia = new BigDecimal(txtDonGia.getText());
+		double donGia = Double.parseDouble(txtDonGia.getText());
 		String mota = txtMoTa.getText();
 		MatHang mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
 		return mh;
