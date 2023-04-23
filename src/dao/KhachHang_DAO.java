@@ -114,13 +114,14 @@ public class KhachHang_DAO {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into KhachHang values(?,?,?,?,?)");
+			stmt = con.prepareStatement("update KhachHang set maKH = ?, tenKH= ?, gioiTinh = ? , diaChi = ?, sdt = ? where maKH = ?");
 			
 			stmt.setString(1, kh.getMaKH());
 			stmt.setString(2, kh.getTenKH());
 			stmt.setString(3, kh.getGioiTinh());
 			stmt.setString(4, kh.getDiaChi());
 			stmt.setString(5, kh.getSdt());
+			stmt.setString(6, kh.getMaKH());
 			n = stmt.executeUpdate();
 			} catch (SQLException e) {
 			// TODO: handle exception
