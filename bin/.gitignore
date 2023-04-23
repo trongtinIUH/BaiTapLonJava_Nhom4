@@ -1,3 +1,14 @@
-/app_QLMBX/
-/dao/
-/entity/
+/nbproject/private/
+/build/
+/.classpath
+/.gitignore
+/.project
+/build.xml
+/icon/
+/image/
+/img/
+/lib/
+/miglayout-src.zip
+/miglayout15-swing.jar
+/nbproject/
+/src/
