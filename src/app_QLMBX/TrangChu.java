@@ -35,20 +35,22 @@ public class TrangChu extends JFrame implements ActionListener{
 	private final JLabel lblNewLabel = new JLabel("HỆ THỐNG QUẢN LÍ MUA BÁN XE MÁY");
 	private final JPanel panel_1 = new JPanel();
 	private JButton btnBanHang;
-	private JButton btnKhuyenMai;
+	private JButton btnHopDong;
 	private JButton btnNhanVien;
 	private JButton btnKhachHang;
 	private JButton btnNhaphang;
+	private JButton btnBaoHanh;
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JButton btnSanPham;
 
 	//thêm các frm
 	FrmBanHang banHang = new FrmBanHang();
 	FrmKhachHang khachHang = new FrmKhachHang();
-	FrmBaoHanh khuyenMai = new FrmBaoHanh();
+	Frm_DanhDachHopDong dsHopDong = new Frm_DanhDachHopDong(); // vẫn đề lại là khuyến mãi cho đễ sữa lại
 	FrmNhanVien nhanVien = new FrmNhanVien();
 	FrmNhapHang nhapHang = new FrmNhapHang();
 	FrmSanPham sanPham = new FrmSanPham();
+	FrmBaoHanh baohanh= new FrmBaoHanh();
 	
 
 	/**
@@ -107,15 +109,15 @@ public class TrangChu extends JFrame implements ActionListener{
 			}
 		});
 		
-		 btnKhuyenMai = new JButton("Khuyến Mãi");
-		btnKhuyenMai.setIcon(new ImageIcon("icon\\khuyenmai.png"));
-		btnKhuyenMai.addActionListener(new ActionListener() {
+		 btnHopDong = new JButton("Hợp Đồng");
+		 btnHopDong.setIcon(new ImageIcon("icon\\khuyenmai.png"));
+		 btnHopDong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnKhuyenMai.setForeground(Color.BLACK);
-		btnKhuyenMai.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		btnKhuyenMai.setBackground(Color.WHITE);
+		 btnHopDong.setForeground(Color.BLACK);
+		 btnHopDong.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		 btnHopDong.setBackground(Color.WHITE);
 		
 		btnSanPham = new JButton("Sản Phẩm");
 		btnSanPham.setIcon(new ImageIcon("icon\\sanpham.png"));
@@ -155,6 +157,20 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnKhachHang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnKhachHang.setBackground(Color.WHITE);
 		
+		///bảo hành
+		
+		 btnBaoHanh = new JButton("Bảo Hành");
+		 btnBaoHanh.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+		 btnBaoHanh.setIcon(new ImageIcon("icon\\baohanh.png"));
+		 btnBaoHanh.setForeground(Color.BLACK);
+		 btnBaoHanh.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		 btnBaoHanh.setBackground(Color.WHITE);
+		
+		///bao hành
+		
 		 btnNhaphang = new JButton("Nhập Hàng");
 		btnNhaphang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,11 +190,12 @@ public class TrangChu extends JFrame implements ActionListener{
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addGap(14)
 							.addGroup(gl_panel_2.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnKhuyenMai, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnHopDong, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnBanHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnSanPham, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnNhanVien, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnBaoHanh, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnNhaphang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
@@ -189,7 +206,7 @@ public class TrangChu extends JFrame implements ActionListener{
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnBanHang, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnKhuyenMai, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnHopDong, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnSanPham, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -197,7 +214,10 @@ public class TrangChu extends JFrame implements ActionListener{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnKhachHang, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnBaoHanh, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNhaphang, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					
 					.addGap(235))
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -217,8 +237,9 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnKhachHang.addActionListener(this);
 		btnSanPham.addActionListener(this);
 		btnBanHang.addActionListener(this);
-		btnKhuyenMai.addActionListener(this);
+		btnHopDong.addActionListener(this);
 		btnNhanVien.addActionListener(this);
+		btnBaoHanh.addActionListener(this);
 		btnNhaphang.addActionListener(this);
 	}
 
@@ -237,11 +258,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.addTab("tab_Bán Hàng\r\n", null, banHang, null);
 			tabbedPane.setSelectedIndex(getIndex(banHang));
 		}
-		if(o.equals(btnKhuyenMai)) {
+		if(o.equals(btnHopDong)) {
 			setBackground();
-			btnKhuyenMai.setBackground(Color.pink);
-			tabbedPane.addTab("tab_Khuyến Mãi\r\n", null, khuyenMai, null);
-			tabbedPane.setSelectedIndex(getIndex(khuyenMai));
+			btnHopDong.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Hợp Đồng\r\n", null, dsHopDong, null);
+			tabbedPane.setSelectedIndex(getIndex(dsHopDong));
 		}
 		if(o.equals(btnNhanVien)) {
 			setBackground();
@@ -261,15 +282,23 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.addTab("tab_Sản Phẩm\r\n", null, sanPham, null);
 			tabbedPane.setSelectedIndex(getIndex(sanPham));
 		}
+		if(o.equals(btnBaoHanh)) {
+			setBackground();
+			btnBaoHanh.setBackground(Color.pink);
+			tabbedPane.addTab("tab_Bảo Hành\r\n", null,baohanh , null);
+			tabbedPane.setSelectedIndex(getIndex(baohanh));
+		}
 	}
 
 	public void setBackground() {
 		btnBanHang.setBackground(Color.white);
 		btnKhachHang.setBackground(Color.white);
-		btnKhuyenMai.setBackground(Color.white);
+		btnHopDong.setBackground(Color.white);
 		btnNhanVien.setBackground(Color.white);
 		btnNhaphang.setBackground(Color.white);
 		btnSanPham.setBackground(Color.white);
+		btnBaoHanh.setBackground(Color.white);
+		
 	}
 	
 	public int getIndex(Component obj) {
