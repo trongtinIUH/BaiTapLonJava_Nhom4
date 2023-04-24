@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 /dao/
 /entity/
 /app_QLMBX/
+=======
+/app_QLMBX/
+/connectDB/
+/dao/
+/entity/
+>>>>>>> main
