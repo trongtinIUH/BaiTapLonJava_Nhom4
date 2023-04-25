@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import javax.swing.Box;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -55,7 +57,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 	private JComboBox<String> jComboBox_mach;
 	private String[] cuahang=  new String[] {"CH001","CH003","CH003"};
 	private JComboBox<String> jComboBox_chucvu;
-	private String[] chucVu=  new String[] {"Nhân viên hành chính","Nhân viên kỹ thuật","Nhân viên bán hàng","Nhân viên tư vấn/Bảo hành","Quản lý kho hàng","Kế "};
+	private String[] chucVu=  new String[] {"Nhân viên hành chính","Nhân viên kỹ thuật","Nhân viên bán hàng","Nhân viên tư vấn/Bảo hành","Quản lý kho hàng","Kế Toán"};
 
 	private JLabel lblTimKiem;
 	private JTextField txtTimkiem;
@@ -69,10 +71,10 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 	
 
 	public FrmNhanVien() {
-		setSize(990, 600);
+		setSize(1000, 600);
 
 		
-		
+		//hi
 		JPanel pnControl = new JPanel();
 		pnControl.setLayout(new BorderLayout());
 		JPanel pnNorth = new JPanel();
@@ -194,35 +196,47 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		txtTimkiem.setBounds(x, y, width, height);
 		
 		pnContent.add(btnThem = new JButton("Thêm"));
-		width = 100; height = 30; x = 150;
+		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
+		//btnThem.setForeground(Color.BLACK);
+	//	btnThem.setBackground(Color.green);
+		width = 110; height = 30; x = 150;
 		y+=30; 
 		btnThem.setBounds(x, y, width, height);
+		
 		pnContent.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
+	//	btnXoa.setForeground(Color.BLACK);
+	//	btnXoa.setBackground(Color.red);
 		x+=120; 
 		btnXoa.setBounds(x, y, width, height);
+		
 		pnContent.add(btnLuu = new JButton("Lưu"));
+		btnLuu.setIcon(new ImageIcon("image\\luu.png"));
 		x+=120;
 		btnLuu.setBounds(x, y, width, height);
 		pnContent.add(btnTimKiem = new JButton("Tìm"));
+		btnTimKiem.setIcon(new ImageIcon("image\\tim.png"));
 		x+=120;
 		btnTimKiem.setBounds(x, y, width, height);
 		pnContent.add(btnXoaTrang = new JButton("Xóa Trắng"));
+		btnXoaTrang.setBackground(Color.yellow);
 		x+=120;
 		btnXoaTrang.setBounds(x, y, 200, height);
 		
 		
 	
-		
+
+// phần bảng
 		model = new DefaultTableModel(col, 0);
 		tblNhanVien = new JTable(model);
 		tblNhanVien.setBackground(Color.pink);
 		JScrollPane sp = new JScrollPane(tblNhanVien);
-		width = 990; height = 400;
+		width = 950; height = 200;
 		y+=50;
-		sp.setBounds(0, y, width, height);
+		sp.setBounds(30, y, width, height);
 		pnContent.add(sp);
-		pnContent.setPreferredSize(new Dimension(990, 600));
-		pnControl.add(pnContent, BorderLayout.CENTER);
+		pnContent.setPreferredSize(new Dimension(1000, 500));
+		pnControl.add(pnContent, BorderLayout.SOUTH);
 		this.add(pnControl);
 			
 		loadData();
@@ -367,7 +381,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		// TODO Auto-generated method stub
 		int row =tblNhanVien.getSelectedRow();
 		if(row!=-1) {
-			int tb= JOptionPane.showConfirmDialog(null, "what the fuck man?","Delete",JOptionPane.YES_NO_OPTION);
+			int tb= JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa?","Delete",JOptionPane.YES_NO_OPTION);
 			if(tb==JOptionPane.YES_OPTION) {
 				model.removeRow(row);
 				String manv = txtmaNV.getText();
