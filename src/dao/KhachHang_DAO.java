@@ -242,4 +242,96 @@ public class KhachHang_DAO {
 		}
 		return dskh;
 	}
+	
+	public String getMaKHTheoSDT(String sdt) {
+		String maKH = "";
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select maKH from KhachHang where sdt like '%" + sdt + "%'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				maKH = rs.getString("maKH");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maKH;
+	}
+	
+	public String getTenKHTheoSDT(String sdt) {
+		String ten = "";
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select tenKH from KhachHang where sdt like '%" + sdt + "%'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				ten = rs.getString("tenKH");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ten;
+	}
+	
+	public String getDiaChiTheoSDT(String sdt) {
+		String diaChi = "";
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select diaChi from KhachHang where sdt like '%" + sdt + "%'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				diaChi = rs.getString("diaChi");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diaChi;
+	}
+	
+	public String getGioiTinhTheoSDT(String sdt) {
+		String gioiTinh = "";
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select gioiTinh from KhachHang where sdt like '%" + sdt + "%'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				gioiTinh = rs.getString("gioiTinh");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return gioiTinh;
+	}
 }
