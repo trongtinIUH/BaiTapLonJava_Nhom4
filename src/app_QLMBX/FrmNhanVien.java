@@ -74,7 +74,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		setSize(1000, 600);
 
 		
-		
+		//hi
 		JPanel pnControl = new JPanel();
 		pnControl.setLayout(new BorderLayout());
 		JPanel pnNorth = new JPanel();
