@@ -1,23 +1,13 @@
 package app_QLMBX;
 
-<<<<<<< HEAD
-=======
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
->>>>>>> main
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-<<<<<<< HEAD
-import javax.swing.JFrame;
-
-
-public class Frm_DanhDachHopDong extends JFrame implements ActionListener, MouseListener{
-
-=======
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -505,7 +495,6 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		txtmaCH.setText(hd.getCuaHang().getMaCH());
 		txtmaNV.setText(hd.getNvLapHD().getMaNV());
 	}
->>>>>>> main
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -530,20 +519,5 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		// TODO Auto-generated method stub
 
 	}
-<<<<<<< HEAD
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-=======
->>>>>>> main
 }
 	
