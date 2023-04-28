@@ -76,6 +76,14 @@ public class MatHang implements Serializable {
 		this.slTon = slTon;
 		this.loaiMH = loaiMH;
 	}
+	
+	public MatHang(String maMH, String tenMH, double donGia, int slTon) {
+		super();
+		this.maMH = maMH;
+		this.tenMH = tenMH;
+		this.donGia = donGia;
+		this.slTon = slTon;
+	}
 	@Override
 	public String toString() {
 		return "MatHang [maMH=" + maMH + ", tenMH=" + tenMH + ", dvt=" + dvt + ", moTa=" + moTa + ", donGia=" + donGia

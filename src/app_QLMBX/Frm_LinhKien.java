@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dao.LinhKien_DAO;
+import dao.MatHang_DAO;
 import entity.LinhKienPhuTung;
 
 public class Frm_LinhKien extends JFrame implements ActionListener {
@@ -24,6 +25,7 @@ public class Frm_LinhKien extends JFrame implements ActionListener {
 	private JButton btnLuu, btnThoat;
 	public String maLK = "";
 	private LinhKien_DAO lk;
+	private MatHang_DAO mh;
 	public Frm_LinhKien() {
 		setSize(300, 200);
 		setLocationRelativeTo(null);

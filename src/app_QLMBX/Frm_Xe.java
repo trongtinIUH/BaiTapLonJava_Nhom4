@@ -120,10 +120,10 @@ public class Frm_Xe extends JFrame implements ActionListener {
 		String dongxe = (String) cboDongXe.getSelectedItem();
 		String sokhung = txtsoKhung.getText();
 		String mauXe = (String) cboMauXe.getSelectedItem();
-		String sopk = (String) cboPK.getSelectedItem();
+		int sopk = (Integer) cboPK.getSelectedItem();
 		String sosuon = txtSoSuon.getText();
 		String xuatsu = txtxuatSu.getText();
-		Xe x = new Xe(maXe, dongxe, sokhung, mauXe, Integer.parseInt(sopk), sosuon, xuatsu);
+		Xe x = new Xe(maXe, dongxe, sokhung, mauXe, sopk, sosuon, xuatsu);
 		return x;
 	}
 	
