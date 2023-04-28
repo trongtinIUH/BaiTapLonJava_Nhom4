@@ -23,9 +23,9 @@ public class TraTrucTiep_DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			while(rs.next()) {
 				HopDong HD = new HopDong(rs.getString(1));
-				String maUuDai = rs.getString(2);
-				double phanTramMienGiam = rs.getDouble(3);
-				TraTrucTiep hdTTT = new TraTrucTiep(HD, maUuDai, phanTramMienGiam);
+				double phanTramMienGiam = rs.getDouble(2);
+				double soTienTra = rs.getDouble(3);
+				TraTrucTiep hdTTT = new TraTrucTiep(HD, phanTramMienGiam, soTienTra);
 				dsHDTraTrucTiep.add(hdTTT);
 			}
 		}
@@ -49,8 +49,8 @@ public class TraTrucTiep_DAO {
 		try {
 			stmt = con.prepareStatement("insert into TraTrucTiep values(?,?,?)"); 
 			stmt.setString(1, hdTTT.getHd().getMaHD());
-			stmt.setString(2, hdTTT.getMaUuDai());
-			stmt.setDouble(3, hdTTT.getPhanTramMienGiam());
+			stmt.setDouble(2, hdTTT.getPhanTramMienGiam());
+			stmt.setDouble(3, hdTTT.getSoTienTra());
 			n = stmt.executeUpdate();
 			
 			} catch (SQLException e) {

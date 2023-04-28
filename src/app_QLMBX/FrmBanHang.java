@@ -23,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -158,6 +159,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		JPanel pnKhachHang = new JPanel();
 		pnKhachHang.setBounds(x,y,width, height);
 		pnKhachHang.setBorder(BorderFactory.createTitledBorder("Nhập thông tin khách hàng"));
+		TitledBorder titleKhachHang = (TitledBorder) pnKhachHang.getBorder();
+		titleKhachHang.setTitleColor(Color.blue);
 		pnKhachHang.setLayout(null);
 		
 		pnKhachHang.add(lblTenKH = new JLabel("Loại khách hàng:"));
@@ -201,6 +204,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		JPanel pnXe = new JPanel();
 		pnXe.setBorder(BorderFactory.createTitledBorder("Nhập thông tin xe cần mua:"));
+		TitledBorder titleXe = (TitledBorder) pnXe.getBorder();
+		titleXe.setTitleColor(Color.blue);
 		pnXe.setLayout(null);
 		x = 420; y=10; width=300; height=200;
 		pnXe.setBounds(x, y, width, height);
@@ -235,8 +240,11 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		JPanel pnNV = new JPanel();
 		pnNV.setBorder(BorderFactory.createTitledBorder("Nhân viên lập hợp đồng"));
+		TitledBorder titleNhanVien = (TitledBorder) pnNV.getBorder();
+		titleNhanVien.setTitleColor(Color.blue);
 		pnNV.setLayout(null);
 		pnNV.setBounds(730, 10, 240, 200);
+		
 		pnNV.add(lblTenNV = new JLabel("Tên nhân viên:"));
 		lblTenNV.setBounds(10, 50, 90, 20);
 		pnNV.add(lblChucVu = new JLabel("Chức vụ:"));
@@ -287,7 +295,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.setBounds(450, 0, 120, 30);
 		datePicker.setBackground(new Color(248,248,248));
-		modelNgayKH.setDate(2023,5,4);
+		modelNgayKH.setDate(2023,4,5);
 		modelNgayKH.setSelected(true);
 		pnThongTin.add(datePicker);
 		pnThongTin.add(lblTGBH = new JLabel("TG Bảo hành:"));
@@ -306,6 +314,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		JPanel pnTable = new JPanel();
 		pnTable.setBorder(BorderFactory.createTitledBorder("Chi tiết hợp đồng"));
+		TitledBorder titleChiTietHD = (TitledBorder) pnTable.getBorder();
+		titleChiTietHD.setTitleColor(Color.blue);
 		pnTable.setBounds(10, 290, 950, 170);
 		pnTable.setLayout(null);
 		
@@ -453,9 +463,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					gioiTinh="Nam";
 				else
 					gioiTinh="Nữ";
-				maKh = makh.generateRandomKH();
-				KhachHang kh = new KhachHang(maKh, tenKH, gioiTinh, diaChi, sDT);
-				kh_dao = new KhachHang_DAO();
+				KhachHang kh = new KhachHang(makh.generateRandomKH(), tenKH, gioiTinh, diaChi, sDT);
 				if(txtTenKH.getText().equals("") || txtSoDt.getText().equals("") || txtDiaChi.getText().equals("") || (!radNam.isSelected() && !radNu.isSelected()))
 				{
 					JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin khách hàng!!");
@@ -463,39 +471,19 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				else
 				{
 					if(kh_dao.getKHTheoSDT(sDT) == null)
-					{
-						JOptionPane.showMessageDialog(this, "Tạo thông tin khách hàng mới thành công!");
-						txtMaKH.setText(kh.getMaKH());
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(this, "Số điện thoại khách hàng đã tồn tại");
-					}
+						if(kh_dao.createKH(kh)) {
+							JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
+							txtMaKH.setText(kh.getMaKH());
+							
+						} else
+							JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
+					
+					else 
+						JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại");
 				}
 			}	
 		}	
 		//}
-	}
-	
-	public void themKhachHangMoi() {
-		flag = 0;
-		String tenKH =txtTenKH.getText();
-		String sDT = txtSoDt.getText();
-		String diaChi = txtDiaChi.getText();
-		String gioiTinh;
-		if(radNam.isSelected())
-			gioiTinh="Nam";
-		else
-			gioiTinh="Nữ";
-		KhachHang kh = new KhachHang(maKh, tenKH, gioiTinh, diaChi, sDT);
-		if(kh_dao.createKH(kh)) {
-			flag = 1;
-		}
-		else
-		{
-			JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
-			flag = 0;
-		}
 	}
 	
 	
@@ -560,8 +548,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		}
 		else
 		{
-			if(flag == 1)
-				themKhachHangMoi(); //Là khách hàng mới thì chèn thông tin KH vào dữ liệu
 			Date ngaylap =(Date) datePicker.getModel().getValue();
 			int tgBH =Integer.parseInt(txtBaoHanh.getText());
 			String loaiHD = cbxHinhThucTT.getSelectedItem().toString();
@@ -569,7 +555,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			CuaHang cuaHang = ch_DAO.getCuaHangTheoTen(cbxCuaHang.getSelectedItem().toString());
 			KhachHang kh = kh_dao.getKHTheoSDT(txtSoDt.getText());		
 			int soDong = tblModel.getRowCount();
-			if(nvl==null || cuaHang==null || soDong==0) {
+			if(nvl==null || cuaHang==null || kh==null || soDong==0) {
 				JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin");
 			}
 			else if(tgBH <= 0) {
@@ -596,9 +582,9 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	//Thêm vào hợp đồng trả trực tiếp
 	private void themHDTraTrucTiep() {
 		HopDong HD = new HopDong(maHd);
-		String maUuDai ="";
 		double PhanTramMienGiam =  Double.parseDouble(txtGiam.getText());
-		TraTrucTiep HDTraTrucTiep = new TraTrucTiep(HD, maUuDai, PhanTramMienGiam); 
+		double soTienTra = Double.parseDouble(txtTienDua.getText());
+		TraTrucTiep HDTraTrucTiep = new TraTrucTiep(HD, PhanTramMienGiam, soTienTra); 
 		traTrucTiep_dao.createHDTraTrucTiep(HDTraTrucTiep);
 	}
 	
@@ -690,7 +676,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		for(Xe n :xe_DAO.getAllXe())
 		{
-			cbxTenNV.addItem(n.getTenMH());;
+			cbxTenXe.addItem(n.getTenMH());;
 		}
 		
 		for(NhanVien n :nv_dao.getAllNhanVien())
@@ -729,7 +715,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		// TODO Auto-generated method stub
 		Object obj = e.getSource();
 		if(obj.equals(radCu)) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại để định danh:");
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại để định danh");
 			txtTenKH.setEditable(false);
 			txtTenKH.setText("");
 			txtDiaChi.setEditable(false);
