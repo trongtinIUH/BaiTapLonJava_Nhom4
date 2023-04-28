@@ -12,18 +12,32 @@ public class KhachHang implements Serializable {
 	
 	private String maKH;
 	private String tenKH;
+	private String gioiTinh;
 	private String diaChi;
 	private String sdt;
+	
 	public KhachHang() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public KhachHang(String maKH, String tenKH, String diaChi, String sdt) {
+	public KhachHang(String maKH, String tenKH, String gioiTinh, String diaChi, String sdt) {
 		super();
 		this.maKH = maKH;
 		this.tenKH = tenKH;
+		this.gioiTinh = gioiTinh;
 		this.diaChi = diaChi;
 		this.sdt = sdt;
+	}
+	
+	public KhachHang(String maKH) {
+		this.maKH = maKH;
+	}
+	
+	public String getGioiTinh() {
+		return gioiTinh;
+	}
+	public void setGioiTinh(String gioiTinh) {
+		this.gioiTinh = gioiTinh;
 	}
 	public String getMaKH() {
 		return maKH;
@@ -66,8 +80,10 @@ public class KhachHang implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return String.format("KhachHang [maKH=%s, tenKH=%s, diaChi=%s, sdt=%s]", maKH, tenKH, diaChi, sdt);
+		return "KhachHang [maKH=" + maKH + ", tenKH=" + tenKH + ", gioiTinh=" + gioiTinh + ", diaChi=" + diaChi
+				+ ", sdt=" + sdt + "]";
 	}
+	
 	
 	
 }
