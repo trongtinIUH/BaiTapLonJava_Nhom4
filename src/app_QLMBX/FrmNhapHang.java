@@ -25,13 +25,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import dao.MatHang_DAO;
 import dao.NhapHang_DAO;
 import entity.MatHang;
 import entity.PhieuNhap;
+import entity.Regex;
 
 import javax.swing.border.TitledBorder;
 
@@ -47,7 +50,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	private JTextField txtTenSp;
 	private JTextField txtSoLuong;
 	private JTextField txtDonGia;
-	private JTextField txtNCC;
+	private JComboBox<String> cboNCC;
 	private JTextField txtMaPhieu;
 	private JTable table;
 	private JTextField txtTim;
@@ -55,7 +58,9 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	private Frame frame;
 	private DefaultTableModel model;
 	private NhapHang_DAO nh;
+	private MatHang_DAO mhDao;
 	private Frm_MatHang mh;
+	private Regex reg;
 	public FrmNhapHang() {
 		frame = new JFrame();
 		setBounds(100, 100, 990, 600);
@@ -65,6 +70,8 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		((JFrame) frame).setContentPane(contentPane);
 		add(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+
+		nh = new NhapHang_DAO();
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
@@ -169,8 +176,10 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		JLabel lblNewLabel_2_1 = new JLabel("Nhà cung cấp");
 		lblNewLabel_2_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
-		txtNCC = new JTextField();
-		txtNCC.setColumns(10);
+		cboNCC = new JComboBox<String>();
+		cboNCC.addItem("Công ty cung ứng xe Bảo Long");
+		cboNCC.addItem("Công ty phụ tùng xe Phước Đại");
+//		cboNCC.set(10);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Mã phiếu nhập");
 		lblNewLabel_2_1_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -208,7 +217,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 						.addGroup(Alignment.LEADING, gl_panel_3.createSequentialGroup()
 							.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(txtNCC, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
+							.addComponent(cboNCC, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addComponent(lblNewLabel_1_1)
@@ -226,7 +235,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 					.addGap(30)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtNCC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(cboNCC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(41)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnXoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
@@ -341,7 +350,6 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 	
 	public void loadData() {
-		nh = new NhapHang_DAO();
 		for(PhieuNhap x : nh.getAllNhapHang()) {
 			Object[] row = {x.getSoPhieu(), x.getMh().getMaMH(), x.getMh().getTenMH(), x.getMh().getSlTon(), x.getMh().getDonGia(), x.getTenNCC()};
 			model.addRow(row);
@@ -375,6 +383,24 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		}
 	}
 	
+
+	private boolean validData() {
+		reg = new Regex();
+		if(txtMaPhieu.getText().equals("") || txtMaSp.getText().equals("") || txtTenSp.getText().equals("") || txtSoLuong.getText().equals("") || txtDonGia.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Các textField không được rỗng");
+			return false;
+		}
+		if(!(txtMaSp.getText().matches("(LK||X)\\d{1,}"))) {
+			JOptionPane.showMessageDialog(null, "Mã sản phẩm phải theo định dạng LKXXX hay AXXX");
+			return false;
+		}
+		if(reg.kiemTraMaNhapHang(txtMaPhieu.getText()) == false) {
+			JOptionPane.showMessageDialog(null, "Mã phiếu phải theo định dạng HDH_NXXX");
+			return false;
+		}
+		return true;
+	}
+	
 	private void unEnabled() {
 		if(btnNhap.getText().equals("Chọn nhập")) {
 			txtMaSp.setEditable(false);
@@ -391,15 +417,14 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		}
 	}
 	
-
 	private void themVaoBang() {
 		String maPhieu = txtMaPhieu.getText();
 		String maSP = txtMaSp.getText();
 		String tenSP = txtTenSp.getText();
 		String sl = txtSoLuong.getText();
 		String donGia = txtDonGia.getText();
-		String nhaCC = txtNCC.getText();
-		String[] row = {maPhieu, maSP, tenSP, sl, donGia, nhaCC};
+		String ncc = (String)cboNCC.getSelectedItem();
+		String[] row = {maPhieu, maSP, tenSP, sl, donGia, ncc};
 		model.addRow(row);
 	}
 	
@@ -408,30 +433,29 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		mh.maHDH = txtMaPhieu.getText();
 		mh.maSP = txtMaSp.getText();
 		mh.tenSP = txtTenSp.getText();
-		mh.soLuong = Integer.parseInt(txtSoLuong.getText()) ;
-		mh.donGia = Double.valueOf(txtDonGia.getText());
-		mh.setVisible(true);
+		if(txtSoLuong.getText().matches("^[0-9]+$") && txtDonGia.getText().matches("^[0-9]+(\\.[0-9]{1,2})?$")) {
+			mh.soLuong = Integer.parseInt(txtSoLuong.getText());
+			mh.donGia = Double.valueOf(txtDonGia.getText());
+			mh.tenNhaCC = (String)cboNCC.getSelectedItem();
+			mh.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "Số lượng và đơn giá phải là số và không nhỏ hơn 0");
+		}
 	}
 	
-	private PhieuNhap revertTextToPhieuNhap() {
-		String maPhieu = txtMaPhieu.getText();
-		String maSP = txtMaSp.getText();
-		String tenSP = txtTenSp.getText();
-		String sl = txtSoLuong.getText();
-		String donGia = txtDonGia.getText();
-		String nhaCC = txtNCC.getText();
-		return new PhieuNhap(maPhieu, new MatHang(maSP, tenSP, Double.valueOf(donGia), Integer.parseInt(sl)), nhaCC, maPhieu);
-	}
 
 	private void xoa() throws SQLException {
+		mhDao = new MatHang_DAO();
 		// TODO Auto-generated method stub
 		int row = table.getSelectedRow();
 		if(row!=-1) {
 			int tb= JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc muốn xóa?", "Delete",JOptionPane.YES_NO_OPTION);
 			if(tb==JOptionPane.YES_OPTION) {
 				model.removeRow(row);
+				String maHDH = txtMaPhieu.getText();
+				nh.Delete(maHDH);
 				String maSP = txtMaSp.getText();
-//				sp.Delete(maSP);
+				mhDao.Delete(maSP);
 				JOptionPane.showMessageDialog(this, "Xoá thành công");
 			}
 		}
@@ -449,8 +473,18 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		} else if(obj.equals(btnNhap)) {
 			unEnabled();
 		} else if(obj.equals(btnXacNhan)) {
+			if(validData()) {
+				try {
+					luu();
+					themVaoBang();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		} else if(obj.equals(btnXoa)) {
 			try {
-				luu();
+				xoa();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -467,7 +501,12 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 			txtTenSp.setText(model.getValueAt(row, 2).toString());
 			txtSoLuong.setText(model.getValueAt(row, 3).toString());
 			txtDonGia.setText(model.getValueAt(row, 4).toString());
-			txtNCC.setText(model.getValueAt(row, 5).toString());
+			if(model.getValueAt(row, 5).toString().equalsIgnoreCase("Công ty cung ứng xe Bảo Long")) {
+				cboNCC.setSelectedIndex(0);
+			}
+			if(model.getValueAt(row, 5).toString().equalsIgnoreCase("Công ty phụ tùng xe Phước Đại")) {
+				cboNCC.setSelectedIndex(1);
+			}
 		}
 	}
 

@@ -54,7 +54,7 @@ public class NhapHang_DAO {
 				int sl = rs.getInt(4);
 				double dg = rs.getDouble(5);
 				String tenNCC = rs.getString(6);
-				PhieuNhap pn = new PhieuNhap();
+				PhieuNhap pn = new PhieuNhap(maPhieu, new MatHang(maSP, ten, dg, sl), tenNCC, maPhieu);
 				dsPhieu.add(pn);
 			}
 			if(dsPhieu.size() == 0) {
@@ -76,6 +76,39 @@ public class NhapHang_DAO {
 			pst.setString(1, p.getSoPhieu());
 			pst.setString(2, p.getTenNCC());
 			pst.setString(3, p.getMaHDH());
+			return pst.executeUpdate() >0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean addCTHD(String maHDH, String maMH, int sl) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		
+		 String sql ="insert into ChiTietHoaDonHang VALUES(?,?,?)";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, maHDH);
+			pst.setString(2, maMH);
+			pst.setInt(3, sl);
+			return pst.executeUpdate() >0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean Delete(String maHDH) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		
+		 String sql ="DELETE FROM HoaDonHang WHERE maHDH =?";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, maHDH);
 			return pst.executeUpdate() >0;
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -23,9 +23,11 @@ import org.jdatepicker.impl.SqlDateModel;
 
 import dao.HoaDonHang_DAO;
 import dao.MatHang_DAO;
+import dao.NhapHang_DAO;
 import entity.DateLabelFormatter;
 import entity.HoaDonHang;
 import entity.MatHang;
+import entity.PhieuNhap;
 
 public class Frm_MatHang extends JFrame implements ActionListener {
 
@@ -41,6 +43,7 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 	public String maHDH = "";
 	public String maSP = "";
 	public String tenSP = "";
+	public String tenNhaCC = "";
 	public int soLuong;
 	public double donGia;
 	private MatHang_DAO sp;
@@ -51,6 +54,7 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 	private Properties p;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
+	private NhapHang_DAO nh;
 	public Frm_MatHang() {
 		setSize(500, 450);
 		setLocationRelativeTo(null);
@@ -139,26 +143,34 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 	}
 	
 	private void luu() throws HeadlessException, SQLException {
+		nh = new NhapHang_DAO();
 		hdh = new HoaDonHang_DAO();
 		sp = new MatHang_DAO();
 		HoaDonHang hd = revertTextToHoaDonHang();
 		MatHang mh = revertTextToMatHang();
+		PhieuNhap p = new PhieuNhap(maHDH, mh, tenNhaCC, maHDH);
 		if(hdh.addHoaDonHang(hd)) {
-			if(sp.addSanPham(mh)) {
-				if(mh.getLoaiMH().equals("Xe")) {
-					JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
-					xe = new Frm_Xe();
-					xe.maXe = maSP;
-					xe.setVisible(true);
+			if(nh.addPhieuNhap(p)) {
+				if(sp.addSanPham(mh)) {
+					if(nh.addCTHD(maHDH, maSP, soLuong)) {
+						if(mh.getLoaiMH().equals("Xe")) {
+							JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
+							xe = new Frm_Xe();
+							xe.maXe = maSP;
+							xe.setVisible(true);
+						}
+						if(mh.getLoaiMH().equals("Linh Kiện")) {
+							JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
+							lk = new Frm_LinhKien();
+							lk.maLK = maSP;
+							lk.setVisible(true);
+						}
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
 				}
-				if(mh.getLoaiMH().equals("Linh Kiện")) {
-					JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
-					lk = new Frm_LinhKien();
-					lk.maLK = maSP;
-					lk.setVisible(true);
-				}
-			}else {
-				JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Trùng mã phiếu nhập!");
 			}
 		}else {
 			JOptionPane.showMessageDialog(null, "Trùng mã hóa đơn hàng!");

@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.MatHang_DAO;
 import entity.MatHang;
+import entity.Regex;
 
 public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	/**
@@ -42,6 +43,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	private MatHang_DAO sp;
 	private Frm_Xe xe;
 	private Frm_LinhKien lk;
+	private Regex reg;
 	public FrmSanPham() {
 		setSize(990, 600);
 		JPanel pnControl = new JPanel();
@@ -173,13 +175,11 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -191,18 +191,22 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		tblSanPham.clearSelection();
+		 if (!tblSanPham.isFocusOwner()) { // Nếu bảng không có focus
+			 tblSanPham.clearSelection(); // Xóa các dòng đã chọn
+	     }
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj.equals(btnThem)) {
-			try {
-				luu();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(validData()) {
+				try {
+					luu();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		if(obj.equals(btnXoa)) {
@@ -217,7 +221,9 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 			tim();
 		}
 		if(obj.equals(btnSua)) {
-			sua();
+			if(validData()) {
+				sua();
+			}
 		}
 		if(obj.equals(cboLoaiSP)) {
 			String selectedValue = (String) cboLoaiSP.getSelectedItem();
@@ -228,27 +234,42 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 			txtMaSP.setText(randomCode); // Hiển thị mã sản phẩm lên trên textfield txtMaSP
 		}
 	}
+	
+	private boolean validData() {
+		reg = new Regex();
+		String ten = txtTenSP.getText();
+		String mta = txtMoTa.getText();
+		if(ten.equals("") || txtsoLuong.getText().equals("") || txtDonGia.getText().equals("") || mta.equals("")) {
+			JOptionPane.showMessageDialog(null, "Các trường không được rỗng");
+			return false;
+		}
+		return true;
+	}
 
 	private void luu() throws SQLException {
 		MatHang mh = revertTextToMatHang();
-		String ma = txtMaSP.getText();
-		if(sp.addSanPham(mh)) {
-			if(mh.getLoaiMH().equals("Xe")) {
-				JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
-				xe = new Frm_Xe();
-				xe.maXe = ma;
-				xe.setVisible(true);
-				themVaoBang();
+		if(mh != null) {
+			String ma = txtMaSP.getText();
+			if(sp.addSanPham(mh)) {
+				if(mh.getLoaiMH().equals("Xe")) {
+					JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
+					xe = new Frm_Xe();
+					xe.maXe = ma;
+					xe.setVisible(true);
+					themVaoBang();
+				}
+				if(mh.getLoaiMH().equals("Linh Kiện")) {
+					JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
+					lk = new Frm_LinhKien();
+					lk.maLK = ma;
+					lk.setVisible(true);
+					themVaoBang();
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
 			}
-			if(mh.getLoaiMH().equals("Linh Kiện")) {
-				JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
-				lk = new Frm_LinhKien();
-				lk.maLK = ma;
-				lk.setVisible(true);
-				themVaoBang();
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng và đủ các trường!");
 		}
 	}
 	
@@ -271,14 +292,19 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	}
 	
 	private MatHang revertTextToMatHang() {
-		String ma = txtMaSP.getText();
-		String loaiMH =(String) cboLoaiSP.getSelectedItem();
-		String ten = txtTenSP.getText();
-		int sl = Integer.parseInt(txtsoLuong.getText());
-		String dvt = txtDonViTinh.getText();
-		double donGia = Double.parseDouble(txtDonGia.getText());
-		String mota = txtMoTa.getText();
-		MatHang mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
+		MatHang mh = null;
+		if(txtsoLuong.getText().matches("^[0-9]+$") && txtDonGia.getText().matches("^[0-9]+(\\.[0-9]{1,2})?$")) {
+			String ma = txtMaSP.getText();
+			String loaiMH =(String) cboLoaiSP.getSelectedItem();
+			String ten = txtTenSP.getText();
+			int sl = Integer.parseInt(txtsoLuong.getText());
+			double donGia = Double.parseDouble(txtDonGia.getText());
+			String dvt = txtDonViTinh.getText();
+			String mota = txtMoTa.getText();
+			mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
+		} else {
+			JOptionPane.showMessageDialog(null, "Số lượng và đơn giá phải là số và không nhỏ hơn 0");
+		}
 		return mh;
 	}
 
