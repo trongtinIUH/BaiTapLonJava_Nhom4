@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,7 +33,6 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.MatHang_DAO;
 import dao.NhapHang_DAO;
-import entity.MatHang;
 import entity.PhieuNhap;
 import entity.Regex;
 
@@ -119,6 +119,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		txtTim = new JTextField();
 		txtTim.setColumns(10);
 		btnTim = new JButton("Tìm");
+		btnTim.setIcon(new ImageIcon("image\\Search-icon.png"));
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
@@ -350,8 +351,9 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 	
 	public void loadData() {
+		DecimalFormat df = new DecimalFormat("#.##");
 		for(PhieuNhap x : nh.getAllNhapHang()) {
-			Object[] row = {x.getSoPhieu(), x.getMh().getMaMH(), x.getMh().getTenMH(), x.getMh().getSlTon(), x.getMh().getDonGia(), x.getTenNCC()};
+			Object[] row = {x.getSoPhieu(), x.getMh().getMaMH(), x.getMh().getTenMH(), x.getMh().getSlTon(), df.format(x.getMh().getDonGia()), x.getTenNCC()};
 			model.addRow(row);
 		}
 	}
