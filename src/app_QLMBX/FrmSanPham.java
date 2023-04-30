@@ -11,7 +11,9 @@ import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -35,7 +37,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	private JTable tblSanPham;
 	private DefaultTableModel model;
 	private String[] cols = {"Mã SP", "Loại SP", "Tên SP", "Số lượng", "Đơn Vị Tính", "Đơn Giá", "Mô tả"};
-	private JButton btnThem, btnLuu, btnXoa, btnTim, btnSua;
+	private JButton btnThem, btnXoa, btnTim, btnSua;
 	private JComboBox<String> cboLoaiSP;
 	private MatHang_DAO sp;
 	private Frm_Xe xe;
@@ -77,11 +79,12 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		x+=100;y = 56;width = 300;height = 20;
 		pnContent.add(txtMaSP = new JTextField(20));
 		txtMaSP.setBounds(x, y, width, height);
-		
+		txtMaSP.setEditable(false);
 		pnContent.add(cboLoaiSP = new JComboBox<String>());
 		cboLoaiSP.addItem("Linh Kiện");
 		cboLoaiSP.addItem("Xe");
 		cboLoaiSP.setBounds(620, y, width, height);
+		txtMaSP.setText(generateRandomCode((String) cboLoaiSP.getSelectedItem()));
 		pnContent.add(txtTenSP = new JTextField(20));
 		y += 30;
 		txtTenSP.setBounds(x, y, width, height);
@@ -101,25 +104,27 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		txtMoTa.setBounds(620, y, width, height);
 		
 		pnContent.add(btnThem = new JButton("Thêm"));
+		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
 		width = 100; height = 30; x = 150;
 		y+=30; 
 		btnThem.setBounds(x, y, width, height);
 		pnContent.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		x+=120; 
 		btnXoa.setBounds(x, y, width, height);
-		pnContent.add(btnLuu = new JButton("Lưu"));
-		x+=120;
-		btnLuu.setBounds(x, y, width, height);
 		pnContent.add(btnTim = new JButton("Tìm"));
+		btnTim.setIcon(new ImageIcon("image\\Search-icon.png"));
 		x+=120;
 		btnTim.setBounds(x, y, width, height);
 		pnContent.add(btnSua = new JButton("Sửa(chỉ sửa số lượng và đơn giá)"));
+		btnSua.setIcon(new ImageIcon("image\\Pencil-icon.png"));
 		x+=120;
 		btnSua.setBounds(x, y, 250, height);
 		
 		model = new DefaultTableModel(cols, 0);
 		tblSanPham = new JTable(model);
 		tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(290);
+		tblSanPham.getColumnModel().getColumn(5).setPreferredWidth(100);
 		tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(400);
 		tblSanPham.setBackground(Color.pink);
 		loadData();
@@ -134,9 +139,9 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnTim.addActionListener(this);
-		btnLuu.addActionListener(this);
 		btnSua.addActionListener(this);
 		tblSanPham.addMouseListener(this);
+		cboLoaiSP.addActionListener(this);
 	}
 	
 	public void loadData() {
@@ -150,18 +155,20 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int row = tblSanPham.getSelectedRow();
-		txtMaSP.setText(model.getValueAt(row, 0).toString());
-		if(model.getValueAt(row, 1).toString().equalsIgnoreCase("Linh Kiện")) {
-			cboLoaiSP.setSelectedIndex(0);
+		if(row != -1) {
+			txtMaSP.setText(model.getValueAt(row, 0).toString());
+			if(model.getValueAt(row, 1).toString().equalsIgnoreCase("Linh Kiện")) {
+				cboLoaiSP.setSelectedIndex(0);
+			}
+			if(model.getValueAt(row, 1).toString().equalsIgnoreCase("Xe")) {
+				cboLoaiSP.setSelectedIndex(1);
+			}
+			txtTenSP.setText(model.getValueAt(row, 2).toString());
+			txtsoLuong.setText(model.getValueAt(row, 3).toString());
+			txtDonViTinh.setText(model.getValueAt(row, 4).toString());
+			txtDonGia.setText(model.getValueAt(row, 5).toString());
+			txtMoTa.setText(model.getValueAt(row, 6).toString());
 		}
-		if(model.getValueAt(row, 1).toString().equalsIgnoreCase("Xe")) {
-			cboLoaiSP.setSelectedIndex(1);
-		}
-		txtTenSP.setText(model.getValueAt(row, 2).toString());
-		txtsoLuong.setText(model.getValueAt(row, 3).toString());
-		txtDonViTinh.setText(model.getValueAt(row, 4).toString());
-		txtDonGia.setText(model.getValueAt(row, 5).toString());
-		txtMoTa.setText(model.getValueAt(row, 6).toString());
 	}
 
 	@Override
@@ -184,17 +191,13 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		tblSanPham.clearSelection();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj.equals(btnThem)) {
-			themVaoBang();
-		}
-		if(obj.equals(btnLuu)) {
 			try {
 				luu();
 			} catch (SQLException e1) {
@@ -215,6 +218,14 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		}
 		if(obj.equals(btnSua)) {
 			sua();
+		}
+		if(obj.equals(cboLoaiSP)) {
+			String selectedValue = (String) cboLoaiSP.getSelectedItem();
+			String randomCode = txtMaSP.getText(); // Lấy mã sản phẩm đã có trên textfield txtMaSP
+			if (tblSanPham.getSelectedRow() == -1) { // Nếu không có hàng nào được chọn trong bảng
+				randomCode = generateRandomCode(selectedValue); // Phát sinh mã ngẫu nhiên mới
+			}
+			txtMaSP.setText(randomCode); // Hiển thị mã sản phẩm lên trên textfield txtMaSP
 		}
 	}
 
@@ -319,5 +330,22 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		}else {
 			JOptionPane.showMessageDialog(null, "Mã SP không tồn tại!");
 		}
+	}
+	private String generateRandomCode(String loaiMH) {
+		String prefix = "";
+		String suffix = "";
+		if(loaiMH.equals("Linh Kiện")) {
+			prefix = "LK";
+			int maxNumber = 999999;
+			int randomNum = new Random().nextInt(maxNumber);
+			suffix = String.format("%06d", randomNum);
+		}
+		if(loaiMH.equals("Xe")) {
+			prefix = "X";
+			int maxNumber = 999999;
+			int randomNum = new Random().nextInt(maxNumber);
+			suffix = String.format("%06d", randomNum);
+		}
+		return prefix + suffix;
 	}
 }
