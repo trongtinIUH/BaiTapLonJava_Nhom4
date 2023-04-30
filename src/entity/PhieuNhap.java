@@ -1,7 +1,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class PhieuNhap extends HoaDonHang implements Serializable {
 
@@ -12,19 +12,37 @@ public class PhieuNhap extends HoaDonHang implements Serializable {
 	
 	private String  tenNCC;
 	private String soPhieu;
-	private LocalDate ngayTao;
-	private int soLuong;
-	public PhieuNhap(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD) {
-		super(mh, nv, ngayGD);
-		// TODO Auto-generated constructor stub
-	}
-	public PhieuNhap(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD, String tenNCC, String soPhieu,
-			LocalDate ngayTao, int soLuong) {
+	public PhieuNhap(MatHang mh, NhanVien nv, Date ngayGD, String tenNCC, String soPhieu) {
 		super(mh, nv, ngayGD);
 		this.tenNCC = tenNCC;
 		this.soPhieu = soPhieu;
-		this.ngayTao = ngayTao;
-		this.soLuong = soLuong;
+	}
+	public PhieuNhap() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public PhieuNhap(MatHang mh, NhanVien nv, Date ngayGD) {
+		super(mh, nv, ngayGD);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	
+	public PhieuNhap(String maHDH, MatHang mh, String tenNCC, String soPhieu) {
+		super(maHDH, mh);
+		this.tenNCC = tenNCC;
+		this.soPhieu = soPhieu;
+	}
+	public PhieuNhap(String maHDH, String maCH, MatHang mh, String tenNCC, String soPhieu) {
+		super(maHDH, maCH, mh);
+		this.tenNCC = tenNCC;
+		this.soPhieu = soPhieu;
+	}
+	public PhieuNhap(String maHDH, String maCH, MatHang mh, Date ngayGD, String tenNCC, String soPhieu) {
+		super(maHDH, maCH, mh, ngayGD);
+		this.tenNCC = tenNCC;
+		this.soPhieu = soPhieu;
 	}
 	public String getTenNCC() {
 		return tenNCC;
@@ -38,24 +56,6 @@ public class PhieuNhap extends HoaDonHang implements Serializable {
 	public void setSoPhieu(String soPhieu) {
 		this.soPhieu = soPhieu;
 	}
-	public LocalDate getNgayTao() {
-		return ngayTao;
-	}
-	public void setNgayTao(LocalDate ngayTao) {
-		this.ngayTao = ngayTao;
-	}
-	public int getSoLuong() {
-		return soLuong;
-	}
-	public void setSoLuong(int soLuong) {
-		this.soLuong = soLuong;
-	}
-	@Override
-	public String toString() {
-		return String.format("PhieuNhap [tenNCC=%s, soPhieu=%s, ngayTao=%s, soLuong=%s]", tenNCC, soPhieu, ngayTao,
-				soLuong);
-	}
-	
 	
 	
 

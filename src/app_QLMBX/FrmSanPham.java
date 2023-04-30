@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,7 +38,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	private JTable tblSanPham;
 	private DefaultTableModel model;
 	private String[] cols = {"Mã SP", "Loại SP", "Tên SP", "Số lượng", "Đơn Vị Tính", "Đơn Giá", "Mô tả"};
-	private JButton btnThem, btnXoa, btnTim, btnSua;
+	private JButton btnThem, btnXoa, btnTim, btnSua, btnRefresh;
 	private JComboBox<String> cboLoaiSP;
 	private MatHang_DAO sp;
 	private Frm_Xe xe;
@@ -107,7 +108,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
 		width = 100; height = 30; x = 150;
 		y+=30; 
-		btnThem.setBounds(x, y, width, height);
+		btnThem.setBounds(130, y, 120, height);
 		pnContent.add(btnXoa = new JButton("Xóa"));
 		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		x+=120; 
@@ -119,7 +120,11 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		pnContent.add(btnSua = new JButton("Sửa(chỉ sửa số lượng và đơn giá)"));
 		btnSua.setIcon(new ImageIcon("image\\Pencil-icon.png"));
 		x+=120;
-		btnSua.setBounds(x, y, 250, height);
+		btnSua.setBounds(x, y, 280, height);
+		pnContent.add(btnRefresh = new JButton("Làm mới"));
+		btnRefresh.setIcon(new ImageIcon("image\\Refresh-icon.png"));
+		x+=300;
+		btnRefresh.setBounds(x, y, 130, height);
 		
 		model = new DefaultTableModel(cols, 0);
 		tblSanPham = new JTable(model);
@@ -127,7 +132,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		tblSanPham.getColumnModel().getColumn(5).setPreferredWidth(100);
 		tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(400);
 		tblSanPham.setBackground(Color.pink);
-		loadData();
+		loadDataFrmSanPham();
 		JScrollPane sp = new JScrollPane(tblSanPham);
 		width = 980; height = 250;
 		y+=50;
@@ -142,12 +147,14 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		btnSua.addActionListener(this);
 		tblSanPham.addMouseListener(this);
 		cboLoaiSP.addActionListener(this);
+		btnRefresh.addActionListener(this);
 	}
 	
-	public void loadData() {
+	public void loadDataFrmSanPham() {
+		DecimalFormat df = new DecimalFormat("#.##");
 		sp = new MatHang_DAO();
 		for(MatHang x : sp.getAllMatHang()) {
-			Object[] row = {x.getMaMH(), x.getLoaiMH(), x.getTenMH(), x.getSlTon(), x.getDvt(), x.getDonGia(), x.getMoTa()};
+			Object[] row = {x.getMaMH(), x.getLoaiMH(), x.getTenMH(), x.getSlTon(), x.getDvt(), df.format(x.getDonGia()), x.getMoTa()};
 			model.addRow(row);
 		}
 	}
@@ -173,13 +180,11 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -191,18 +196,22 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		tblSanPham.clearSelection();
+		 if (!tblSanPham.isFocusOwner()) { // Nếu bảng không có focus
+			 tblSanPham.clearSelection(); // Xóa các dòng đã chọn
+	     }
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj.equals(btnThem)) {
-			try {
-				luu();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(validData()) {
+				try {
+					luu();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		if(obj.equals(btnXoa)) {
@@ -217,7 +226,13 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 			tim();
 		}
 		if(obj.equals(btnSua)) {
-			sua();
+			if(validData()) {
+				sua();
+			}
+		}
+		if(obj.equals(btnRefresh)) {
+			clearTableFrmSanPham();
+			loadDataFrmSanPham();
 		}
 		if(obj.equals(cboLoaiSP)) {
 			String selectedValue = (String) cboLoaiSP.getSelectedItem();
@@ -228,27 +243,39 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 			txtMaSP.setText(randomCode); // Hiển thị mã sản phẩm lên trên textfield txtMaSP
 		}
 	}
+	
+	private boolean validData() {
+		String ten = txtTenSP.getText();
+		String mta = txtMoTa.getText();
+		if(ten.equals("") || txtsoLuong.getText().equals("") || txtDonGia.getText().equals("") || mta.equals("")) {
+			JOptionPane.showMessageDialog(null, "Các trường không được rỗng");
+			return false;
+		}
+		return true;
+	}
 
 	private void luu() throws SQLException {
 		MatHang mh = revertTextToMatHang();
-		String ma = txtMaSP.getText();
-		if(sp.addSanPham(mh)) {
-			if(mh.getLoaiMH().equals("Xe")) {
-				JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
-				xe = new Frm_Xe();
-				xe.maXe = ma;
-				xe.setVisible(true);
-				themVaoBang();
+		if(mh != null) {
+			String ma = txtMaSP.getText();
+			if(sp.addSanPham(mh)) {
+				if(mh.getLoaiMH().equals("Xe")) {
+					JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
+					xe = new Frm_Xe();
+					xe.maXe = ma;
+					xe.setVisible(true);
+					themVaoBang();
+				}
+				if(mh.getLoaiMH().equals("Linh Kiện")) {
+					JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
+					lk = new Frm_LinhKien();
+					lk.maLK = ma;
+					lk.setVisible(true);
+					themVaoBang();
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
 			}
-			if(mh.getLoaiMH().equals("Linh Kiện")) {
-				JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
-				lk = new Frm_LinhKien();
-				lk.maLK = ma;
-				lk.setVisible(true);
-				themVaoBang();
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
 		}
 	}
 	
@@ -271,14 +298,19 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	}
 	
 	private MatHang revertTextToMatHang() {
-		String ma = txtMaSP.getText();
-		String loaiMH =(String) cboLoaiSP.getSelectedItem();
-		String ten = txtTenSP.getText();
-		int sl = Integer.parseInt(txtsoLuong.getText());
-		String dvt = txtDonViTinh.getText();
-		double donGia = Double.parseDouble(txtDonGia.getText());
-		String mota = txtMoTa.getText();
-		MatHang mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
+		MatHang mh = null;
+		if(txtsoLuong.getText().matches("^[0-9]+$") && txtDonGia.getText().matches("^[0-9]+(\\.[0-9]{1,2})?$")) {
+			String ma = txtMaSP.getText();
+			String loaiMH =(String) cboLoaiSP.getSelectedItem();
+			String ten = txtTenSP.getText();
+			int sl = Integer.parseInt(txtsoLuong.getText());
+			double donGia = Double.parseDouble(txtDonGia.getText());
+			String dvt = txtDonViTinh.getText();
+			String mota = txtMoTa.getText();
+			mh = new MatHang(ma, ten, dvt, mota, donGia, sl, loaiMH);
+		} else {
+			JOptionPane.showMessageDialog(null, "Số lượng và đơn giá phải là số và không nhỏ hơn 0");
+		}
 		return mh;
 	}
 
@@ -293,7 +325,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		String[] row = {ma, loaiMH, ten, sl, dvt, donGia, mota};
 		model.addRow(row);
 	}
-	private void clearTable() {
+	public void clearTableFrmSanPham() {
 		while (tblSanPham.getRowCount() > 0) {
 			model.removeRow(0);
 		}
@@ -303,7 +335,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 			ArrayList<MatHang> dsmh = sp.getSPTheoTen(txtTim.getText());
 			if(dsmh != null) {
 				btnTim.setText("Hủy tìm");
-				clearTable();
+				clearTableFrmSanPham();
 				for(MatHang mh : dsmh) {				
 					if(dsmh != null) {
 						model.addRow(new String[] {mh.getMaMH(), mh.getTenMH(), mh.getDvt(),
@@ -314,8 +346,8 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 				JOptionPane.showMessageDialog(this, "Không tìm thấy");
 			}
 		}else {
-			clearTable();
-			loadData();
+			clearTableFrmSanPham();
+			loadDataFrmSanPham();
 			btnTim.setText("Tìm");
 		}
 	}
@@ -324,8 +356,8 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		int sl = Integer.parseInt(txtsoLuong.getText());
 		BigDecimal dg = new BigDecimal(txtDonGia.getText());
 		if(sp.update(sl, dg, ma)) {
-			clearTable();
-			loadData();
+			clearTableFrmSanPham();
+			loadDataFrmSanPham();
 			JOptionPane.showMessageDialog(null, "Sửa thành công!");
 		}else {
 			JOptionPane.showMessageDialog(null, "Mã SP không tồn tại!");

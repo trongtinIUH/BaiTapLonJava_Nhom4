@@ -295,6 +295,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.setSelectedIndex(getIndex(nhapHang));
 		}
 		if(o.equals(btnSanPham)) {
+			sanPham.loadDataFrmSanPham();
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Sản Phẩm\r\n", null, sanPham, null);

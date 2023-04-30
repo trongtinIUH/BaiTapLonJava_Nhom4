@@ -18,7 +18,7 @@ public class Xe_DAO {
 		String sql ="insert into Xe(maXe, dongXe, soKhung, mauXe, soPK, soSuon, xuatXu) VALUES(?,?,?,?,?,?,?)";
 		 try {
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, x.getMaMH());
+			pst.setString(1, x.getMaXe());
 			pst.setString(2, x.getDongXe());
 			pst.setString(3, x.getSoKhung());
 			pst.setString(4, x.getMauXe());

@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class PhieuXuat extends HoaDonHang implements Serializable{
@@ -13,11 +14,11 @@ public class PhieuXuat extends HoaDonHang implements Serializable{
 	private String soPhieu;
 	private LocalDate ngayTao;
 	private int soLuong;
-	public PhieuXuat(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD) {
+	public PhieuXuat(MatHang mh, KhachHang kh, NhanVien nv, Date ngayGD) {
 		super(mh, nv, ngayGD);
 		// TODO Auto-generated constructor stub
 	}
-	public PhieuXuat(MatHang mh, KhachHang kh, NhanVien nv, LocalDate ngayGD, String soPhieu, LocalDate ngayTao,
+	public PhieuXuat(MatHang mh, KhachHang kh, NhanVien nv, Date ngayGD, String soPhieu, LocalDate ngayTao,
 			int soLuong) {
 		super(mh, nv, ngayGD);
 		this.soPhieu = soPhieu;
