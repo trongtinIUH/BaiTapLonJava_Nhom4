@@ -233,7 +233,7 @@ public class TrangChu extends JFrame implements ActionListener{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnNhaphang, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					
 					.addGap(235))
 		);
@@ -307,19 +307,14 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.setSelectedIndex(getIndex(baohanh));
 		}
 		if(o.equals(btnThongKe)) {
-		    // xóa các tab không cần thiết
-		    int count = tabbedPane.getTabCount();
-		    for (int i = count - 1; i >= 0; i--) {
-		        String title = tabbedPane.getTitleAt(i);
-		        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Thống Kê")) {
-		            tabbedPane.removeTabAt(i);
-		        }
-		    }
+		  
 		    // thêm tab "Thống kê" mới
+			thongke.loadData();
 		    setBackground();
 		    btnThongKe.setBackground(Color.pink);
 		    tabbedPane.addTab("tab_Thống Kê\r\n", null, thongke, null);
-		    tabbedPane.setSelectedIndex(getIndex(thongke));
+		 //   tabbedPane.setSelectedIndex(getIndex(thongke));
+		    tabbedPane.setSelectedComponent(thongke);
 		}
 	}
 
