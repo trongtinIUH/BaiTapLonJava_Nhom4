@@ -1,4 +1,10 @@
 /app_QLMBX/
+<<<<<<< HEAD
 /connectDB/
 /dao/
 /entity/
+=======
+/dao/
+/entity/
+/connectDB/
+>>>>>>> origin/nhanh1

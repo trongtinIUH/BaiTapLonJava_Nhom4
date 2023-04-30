@@ -1,9 +1,6 @@
 package dao;
 
-<<<<<<< HEAD
-public class NhapHang_DAO {
 
-=======
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,5 +117,4 @@ public class NhapHang_DAO {
 		}
 		return false;
 	}
->>>>>>> origin/nhanh3
 }

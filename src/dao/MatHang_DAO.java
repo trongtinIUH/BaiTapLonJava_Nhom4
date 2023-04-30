@@ -2,6 +2,7 @@ package dao;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
+import entity.CuaHang;
+import entity.HopDong;
+import entity.KhachHang;
 import entity.MatHang;
+import entity.NhanVien;
 
 public class MatHang_DAO {
 	public ArrayList<MatHang> getAllMatHang() {
@@ -178,6 +183,7 @@ public class MatHang_DAO {
 		return false;
 	}
 	
+<<<<<<< HEAD
 	public boolean updateSLTon(int sl, String ma) {
 		try {
 			ConnectDB.getInstance();
@@ -198,5 +204,36 @@ public class MatHang_DAO {
 			e.printStackTrace();
 		}
 		return false;
+=======
+	public MatHang getMHTheoMa(String id) {
+		MatHang mh = new MatHang();
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from MatHang where maMH = '" + id + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				String maMH = rs.getString("maMH");
+				String ten = rs.getString("tenMH");
+				String dvt = rs.getString("dvt");
+				String moTa = rs.getString("moTa");
+				double donGia = rs.getDouble("donGia");
+				int soLuongTon = rs.getInt("slTon");
+				String loaiMH = rs.getString("loaiMH");
+				mh = new MatHang(maMH, ten, dvt, moTa, donGia, soLuongTon, loaiMH);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (mh.getMaMH() == null)
+			return null;
+		return mh;
+>>>>>>> origin/nhanh1
 	}
 }
