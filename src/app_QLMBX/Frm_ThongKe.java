@@ -31,7 +31,7 @@ public class Frm_ThongKe extends JPanel implements Serializable {
 	private ThongKe_DAO thongke ;
 
 	
-	
+	//
 //public static void main(String[] args) {
 //	new Frm_ThongKe().setVisible(true);
 //}
