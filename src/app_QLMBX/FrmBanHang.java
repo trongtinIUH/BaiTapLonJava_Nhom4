@@ -23,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -88,7 +89,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private JComboBox cbxHinhThucTT;
 	private JLabel lblCuaHang;
 	private JComboBox cbxCuaHang;
-	private JButton btnThemKH;
 	private JTextField txtTenNVTT;
 	private JLabel lblChucVu;
 	private JComboBox<String> cbxChucVu;
@@ -130,6 +130,11 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private int flag;
 	private TraGop_DAO traGop_dao;
 	private TraTrucTiep_DAO traTrucTiep_dao;
+	private JRadioButton radCu;
+	private JRadioButton radMoi;
+	private ButtonGroup grbType;
+	private JButton btnLayTTKH;
+	private String maKh;
 
 	public FrmBanHang() {
 		
@@ -154,40 +159,53 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		JPanel pnKhachHang = new JPanel();
 		pnKhachHang.setBounds(x,y,width, height);
 		pnKhachHang.setBorder(BorderFactory.createTitledBorder("Nhập thông tin khách hàng"));
+		TitledBorder titleKhachHang = (TitledBorder) pnKhachHang.getBorder();
+		titleKhachHang.setTitleColor(Color.blue);
 		pnKhachHang.setLayout(null);
 		
+		pnKhachHang.add(lblTenKH = new JLabel("Loại khách hàng:"));
+		lblTenKH.setBounds(30, 20, 120, 20);
 		pnKhachHang.add(lblTenKH = new JLabel("Tên khách hàng:"));
-		lblTenKH.setBounds(30, 30, 120, 20);
+		lblTenKH.setBounds(30, 45, 120, 20);
 		pnKhachHang.add(lblDiaChi = new JLabel("Địa chỉ:"));
-		lblDiaChi.setBounds(30, 60, 120, 20);
+		lblDiaChi.setBounds(30, 75, 120, 20);
 		pnKhachHang.add(lblSoDt = new JLabel("Số điện thoại:"));
-		lblSoDt.setBounds(30, 90, 120, 20);
+		lblSoDt.setBounds(30, 105, 120, 20);
 		pnKhachHang.add(lblGioiTinh = new JLabel("Giới tính:"));
-		lblGioiTinh.setBounds(30, 120, 120, 20);
+		lblGioiTinh.setBounds(30, 135, 120, 20);
 
+		pnKhachHang.add(radCu = new JRadioButton("Cũ"));
+		radCu.setBounds(160, 20, 60, 20);
+		pnKhachHang.add(radMoi = new JRadioButton("Mới"));
+		radMoi.setBounds(220, 20, 60, 20);
+		grbType = new ButtonGroup();
+		grbType.add(radCu);
+		grbType.add(radMoi);
 		pnKhachHang.add(txtTenKH = new JTextField());
-		txtTenKH.setBounds(160, 30, 200, 20);
+		txtTenKH.setBounds(160, 45, 200, 20);
 		pnKhachHang.add(txtDiaChi = new JTextField());
-		txtDiaChi.setBounds(160, 60, 200, 20);
+		txtDiaChi.setBounds(160, 75, 200, 20);
 		pnKhachHang.add(txtSoDt = new JTextField());
-		txtSoDt.setBounds(160, 90, 200, 20);
+		txtSoDt.setBounds(160, 105, 200, 20);
 		pnKhachHang.add(radNam = new JRadioButton("Nam"));
-		radNam.setBounds(160, 120, 60, 20);
+		radNam.setBounds(160, 135, 60, 20);
 		pnKhachHang.add(radNu = new JRadioButton("Nữ"));
-		radNu.setBounds(220, 120, 60, 20);
+		radNu.setBounds(220, 135, 60, 20);
 		grbSex = new ButtonGroup();
 		grbSex.add(radNam);
 		grbSex.add(radNu);
 
 		
-		pnKhachHang.add(btnThemKH = new JButton("Thêm khách hàng"));
+		pnKhachHang.add(btnLayTTKH = new JButton("Thêm khách hàng"));
 		pnKhachHang.add(btnXoaTrangKH = new JButton("Xóa trắng"));
-		btnThemKH.setBounds(110, 160, 150, 30);
+		btnLayTTKH.setBounds(110, 160, 150, 30);
 		btnXoaTrangKH.setBounds(270, 160, 100, 30);
 		add(pnKhachHang);
 		
 		JPanel pnXe = new JPanel();
 		pnXe.setBorder(BorderFactory.createTitledBorder("Nhập thông tin xe cần mua:"));
+		TitledBorder titleXe = (TitledBorder) pnXe.getBorder();
+		titleXe.setTitleColor(Color.blue);
 		pnXe.setLayout(null);
 		x = 420; y=10; width=300; height=200;
 		pnXe.setBounds(x, y, width, height);
@@ -221,9 +239,12 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		add(pnXe);
 		
 		JPanel pnNV = new JPanel();
-		pnNV.setBorder(BorderFactory.createTitledBorder("Nhân viên lập hóa đơn"));
+		pnNV.setBorder(BorderFactory.createTitledBorder("Nhân viên lập hợp đồng"));
+		TitledBorder titleNhanVien = (TitledBorder) pnNV.getBorder();
+		titleNhanVien.setTitleColor(Color.blue);
 		pnNV.setLayout(null);
 		pnNV.setBounds(730, 10, 240, 200);
+		
 		pnNV.add(lblTenNV = new JLabel("Tên nhân viên:"));
 		lblTenNV.setBounds(10, 50, 90, 20);
 		pnNV.add(lblChucVu = new JLabel("Chức vụ:"));
@@ -274,7 +295,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.setBounds(450, 0, 120, 30);
 		datePicker.setBackground(new Color(248,248,248));
-		modelNgayKH.setDate(2020,12,12);
+		modelNgayKH.setDate(2023,4,5);
 		modelNgayKH.setSelected(true);
 		pnThongTin.add(datePicker);
 		pnThongTin.add(lblTGBH = new JLabel("TG Bảo hành:"));
@@ -293,6 +314,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		JPanel pnTable = new JPanel();
 		pnTable.setBorder(BorderFactory.createTitledBorder("Chi tiết hợp đồng"));
+		TitledBorder titleChiTietHD = (TitledBorder) pnTable.getBorder();
+		titleChiTietHD.setTitleColor(Color.blue);
 		pnTable.setBounds(10, 290, 950, 170);
 		pnTable.setLayout(null);
 		
@@ -304,51 +327,53 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		pnTable.add(scrollTable);
 		add(pnTable);
 		
-		JPanel pnControl = new JPanel();
-		pnControl.setBounds(10, 470, 950, 40);
-		pnControl.setLayout(null);
-		pnControl.add(lblTongTT = new JLabel("Tổng thành tiền: "));
-		lblTongTT.setBounds(10, 5, 120, 20);
-		pnControl.add(txtTongTT = new JTextField());
-		txtTongTT.setBounds(140, 5, 200, 20);
-		txtTongTT.setEditable(false);
-		pnControl.add(btnXoaDong = new JButton("Xóa sản phẩm"));
-		btnXoaDong.setBounds(400, 5, 150, 30);
-		btnXoaDong.setForeground(Color.red);
-		pnControl.add(btnXoaTrang = new JButton("LÀM MỚI"));
-		btnXoaTrang.setBounds(560, 5, 100, 30);
-		pnControl.add(btnThanhToan = new JButton("THANH TOÁN"));
-		btnThanhToan.setBounds(670, 5, 120, 30);   
-		add(pnControl);     
-		
 		JPanel pnLoaiTT = new JPanel();
 		pnLoaiTT.setLayout(null);
-		pnLoaiTT.setBounds(10, 510, 950, 40);
-		pnLoaiTT.add(lblHinhThucTT = new JLabel("Chọn hình thức thanh toán: "));
-		lblHinhThucTT.setBounds(10, 5, 170, 20);
+		pnLoaiTT.setBounds(10, 470, 950, 30);
+		pnLoaiTT.add(lblTongTT = new JLabel("Tổng thành tiền: "));
+		lblTongTT.setBounds(10, 5, 120, 20);
+		pnLoaiTT.add(txtTongTT = new JTextField());
+		txtTongTT.setBounds(140, 5, 200, 20);
+		txtTongTT.setEditable(false);
+		pnLoaiTT.add(lblHinhThucTT = new JLabel("Chọn loại thanh toán: "));
+		lblHinhThucTT.setBounds(350, 5, 140, 20);
 		pnLoaiTT.add(cbxHinhThucTT = new JComboBox());
-		cbxHinhThucTT.setBounds(190, 5, 120, 20);
+		cbxHinhThucTT.setBounds(500, 5, 110, 20);
 		cbxHinhThucTT.addItem("Trả trực tiếp");
 		cbxHinhThucTT.addItem("Trả góp");
-		pnLoaiTT.add(lblGiam = new JLabel("Phần trăm giảm"));
-		lblGiam.setBounds(320, 5, 100, 20);
+		pnLoaiTT.add(lblGiam = new JLabel("Phần trăm giảm:"));
+		lblGiam.setBounds(630, 5, 100, 20);
 		pnLoaiTT.add(txtGiam = new JTextField());
-		txtGiam.setBounds(430, 5, 60, 20);
+		txtGiam.setBounds(730, 5, 60, 20);
 		txtGiam.setEditable(false);
-		pnLoaiTT.add(lblLaiSuat = new JLabel("Lãi suất"));
-		lblLaiSuat.setBounds(510, 5, 60, 20);
+		pnLoaiTT.add(lblLaiSuat = new JLabel("Lãi suất:"));
+		lblLaiSuat.setBounds(800, 5, 60, 20);
 		pnLoaiTT.add(txtLaiSuat = new JTextField());
-		txtLaiSuat.setBounds(580, 5, 60, 20);
+		txtLaiSuat.setBounds(860, 5, 60, 20);
 		txtLaiSuat.setEditable(false);
-		pnLoaiTT.add(lblTienDua = new JLabel("Tiền phải đưa"));
-		lblTienDua.setBounds(660, 5, 90, 20);
-		pnLoaiTT.add(txtTienDua = new JTextField());
-		txtTienDua.setBounds(770, 5, 170, 20);
-		txtTienDua.setEditable(false);
 		add(pnLoaiTT);
+
 		
-		
-		btnThemKH.addActionListener(this);
+		JPanel pnControl = new JPanel();
+		pnControl.setBounds(10, 500, 950, 40);
+		pnControl.setLayout(null);
+		pnControl.add(lblTienDua = new JLabel("Tiền phải đưa: "));
+		lblTienDua.setBounds(10, 5, 90, 20);
+		pnControl.add(txtTienDua = new JTextField());
+		txtTienDua.setBounds(140, 5, 200, 20);
+		txtTienDua.setEditable(false);
+		pnControl.add(btnXoaDong = new JButton("XÓA SẢN PhẨM"));
+		btnXoaDong.setBounds(500, 0, 170, 30);
+		btnXoaDong.setForeground(Color.red);
+		pnControl.add(btnXoaTrang = new JButton("LÀM MỚI"));
+		btnXoaTrang.setBounds(680, 0, 110, 30);
+		pnControl.add(btnThanhToan = new JButton("THANH TOÁN"));
+		btnThanhToan.setBounds(800, 0, 140, 30);   
+		add(pnControl);     
+				
+		radCu.addActionListener(this);
+		radMoi.addActionListener(this);
+		btnLayTTKH.addActionListener(this);
 		btnXoaTrangKH.addActionListener(this);
 		btnThemXe.addActionListener(this);
 		btnThemNV.addActionListener(this);
@@ -362,10 +387,12 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	}
 	
 	private void xoaTrangKH() {
+		grbType.clearSelection();
 		txtTenKH.setText("");
 		txtDiaChi.setText("");
 		txtSoDt.setText("");
 		grbSex.clearSelection();
+		txtMaKH.setText("");
 		txtTenKH.requestFocus();
 	}
 	
@@ -393,39 +420,72 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		return -1;
 	}
 	
-	private void themKH() {
+	private void LayDuLieuKH() {
 		//if(kiemTraKH()) {
-			PhatSinhMa_DAO makh = new PhatSinhMa_DAO();
-			String tenKH =txtTenKH.getText();
-			String sDT = txtSoDt.getText();
-			String diaChi = txtDiaChi.getText();
-			String gioiTinh;
-			if(radNam.isSelected())
-				gioiTinh="Nam";
-			else
-				gioiTinh="Nữ";
-			KhachHang kh = new KhachHang(makh.generateRandomKH(), tenKH, gioiTinh, diaChi, sDT);
-			kh_dao = new KhachHang_DAO();
-			if(txtTenKH.getText().equals("") || txtSoDt.getText().equals("") || txtDiaChi.getText().equals("") || (!radNam.isSelected() && !radNu.isSelected()))
+		if(!radCu.isSelected() && !radMoi.isSelected()) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn loại khách hàng!!");
+		}
+		else
+		{
+			if(radCu.isSelected())
 			{
-				JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin khách hàng!!");
+				String sdt = txtSoDt.getText();
+				if(sdt.equals(""))
+					JOptionPane.showMessageDialog(null, "Số ĐT không được rỗng!!");
+				else
+				{
+					String ma = kh_dao.getMaKHTheoSDT(sdt);
+					String ten = kh_dao.getTenKHTheoSDT(sdt);
+					String diaChi = kh_dao.getDiaChiTheoSDT(sdt);
+					String gioiTinh = kh_dao.getGioiTinhTheoSDT(sdt);
+					if(ma != "" && ten != "" && diaChi != "" && gioiTinh != "")
+					{
+						txtTenKH.setText(ten);
+						txtDiaChi.setText(diaChi);
+						if(gioiTinh.equalsIgnoreCase("Nam"))
+							radNam.setSelected(true);
+						else
+							radNu.setSelected(true);
+						txtMaKH.setText(ma);
+						JOptionPane.showMessageDialog(null, "Tìm thấy dữ liệu khách hàng!!");
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin, số DT không hợp lệ!!");
+				}
 			}
-			else
-			{
-				if(kh_dao.getKHTheoSDT(sDT) == null)
-					if(kh_dao.createKH(kh)) {
-						JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
-						txtMaKH.setText(kh.getMaKH());
-						
-					} else
-						JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
-				
-				else 
-					JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại");
-			}
-				
+			else if(radMoi.isSelected()) {
+				PhatSinhMa_DAO makh = new PhatSinhMa_DAO();
+				String tenKH =txtTenKH.getText();
+				String sDT = txtSoDt.getText();
+				String diaChi = txtDiaChi.getText();
+				String gioiTinh;
+				if(radNam.isSelected())
+					gioiTinh="Nam";
+				else
+					gioiTinh="Nữ";
+				KhachHang kh = new KhachHang(makh.generateRandomKH(), tenKH, gioiTinh, diaChi, sDT);
+				if(txtTenKH.getText().equals("") || txtSoDt.getText().equals("") || txtDiaChi.getText().equals("") || (!radNam.isSelected() && !radNu.isSelected()))
+				{
+					JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin khách hàng!!");
+				}
+				else
+				{
+					if(kh_dao.getKHTheoSDT(sDT) == null)
+						if(kh_dao.createKH(kh)) {
+							JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
+							txtMaKH.setText(kh.getMaKH());
+							
+						} else
+							JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
+					
+					else 
+						JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại");
+				}
+			}	
+		}	
 		//}
 	}
+	
 	
 	private boolean kiemTraSoLuongNhap() {
 		int soLuongMua = Integer.parseInt(txtSoLuongMua.getText());
@@ -493,8 +553,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			String loaiHD = cbxHinhThucTT.getSelectedItem().toString();
 			NhanVien nvl = nv_dao.getNhanVienTheoTen(cbxTenNV.getSelectedItem().toString());
 			CuaHang cuaHang = ch_DAO.getCuaHangTheoTen(cbxCuaHang.getSelectedItem().toString());
-			KhachHang kh = kh_dao.getKHTheoSDT(txtSoDt.getText());
-			//		ChiTietHopDong cthd = cthd_dao.getCTHDTheoMa(maCTHD);
+			KhachHang kh = kh_dao.getKHTheoSDT(txtSoDt.getText());		
 			int soDong = tblModel.getRowCount();
 			if(nvl==null || cuaHang==null || kh==null || soDong==0) {
 				JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin");
@@ -510,6 +569,11 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					else if(loaiHD.equalsIgnoreCase("Trả góp"))
 						themHDTraGop();
 					
+					int soRow = tblHopDong.getRowCount();
+					for(int i=0;i<soRow;i++)
+					{
+						themCTHD(i);
+					}
 					JOptionPane.showMessageDialog(this, "Thanh Toán thành công, hợp đồng đã được lưu vào CSDL!!");
 			}
 		}
@@ -518,9 +582,9 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	//Thêm vào hợp đồng trả trực tiếp
 	private void themHDTraTrucTiep() {
 		HopDong HD = new HopDong(maHd);
-		String maUuDai ="";
 		double PhanTramMienGiam =  Double.parseDouble(txtGiam.getText());
-		TraTrucTiep HDTraTrucTiep = new TraTrucTiep(HD, maUuDai, PhanTramMienGiam); 
+		double soTienTra = Double.parseDouble(txtTienDua.getText());
+		TraTrucTiep HDTraTrucTiep = new TraTrucTiep(HD, PhanTramMienGiam, soTienTra); 
 		traTrucTiep_dao.createHDTraTrucTiep(HDTraTrucTiep);
 	}
 	
@@ -556,39 +620,9 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	// Thanh toán và lưu thông tin hợp đồng
 	private void thanhToan() {
 		themhd();
-		int soRow = tblHopDong.getRowCount();
-		for(int i=0;i<soRow;i++)
-		{
-			themCTHD(i);
-		}
 	}
 
 		
-//	private void timSDTKH()
-//	{
-//
-//
-//		String sdt = txtTimSo.getText().trim();
-//		KhachHang kh = kh_dao.getKhachHangTheoSDT(sdt);
-//		if(kh!=null)
-//		{
-//
-//			lbXuatTenKH.setText(kh.getMaKH());
-//			txtTenKH.setText(kh.getHoTen());
-//			txtSDT.setText(kh.getSDT());
-//			modelNgayKH.setValue(kh.getNgaySinh());
-//			txtDiaChi.setText(kh.getDiaChi());
-//
-//			if (kh.isGioiTinh()) {
-//				radNam.setSelected(true);
-//				radNu.setSelected(false);
-//			} else {
-//				radNam.setSelected(false);
-//				radNu.setSelected(true);
-//			}
-//		}
-//		else JOptionPane.showMessageDialog(this, "Khách hàng không tồn tại");
-//	}
 
 	private void xoaCTHD() {
 		if (tblHopDong.getSelectedRow() == -1) {
@@ -606,32 +640,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	}
 		
 		
-		//sửa Khách hàng 
-//	private void suaKH() {
-//
-//		if(kiemTraKH()) {
-//
-//		String tenkh = txtTenKH.getText().trim();
-//		String sdt = txtSoDt.getText().trim();
-//		String diachi = txtDiaChi.getText().trim();
-//		boolean gioitinh = radNam.isSelected();
-//		KhachHang ktkh = kh_dao.getKhachHangTheoSDT(txtSDT.getText());
-//		KhachHang skh = new KhachHang(lbXuatTenKH.getText(), tenkh, gioitinh, diachi, sdt);
-//		if(ktkh!=null&&!ktkh.getMaKH().equalsIgnoreCase(lbXuatTenKH.getText()))
-//		{
-//			JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại ở khách hàng khác");
-//		}
-//		else if(kh_dao.update(skh))
-//		{
-//			JOptionPane.showMessageDialog(this,"Cập nhật thành công thông tin khách hàng");
-//			txtTimSDT.setText(skh.getSDT());
-//		}
-//
-//		}
-//
-//
-//	}
-		
 	private void clearTable() {
 		while (tblHopDong.getRowCount() > 0) {
 			tblModel.removeRow(0);
@@ -641,6 +649,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private void xoaRong() {
 		clearTable();
 		
+		grbType.clearSelection();
 		txtTenKH.setText("");
 		txtDiaChi.setText("");
 		txtSoDt.setText("");
@@ -660,10 +669,14 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		txtTenNVTT.setText("");
 		txtBaoHanh.setText("");
 		cbxCuaHang.removeAllItems();
+		txtTongTT.setText("");
+		txtGiam.setText("");
+		txtLaiSuat.setText("");
+		txtTienDua.setText("");
 		
 		for(Xe n :xe_DAO.getAllXe())
 		{
-			cbxTenNV.addItem(n.getTenMH());;
+			cbxTenXe.addItem(n.getTenMH());;
 		}
 		
 		for(NhanVien n :nv_dao.getAllNhanVien())
@@ -701,13 +714,36 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object obj = e.getSource();
-		if(obj.equals(btnXoaTrangKH)) //Xoa trang KH
+		if(obj.equals(radCu)) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại để định danh");
+			txtTenKH.setEditable(false);
+			txtTenKH.setText("");
+			txtDiaChi.setEditable(false);
+			txtDiaChi.setText("");
+			radNam.setEnabled(false);
+			radNu.setEnabled(false);
+			txtSoDt.setText("");
+			txtSoDt.requestFocus();
+		}
+		else if(obj.equals(radMoi)) {
+			txtTenKH.setEditable(true);
+			txtTenKH.setText("");
+			txtDiaChi.setEditable(true);
+			txtDiaChi.setText("");
+			txtSoDt.setText("");
+			radNam.setEnabled(true);
+			radNu.setEnabled(true);
+			grbSex.clearSelection();
+			txtMaKH.setText("");
+			txtTenKH.requestFocus();
+		}
+		else if(obj.equals(btnXoaTrangKH)) //Xoa trang KH
 		{
 			xoaTrangKH();
 		}
-		else if(obj.equals(btnThemKH))
+		else if(obj.equals(btnLayTTKH))
 		{
-			themKH();
+			LayDuLieuKH();
 		}
 		else if(obj.equals(btnThemXe)) {
 			themXeVaoHD();

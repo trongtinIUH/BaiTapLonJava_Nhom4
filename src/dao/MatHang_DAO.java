@@ -59,6 +59,31 @@ public class MatHang_DAO {
 		return mh;
 		
 	}
+	
+	public MatHang getMatHangTheoMa(String maMh) {
+		MatHang mh = null;
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from MatHang where maMH = '"+maMh+"'";
+			Statement sta = con.createStatement();
+			ResultSet rs = sta.executeQuery(sql);
+			while(rs.next()) {
+				mh = new MatHang(rs.getString("maMH"), rs.getString("tenMH"), rs.getString("dvt"), rs.getString("moTa"), rs.getDouble("donGia"), rs.getInt("slTon"), rs.getString("loaiMH"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mh;
+		
+	}
+	
 	public boolean addSanPham(MatHang sp) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();

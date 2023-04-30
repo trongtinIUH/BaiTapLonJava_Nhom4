@@ -1,3 +1,20 @@
+<<<<<<< HEAD
 /dao/
 /entity/
 /app_QLMBX/
+=======
+<<<<<<< HEAD
+/dao/
+/entity/
+/app_QLMBX/
+=======
+/app_QLMBX/
+/connectDB/
+/dao/
+/entity/
+<<<<<<< HEAD
+>>>>>>> main
+=======
+/.gitignore
+>>>>>>> main
+>>>>>>> origin/nhanh2

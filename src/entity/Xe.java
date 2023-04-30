@@ -1,4 +1,5 @@
 package entity;
+
 import java.util.Objects;
 
 public class Xe extends MatHang{

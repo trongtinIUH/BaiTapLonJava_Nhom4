@@ -39,6 +39,7 @@ public class MatHang implements Serializable {
 	public void setMoTa(String moTa) {
 		this.moTa = moTa;
 	}
+
 	public double getDonGia() {
 		return donGia;
 	}
