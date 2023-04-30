@@ -42,6 +42,7 @@ public class TrangChu extends JFrame implements ActionListener{
 	private JButton btnBaoHanh;
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JButton btnSanPham;
+	private JButton btnThongKe;
 
 	//thêm các frm
 	FrmBanHang banHang = new FrmBanHang();
@@ -51,6 +52,7 @@ public class TrangChu extends JFrame implements ActionListener{
 	FrmNhapHang nhapHang = new FrmNhapHang();
 	FrmSanPham sanPham = new FrmSanPham();
 	FrmBaoHanh baohanh= new FrmBaoHanh();
+	Frm_ThongKe thongke= new Frm_ThongKe();
 	
 
 	/**
@@ -73,7 +75,7 @@ public class TrangChu extends JFrame implements ActionListener{
 	 */
 	private void initialize() {
 		
-		setBounds(100, 100, 1280, 650);
+		setBounds(100, 100, 1280, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -180,6 +182,18 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnNhaphang.setForeground(Color.BLACK);
 		btnNhaphang.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		btnNhaphang.setBackground(Color.WHITE);
+		//thống kê 
+		 btnThongKe = new JButton("Thống Kê");
+		 btnThongKe.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+		 btnThongKe.setIcon(new ImageIcon("icon\\thongke.png"));
+		 btnThongKe.setForeground(Color.BLACK);
+		 btnThongKe.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		 btnThongKe.setBackground(Color.WHITE);
+		 
+		 
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
@@ -196,7 +210,8 @@ public class TrangChu extends JFrame implements ActionListener{
 								.addComponent(btnNhanVien, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
 								.addComponent(btnBaoHanh, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-								.addComponent(btnNhaphang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+								.addComponent(btnNhaphang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+								.addComponent(btnThongKe, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_panel_2.setVerticalGroup(
@@ -216,7 +231,9 @@ public class TrangChu extends JFrame implements ActionListener{
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnBaoHanh, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNhaphang, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnNhaphang, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 					
 					.addGap(235))
 		);
@@ -241,6 +258,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnNhanVien.addActionListener(this);
 		btnBaoHanh.addActionListener(this);
 		btnNhaphang.addActionListener(this);
+		btnThongKe.addActionListener(this);
 	}
 
 	@Override
@@ -288,6 +306,21 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.addTab("tab_Bảo Hành\r\n", null,baohanh , null);
 			tabbedPane.setSelectedIndex(getIndex(baohanh));
 		}
+		if(o.equals(btnThongKe)) {
+		    // xóa các tab không cần thiết
+		    int count = tabbedPane.getTabCount();
+		    for (int i = count - 1; i >= 0; i--) {
+		        String title = tabbedPane.getTitleAt(i);
+		        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Thống Kê")) {
+		            tabbedPane.removeTabAt(i);
+		        }
+		    }
+		    // thêm tab "Thống kê" mới
+		    setBackground();
+		    btnThongKe.setBackground(Color.pink);
+		    tabbedPane.addTab("tab_Thống Kê\r\n", null, thongke, null);
+		    tabbedPane.setSelectedIndex(getIndex(thongke));
+		}
 	}
 
 	public void setBackground() {
@@ -298,6 +331,7 @@ public class TrangChu extends JFrame implements ActionListener{
 		btnNhaphang.setBackground(Color.white);
 		btnSanPham.setBackground(Color.white);
 		btnBaoHanh.setBackground(Color.white);
+		btnThongKe.setBackground(Color.white);
 		
 	}
 	
