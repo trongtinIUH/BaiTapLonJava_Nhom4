@@ -183,7 +183,7 @@ public class MatHang_DAO {
 		return false;
 	}
 	
-<<<<<<< HEAD
+
 	public boolean updateSLTon(int sl, String ma) {
 		try {
 			ConnectDB.getInstance();
@@ -204,7 +204,7 @@ public class MatHang_DAO {
 			e.printStackTrace();
 		}
 		return false;
-=======
+	}
 	public MatHang getMHTheoMa(String id) {
 		MatHang mh = new MatHang();
 		try {
@@ -234,6 +234,6 @@ public class MatHang_DAO {
 		if (mh.getMaMH() == null)
 			return null;
 		return mh;
->>>>>>> origin/nhanh1
+
 	}
 }
