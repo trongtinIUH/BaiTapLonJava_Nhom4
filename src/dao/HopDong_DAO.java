@@ -19,7 +19,7 @@ public class HopDong_DAO {
 	public boolean update(HopDong hd){
 		try {
 			ConnectDB.getInstance();
-		} catch (SQLException e1) {
+		} catch (SQLException e1) { 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -255,7 +255,7 @@ public class HopDong_DAO {
 	}
 	
 	public Date getNgayLapTheoMaHD(String maHD) {
-		Date NgayLap=null;
+		Date NgayLap = null;
 		try {
 			ConnectDB.getInstance();
 		} catch (SQLException e1) {

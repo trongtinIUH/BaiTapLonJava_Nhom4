@@ -9,7 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DecimalFormat;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
@@ -17,6 +21,7 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -81,6 +86,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 	private JTextField txtLoi;
 	private JTextField txtTienSua;
 	private BaoHanh_DAO bh;
+	private DecimalFormat df = new DecimalFormat("#");
 
 	public FrmBaoHanh() {
 		setLayout(null);
@@ -106,7 +112,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		pane.setPreferredSize(new Dimension(950, 270));
 
 		JPanel panelSouth = new JPanel();
-		panelSouth.setBounds(7, 340, 580, 200);
+		panelSouth.setBounds(7, 340, 560, 200);
 		panelSouth.setBorder(BorderFactory.createTitledBorder("Thông tin bảo hành"));
 		TitledBorder titledthongtin = (TitledBorder) panelSouth.getBorder();
 		titledthongtin.setTitleColor(Color.blue);
@@ -132,9 +138,9 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		// Đặt giá trị cho JTextField
 		txtMaPhieu.setText(code);
 
-		JLabel lblTen = new JLabel("Ngày lập:");
+		JLabel lblTen = new JLabel("Ngày lập BH:");
 		panelSouth.add(lblTen);
-		lblTen.setBounds(300, 30, 100, 20);
+		lblTen.setBounds(290, 30, 100, 20);
 		lblTen.setFont(font);
 		modelNgaylap = new SqlDateModel();
 		p = new Properties();
@@ -143,7 +149,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		p.put("text.year", "Year");
 		datePanel = new JDatePanelImpl(modelNgaylap, p);
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		datePicker.setBounds(420, 30, 140, 30);
+		datePicker.setBounds(410, 30, 140, 30);
 		datePicker.setBackground(new Color(248, 248, 248));
 		datePicker.setToolTipText("Chọn ngày lập");
 		modelNgaylap.setDate(2023, 4, 5);
@@ -162,10 +168,10 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 
 		JLabel lblLiDo = new JLabel("Lí do:");
 		panelSouth.add(lblLiDo);
-		lblLiDo.setBounds(300, 60, 150, 20);
+		lblLiDo.setBounds(290, 60, 150, 20);
 		lblLiDo.setFont(font);
 		panelSouth.add(txtLiDo = new JTextField());
-		txtLiDo.setBounds(420, 60, 140, 23);
+		txtLiDo.setBounds(410, 60, 140, 23);
 		txtLiDo.setFont(font);
 		
 		JLabel lblLinhKien = new JLabel("Mã Linh kiện:");
@@ -179,11 +185,11 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 
 		JLabel lblLoi = new JLabel("Lỗi của ai:");
 		panelSouth.add(lblLoi);
-		lblLoi.setBounds(300, 90, 130, 20);
+		lblLoi.setBounds(290, 90, 130, 20);
 		lblLoi.setFont(font);
 		panelSouth.add(txtLoi = new JTextField());
 		txtLoi.setFont(font);
-		txtLoi.setBounds(420, 90, 140, 23);
+		txtLoi.setBounds(410, 90, 140, 23);
 		
 		JLabel lblmaNV = new JLabel("Mã nhân viên:");
 		panelSouth.add(lblmaNV);
@@ -195,11 +201,11 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		
 		JLabel lblTienSua = new JLabel("Giá tiền sửa:");
 		panelSouth.add(lblTienSua);
-		lblTienSua.setBounds(300, 120, 130, 20);
+		lblTienSua.setBounds(290, 120, 130, 20);
 		lblTienSua.setFont(font);
 		panelSouth.add(txtTienSua = new JTextField());
 		txtTienSua.setFont(font);
-		txtTienSua.setBounds(420, 120, 140, 23);
+		txtTienSua.setBounds(410, 120, 140, 23);
 		
 		JLabel lblmaKh = new JLabel("Mã khách hàng:");
 		panelSouth.add(lblmaKh);
@@ -214,7 +220,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		// chức năng
 		JPanel panelChucNang = new JPanel();
 		panelChucNang.setLayout(null);
-		panelChucNang.setBounds(595, 340, 375, 200);
+		panelChucNang.setBounds(575, 340, 375, 200);
 		panelChucNang.setBorder(BorderFactory.createTitledBorder("Các chức năng"));
 		TitledBorder titledchucnang = (TitledBorder) panelChucNang.getBorder();
 		titledchucnang.setTitleColor(Color.blue);
@@ -232,7 +238,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		cbTim.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		JLabel lblNhapTT = new JLabel("Nhập thông tin:");
-		panelChucNang.add(lblNhapTT);
+		panelChucNang.add(lblNhapTT); 
 		lblNhapTT.setBounds(20, 70, 150, 20);
 		lblNhapTT.setFont(font);
 		panelChucNang.add(txtTim = new JTextField());
@@ -240,25 +246,30 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		txtTim.setBounds(140, 70, 220, 23);
 
 		panelChucNang.add(btnTim = new JButton("Tìm kiếm"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		btnTim.setFont(font);
-		btnTim.setBounds(137, 110, 100, 25);
+		btnTim.setBounds(117, 100, 145, 25);
 
 		panelChucNang.add(btnThem = new JButton("Thêm"));
+		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
 		btnThem.setFont(font);
-		btnThem.setBounds(20, 160, 80, 25);
+		btnThem.setBounds(50, 140, 140, 25);
 
 		panelChucNang.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(font);
 		btnXoa.setForeground(Color.red);
-		btnXoa.setBounds(105, 160, 70, 25);
+		btnXoa.setBounds(195, 140, 140, 25);
 
 		panelChucNang.add(btnXoaTrang = new JButton("Xóa trắng"));
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
 		btnXoaTrang.setFont(font);
-		btnXoaTrang.setBounds(180, 160, 105, 25);
+		btnXoaTrang.setBounds(50, 170, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
+		btnSua.setIcon(new ImageIcon("image\\sua.png"));
 		btnSua.setFont(font);
-		btnSua.setBounds(290, 160, 70, 25);
+		btnSua.setBounds(195, 170, 140, 25);
 		loadData();
 
 		table.addMouseListener(this);
@@ -343,24 +354,51 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 	
 	private boolean kiemTraThoiHanBaoHanh() {
 		String maHD = txtHopDong.getText();
+
 		Date ngaylapBaoHanh = (Date) datePicker.getModel().getValue();
+		
 		@SuppressWarnings("deprecation")
-		int thangLapBaoHanh = ngaylapBaoHanh.getMonth();
+		int thangLapBaoHanh = ngaylapBaoHanh.getMonth()+1;
+		@SuppressWarnings("deprecation")
+		int namLapBaoHanh = ngaylapBaoHanh.getYear();
+		@SuppressWarnings("deprecation")
+		int ngayBH = ngaylapBaoHanh.getDate();
+		
 		
 		hd_dao = new HopDong_DAO();	
 		int thoiGianBh = hd_dao.getThoiGianBHTheoMaHD(maHD);
 		Date ngayLapHD = hd_dao.getNgayLapTheoMaHD(maHD);
 		@SuppressWarnings("deprecation")
-		int thangLapHD = ngayLapHD.getMonth();
-		if((thangLapBaoHanh - thangLapHD) < thoiGianBh)
-			return true;
+		int thangLapHD = ngayLapHD.getMonth()+1;
+		@SuppressWarnings("deprecation")
+		int namLapHD = ngayLapHD.getYear();
+		@SuppressWarnings("deprecation")
+		int ngayHD = ngayLapHD.getDate();
+
+		int doiThang = (namLapBaoHanh - namLapHD) * 12;
+		if((thangLapBaoHanh - thangLapHD) >= 0) {
+			if((doiThang + (thangLapBaoHanh - thangLapHD)) <= thoiGianBh)
+				return true;
+			else
+				return false;
+		}
 		else
-			return false;
+		{
+			if((doiThang - (thangLapHD - thangLapBaoHanh)) <= thoiGianBh && namLapBaoHanh-namLapHD > 0)
+				return true;
+			else
+				return false;
+		}
 	}
 
 	private void them() {
-		if(kiemTraThoiHanBaoHanh() == true)
+		if(txtHopDong.getText().equals("") || txtLinhKien.getText().equals("") || txtmaNV.getText().equals("") 
+				|| txtLiDo.getText().equals("") || txtLoi.getText().equals("") || txtTienSua.getText().equals(""))
 		{
+			JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin!!");
+		}else if(kiemTraThoiHanBaoHanh() == false) {
+			JOptionPane.showMessageDialog(null, "Hợp đồng đã quá hạn bảo hành");
+		}else {
 			Set<String> generatedCodes = new HashSet<>();
 			String code;
 			do {
@@ -391,9 +429,9 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 			PhieuBaoHanh bh = new PhieuBaoHanh(maPhieu, hd, lk, ngaylap, liDo, loiCuaAi, tienSua, nv, kh);
 			bh_dao = new BaoHanh_DAO();
 			if (bh_dao.createBH(bh)) {
-					model.addRow(new Object[] { model.getRowCount() + 1, maPhieu, hd_dao.getHopDongTheoMa(MaHD).getMaHD(),
-							 lk_dao.getLinhKienTheoMa(TenLK).getMaLinhKien(), ngaylap, liDo, loiCuaAi, tienSua, nvdao.getNVTheoMa(maNV).getTenNV(), khdao.getKHTheoMa(maKH).getTenKH()});
-					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				model.addRow(new Object[] { model.getRowCount() + 1, maPhieu, hd_dao.getHopDongTheoMa(MaHD).getMaHD(),
+						lk_dao.getLinhKienTheoMa(TenLK).getMaLinhKien(), ngaylap, liDo, loiCuaAi, tienSua, nvdao.getNVTheoMa(maNV).getTenNV(), khdao.getKHTheoMa(maKH).getTenKH()});
+				JOptionPane.showMessageDialog(this, "Thêm thành công");
 			} else {
 				if(nvdao.getNVTheoMa(maNV) == null)
 					JOptionPane.showMessageDialog(this, "Thêm không thành công mã nhân viên không tồn tại!");
@@ -402,9 +440,8 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 				else if(lk_dao.getLinhKienTheoMa(TenLK) == null)
 					JOptionPane.showMessageDialog(this, "Thêm không thành công mã linh kiện không tồn tại");
 			}
+
 		}
-		else
-			JOptionPane.showMessageDialog(null, "Hợp đồng đã quá hạn bảo hành");
 	}
 
 	private void xoaTrang() {
@@ -499,7 +536,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 			lk = lk_dao.getLinhKienTheoMa(x.getLkpt().getMaLinhKien());
 			kh = khdao.getKHTheoMa(x.getKh().getMaKH());
 			Object[] row = { i, x.getMaPhieuBH(), hd.getMaHD(), lk.getMaLinhKien(), x.getNgayBH(), x.getLiDo(),
-					x.getLoiCuaAi(), x.getGiaTienSua(), nv.getTenNV(), kh.getTenKH()};
+					x.getLoiCuaAi(), df.format(x.getGiaTienSua()), nv.getTenNV(), kh.getTenKH()};
 			model.addRow(row);
 		}
 	}

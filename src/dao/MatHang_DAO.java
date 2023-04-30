@@ -177,4 +177,26 @@ public class MatHang_DAO {
 		}
 		return false;
 	}
+	
+	public boolean updateSLTon(int sl, String ma) {
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 Connection con = ConnectDB.getConnection();
+		
+		 String sql ="UPDATE MatHang SET slTon = ? WHERE maMH = ?";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setInt(1, sl);
+			pst.setString(2, ma);
+			return pst.executeUpdate() >0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

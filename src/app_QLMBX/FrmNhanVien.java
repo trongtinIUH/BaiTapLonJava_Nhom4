@@ -204,7 +204,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		btnThem.setBounds(x, y, width, height);
 		
 		pnContent.add(btnXoa = new JButton("Xóa"));
-		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png")); 
 	//	btnXoa.setForeground(Color.BLACK);
 	//	btnXoa.setBackground(Color.red);
 		x+=120; 

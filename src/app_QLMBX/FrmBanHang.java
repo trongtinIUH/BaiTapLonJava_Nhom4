@@ -10,10 +10,12 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -197,9 +199,11 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 
 		
 		pnKhachHang.add(btnLayTTKH = new JButton("Thêm khách hàng"));
+		btnLayTTKH.setIcon(new ImageIcon("image\\add-icon.png"));
 		pnKhachHang.add(btnXoaTrangKH = new JButton("Xóa trắng"));
-		btnLayTTKH.setBounds(110, 160, 150, 30);
-		btnXoaTrangKH.setBounds(270, 160, 100, 30);
+		btnXoaTrangKH.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
+		btnLayTTKH.setBounds(50, 160, 180, 30);
+		btnXoaTrangKH.setBounds(240, 160, 120, 30);
 		add(pnKhachHang);
 		
 		JPanel pnXe = new JPanel();
@@ -235,7 +239,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		txtSoLuongMua.setBounds(160, 120, 120, 20);
 		
 		pnXe.add(btnThemXe = new JButton("Thêm vào hóa đơn"));
-		btnThemXe.setBounds(100, 160, 150, 30);
+		btnThemXe.setIcon(new ImageIcon("image\\add-icon.png"));
+		btnThemXe.setBounds(100, 160, 180, 30);
 		add(pnXe);
 		
 		JPanel pnNV = new JPanel();
@@ -266,7 +271,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	
 		
 		pnNV.add(btnThemNV = new JButton("Thêm nhân viên"));
-		btnThemNV.setBounds(40, 160, 150, 30);
+		btnThemNV.setIcon(new ImageIcon("image\\add-icon.png"));
+		btnThemNV.setBounds(40, 160, 180, 30);
 		add(pnNV);
 		
 		
@@ -329,10 +335,12 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		JPanel pnLoaiTT = new JPanel();
 		pnLoaiTT.setLayout(null);
-		pnLoaiTT.setBounds(10, 470, 950, 30);
+		pnLoaiTT.setBounds(10, 465, 950, 30);
 		pnLoaiTT.add(lblTongTT = new JLabel("Tổng thành tiền: "));
+		lblTongTT.setForeground(Color.BLUE);
 		lblTongTT.setBounds(10, 5, 120, 20);
 		pnLoaiTT.add(txtTongTT = new JTextField());
+		txtTongTT.setForeground(Color.BLUE);
 		txtTongTT.setBounds(140, 5, 200, 20);
 		txtTongTT.setEditable(false);
 		pnLoaiTT.add(lblHinhThucTT = new JLabel("Chọn loại thanh toán: "));
@@ -358,17 +366,22 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		pnControl.setBounds(10, 500, 950, 40);
 		pnControl.setLayout(null);
 		pnControl.add(lblTienDua = new JLabel("Tiền phải đưa: "));
+		lblTienDua.setForeground(Color.BLUE);
 		lblTienDua.setBounds(10, 5, 90, 20);
 		pnControl.add(txtTienDua = new JTextField());
+		txtTienDua.setForeground(Color.BLUE);
 		txtTienDua.setBounds(140, 5, 200, 20);
 		txtTienDua.setEditable(false);
 		pnControl.add(btnXoaDong = new JButton("XÓA SẢN PhẨM"));
-		btnXoaDong.setBounds(500, 0, 170, 30);
+		btnXoaDong.setIcon(new ImageIcon("image\\delete-icon.png"));
+		btnXoaDong.setBounds(460, 0, 170, 30);
 		btnXoaDong.setForeground(Color.red);
 		pnControl.add(btnXoaTrang = new JButton("LÀM MỚI"));
-		btnXoaTrang.setBounds(680, 0, 110, 30);
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png")); 
+		btnXoaTrang.setBounds(640, 0, 130, 30);
 		pnControl.add(btnThanhToan = new JButton("THANH TOÁN"));
-		btnThanhToan.setBounds(800, 0, 140, 30);   
+		btnThanhToan.setIcon(new ImageIcon("image\\buy.png"));
+		btnThanhToan.setBounds(780, 0, 160, 30);   
 		add(pnControl);     
 				
 		radCu.addActionListener(this);
@@ -420,8 +433,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		return -1;
 	}
 	
-	private void LayDuLieuKH() {
-		//if(kiemTraKH()) {
+	private void themKH() {
 		if(!radCu.isSelected() && !radMoi.isSelected()) {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn loại khách hàng!!");
 		}
@@ -483,7 +495,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				}
 			}	
 		}	
-		//}
 	}
 	
 	
@@ -500,7 +511,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	}
 	
 	private void themXeVaoHD() {
-		//if(kiemTraMatHang()&&kiemTraKH())
 		if(txtSoLuongMua.getText().length()>0 && Integer.parseInt(txtSoLuongMua.getText().trim()) > 0)
 		{	
 			if(kiemTraSoLuongNhap()==true) {
@@ -539,8 +549,22 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			JOptionPane.showMessageDialog(this, "Không để trống và số lượng xe phải lớn hơn 0");
 	}
 	
+	//Cập nhật lại số lượng tồn khi tạo hợp đồng
+	private void capNhatSLTon() {
+		int soRow = tblHopDong.getRowCount();
+		for(int i=0;i<soRow;i++)
+		{
+			String tenMH = tblModel.getValueAt(i, 1).toString();
+			matHang_DAO = new MatHang_DAO();
+			MatHang mh = matHang_DAO.getMatHangTheoTen(tenMH);
+			
+			int slNew = mh.getSlTon() - Integer.parseInt(tblModel.getValueAt(i, 2).toString());
+//			mh = new MatHang(mh.getMaMH());
+			matHang_DAO.updateSLTon(slNew, mh.getMaMH());
+		}
+	}
 	
-	//Thêm vào hợp đồng
+	//Thêm hợp đồng vào CSDL
 	private void themhd() {
 		if(txtBaoHanh.getText().equals(""))
 		{
@@ -574,6 +598,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					{
 						themCTHD(i);
 					}
+					capNhatSLTon();
 					JOptionPane.showMessageDialog(this, "Thanh Toán thành công, hợp đồng đã được lưu vào CSDL!!");
 			}
 		}
@@ -601,8 +626,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 
 	//	thêm vào chi tiết 
 	private void themCTHD(int vtRow) {
-		//if(kiemTraThuoc()&&kiemTraKH())
-		//{
 		HopDong HD = new HopDong(maHd);
 		String maCTHD = tblModel.getValueAt(vtRow, 0).toString();
 		String tenT = tblModel.getValueAt(vtRow, 1).toString();
@@ -613,16 +636,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		{	
 			JOptionPane.showMessageDialog(this, "Không tạo được!!");
 		}
-		//}
-
-	}
-	
-	// Thanh toán và lưu thông tin hợp đồng
-	private void thanhToan() {
-		themhd();
-	}
-
-		
+	}		
 
 	private void xoaCTHD() {
 		if (tblHopDong.getSelectedRow() == -1) {
@@ -698,7 +712,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		for(int i =0;i<row;i++) {
 			tong+= Double.parseDouble(tblHopDong.getValueAt(i, 4).toString());
 		}
-		txtTongTT.setText(" "+tong+ " VNĐ");
+		txtTongTT.setText("   " + df.format(tong)+ " VNĐ");
 	}
 	
 	private int tongSoLuong() {
@@ -743,7 +757,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		}
 		else if(obj.equals(btnLayTTKH))
 		{
-			LayDuLieuKH();
+			themKH();
 		}
 		else if(obj.equals(btnThemXe)) {
 			themXeVaoHD();
@@ -755,7 +769,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			xoaCTHD();
 		else if(obj.equals(btnThanhToan))
 		{
-			thanhToan();
+			themhd();
 		}
 		else if(obj.equals(btnXoaTrang))
 			xoaRong();
@@ -803,13 +817,13 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					{
 						txtGiam.setText(0.05 + "");
 						txtLaiSuat.setText("");
-						txtTienDua.setText((tong-tong*0.05) + "");
+						txtTienDua.setText("   " + df.format((tong-tong*0.05)));
 					}
 					else
 					{
 						txtGiam.setText(0.02 + "");
 						txtLaiSuat.setText("");
-						txtTienDua.setText((tong-tong*0.02) + "");
+						txtTienDua.setText("   " + df.format((tong-tong*0.02)));
 					}
 				}
 			}
@@ -825,7 +839,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					txtLaiSuat.setText(0.01 + "");
 					double tienKhachDua = tong/3+ (tong/3)*0.01;  //Trả 3 đợt
 					txtGiam.setText("");
-					txtTienDua.setText(tienKhachDua + "");
+					txtTienDua.setText("   " + df.format(tienKhachDua));
 				}
 			}
 		}
