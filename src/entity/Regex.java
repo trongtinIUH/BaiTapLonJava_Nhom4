@@ -202,5 +202,50 @@ public class Regex implements Serializable{
 		Matcher matcher = pattern.matcher(tenNuoc);
 		return matcher.find();
 	}
+	
+	public boolean kiemTraTenSP(String tenSP) {
+		String regex = "^[a-zA-Z][a-zA-Z0-9]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(tenSP);
+		return matcher.find();
+	}
+	
+	public boolean kiemTraSoKhung(String sk, String sx) {
+		String regex = "";
+		if(sx.equals("Việt Nam")) {
+			regex = "^(VN)[A-Z0-9]{15}$";
+		} else if(sx.equals("Nhật Bản")) {
+			regex = "^(NB)[A-Z0-9]{15}$";
+		} else if(sx.equals("Hàn Quốc")) {
+			regex = "^(HQ)[A-Z0-9]{15}$";
+		} else if(sx.equals("Trung Quốc")) {
+			regex = "^(TQ)[A-Z0-9]{15}$";
+		} else if(sx.equals("Đức")) {
+			regex = "^(D)[A-Z0-9]{15}$";
+		} else if(sx.equals("Mỹ")) {
+			regex = "^(M)[A-Z0-9]{15}$";
+		} else if(sx.equals("Ý")) {
+			regex = "^(Y)[A-Z0-9]{15}$";
+		} else if(sx.equals("Singapore")) {
+			regex = "^(S)[A-Z0-9]{15}$";
+		}
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(sk);
+		return matcher.find();
+	}
+	
+	public boolean kiemTraSoSuon(String ss) {
+		String regex = "^[A-Z0-9]{2,4}-\\d{6,7}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(ss);
+		return matcher.find();
+	}
+	
+	public boolean kiemTraMaNhapHang(String maHDH) {
+		String regex = "^(HDH_N)\\d{3,}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(maHDH);
+		return matcher.find();
+	}
 
 }

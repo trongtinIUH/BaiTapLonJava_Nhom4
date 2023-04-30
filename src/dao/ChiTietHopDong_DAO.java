@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.ChiTietHopDong;
 import entity.HopDong;
+import entity.KhachHang;
 import entity.MatHang;
 import entity.Xe;
 
 
 public class ChiTietHopDong_DAO {
+	private HopDong_DAO hddao = new HopDong_DAO();
+	private MatHang_DAO mhdao = new MatHang_DAO();
+
 	public boolean update(ChiTietHopDong cthd) {
 		try {
 			ConnectDB.getInstance();
@@ -180,5 +184,37 @@ public class ChiTietHopDong_DAO {
 				// TODO: handle exception
 			}
 				return cthd;		
+	}
+	
+	public ChiTietHopDong getCTHDTheoMaHD (String id) {
+		ChiTietHopDong cthd = new ChiTietHopDong();
+		HopDong hd = new HopDong();
+		MatHang mh = new MatHang();
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from ChiTietHopDong where maHD = '" + id + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				String maHD = rs.getString("maHD");
+				hd = hddao.getHopDongTheoMa(maHD);
+				String maCTHD = rs.getString("maCTHD");
+				String maMH = rs.getString("maMH");
+				mh = mhdao.getMHTheoMa(maMH);
+				int soluong = rs.getInt("soLuong");
+				cthd = new ChiTietHopDong(hd, maCTHD, mh, soluong);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(cthd.getMaChiTietHD() == null)
+			return null;
+		return cthd;
 	}
 }

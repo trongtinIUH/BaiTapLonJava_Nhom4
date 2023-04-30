@@ -1,14 +1,15 @@
 package entity;
 
-import java.time.LocalDate;
-import java.util.Objects;
+import java.sql.Date;
 
 public class HoaDonHang {
+	private String maHDH;
+	private String maCH;
 	private MatHang mh;
 	private NhanVien nv;
-	private LocalDate ngayGD;
+	private Date ngayGD;
 
-	public HoaDonHang(MatHang mh, NhanVien nv, LocalDate ngayGD) {
+	public HoaDonHang(MatHang mh, NhanVien nv, Date ngayGD) {
 		super();
 		this.mh = mh;
 		this.nv = nv;
@@ -18,6 +19,46 @@ public class HoaDonHang {
 	public HoaDonHang() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public HoaDonHang(String maHDH, String maCH, MatHang mh) {
+		super();
+		this.maHDH = maHDH;
+		this.maCH = maCH;
+		this.mh = mh;
+	}
+	
+	
+
+	public HoaDonHang(String maHDH, MatHang mh) {
+		super();
+		this.maHDH = maHDH;
+		this.mh = mh;
+	}
+
+	public HoaDonHang(String maHDH, String maCH, MatHang mh, Date ngayGD) {
+		super();
+		this.maHDH = maHDH;
+		this.maCH = maCH;
+		this.mh = mh;
+		this.ngayGD = ngayGD;
+	}
+
+	public String getMaHDH() {
+		return maHDH;
+	}
+
+	public void setMaHDH(String maHDH) {
+		this.maHDH = maHDH;
+	}
+	
+
+	public String getMaCH() {
+		return maCH;
+	}
+
+	public void setMaCH(String maCH) {
+		this.maCH = maCH;
 	}
 
 	public MatHang getMh() {
@@ -36,11 +77,11 @@ public class HoaDonHang {
 		this.nv = nv;
 	}
 
-	public LocalDate getNgayGD() {
+	public Date getNgayGD() {
 		return ngayGD;
 	}
 
-	public void setNgayGD(LocalDate ngayGD) {
+	public void setNgayGD(Date ngayGD) {
 		this.ngayGD = ngayGD;
 	}
 

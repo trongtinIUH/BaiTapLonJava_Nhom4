@@ -39,6 +39,7 @@ public class MatHang implements Serializable {
 	public void setMoTa(String moTa) {
 		this.moTa = moTa;
 	}
+
 	public double getDonGia() {
 		return donGia;
 	}
@@ -75,6 +76,14 @@ public class MatHang implements Serializable {
 		this.donGia = donGia;
 		this.slTon = slTon;
 		this.loaiMH = loaiMH;
+	}
+	
+	public MatHang(String maMH, String tenMH, double donGia, int slTon) {
+		super();
+		this.maMH = maMH;
+		this.tenMH = tenMH;
+		this.donGia = donGia;
+		this.slTon = slTon;
 	}
 	@Override
 	public String toString() {

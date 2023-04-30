@@ -12,8 +12,8 @@ public class TraTrucTiep extends HopDong implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private HopDong hd;
-	private String  maUuDai;
 	private double phanTramMienGiam;
+	private double soTienTra;
 	
 	public TraTrucTiep(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD, CuaHang cuaHang, KhachHang khachHang) {
 		super(maHD, ngaylapHD, thoiGianBH, loaiHD, nvLapHD, cuaHang, khachHang);
@@ -21,18 +21,18 @@ public class TraTrucTiep extends HopDong implements Serializable{
 	}
 
 	public TraTrucTiep(String maHD, Date ngaylapHD, int thoiGianBH, String loaiHD, NhanVien nvLapHD,  CuaHang cuaHang,KhachHang khachHang,
-			HopDong hd, String maUuDai, double phanTramMienGiam) {
+			HopDong hd, double phanTramMienGiam, double soTienTra) {
 		super(maHD, ngaylapHD, thoiGianBH, loaiHD, nvLapHD, cuaHang, khachHang);
 		this.hd = hd;
-		this.maUuDai = maUuDai;
 		this.phanTramMienGiam = phanTramMienGiam;
+		this.soTienTra = soTienTra;
 	}
 
-	public TraTrucTiep(HopDong hd, String maUuDai, double phanTramMienGiam) {
+	public TraTrucTiep(HopDong hd, double phanTramMienGiam, double soTienTra) {
 		super();
 		this.hd = hd;
-		this.maUuDai = maUuDai;
 		this.phanTramMienGiam = phanTramMienGiam;
+		this.soTienTra = soTienTra;
 	}
 	
 	
@@ -45,20 +45,21 @@ public class TraTrucTiep extends HopDong implements Serializable{
 		this.hd = hd;
 	}
 
-	public String getMaUuDai() {
-		return maUuDai;
-	}
-
-	public void setMaUuDai(String maUuDai) {
-		this.maUuDai = maUuDai;
-	}
-
 	public double getPhanTramMienGiam() {
 		return phanTramMienGiam;
 	}
 
 	public void setPhanTramMienGiam(double phanTramMienGiam) {
 		this.phanTramMienGiam = phanTramMienGiam;
+	}
+	
+
+	public double getSoTienTra() {
+		return soTienTra;
+	}
+
+	public void setSoTienTra(double soTienTra) {
+		this.soTienTra = soTienTra;
 	}
 
 	@Override
@@ -80,6 +81,6 @@ public class TraTrucTiep extends HopDong implements Serializable{
 
 	@Override
 	public String toString() {
-		return "TraTrucTiep [hd=" + hd + ", maUuDai=" + maUuDai + ", phanTramMienGiam=" + phanTramMienGiam + "]";
+		return "TraTrucTiep [hd=" + hd + ", phanTramMienGiam=" + phanTramMienGiam + ", soTienTra=" + soTienTra + "]";
 	}
 }
