@@ -32,6 +32,7 @@ public class Regex implements Serializable{
 			return false;
 	}
 
+
 	public boolean kiemTraTuoi(SqlDateModel modelNgay) {
 		long millis = System.currentTimeMillis();
 		Date today = new Date(millis);
@@ -245,6 +246,19 @@ public class Regex implements Serializable{
 		String regex = "^(HDH_N)\\d{3,}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(maHDH);
+		return matcher.find();
+	}
+	public boolean kiemTraTenNV(String tennv) {
+		String regex = "^[\\p{L}\\s]+[\\p{M}\\s]*$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(tennv);
+		return matcher.find();
+	}
+
+	public boolean kiemTraSDT(String tennv) {
+		String regex = "^[0][0-9]{9}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(tennv);
 		return matcher.find();
 	}
 
