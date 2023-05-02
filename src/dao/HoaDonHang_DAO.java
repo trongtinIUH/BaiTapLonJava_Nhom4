@@ -53,8 +53,8 @@ public class HoaDonHang_DAO {
 		return false;
 	}
 	
-	public CuaHang getCuaHangTheoMaHoaDonHang(String HDH) {
-		CuaHang ch = new CuaHang();
+	public String getCuaHangTheoMaHoaDonHang(String HDH) {
+		String maCH = null;
 		try {
 			ConnectDB.getInstance();
 		} catch (SQLException e) {
@@ -63,16 +63,16 @@ public class HoaDonHang_DAO {
 		}
 		Connection con = ConnectDB.getConnection();
 		try {
-			String sql = "select * from CuaHang where maHDH='"+ HDH +"'";
+			String sql = "select * from HoaDonHang where maHDH='"+ HDH +"'";
 			Statement sta = con.createStatement();
 			ResultSet rs = sta.executeQuery(sql);
 			while(rs.next()) {
-				ch = new CuaHang(rs.getString("maCH"),rs.getString("tenCuaHang"), rs.getString("diaChi"), rs.getString("sdt"));
+				maCH = rs.getString("maCH");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ch;
+		return maCH;
 	}
 }

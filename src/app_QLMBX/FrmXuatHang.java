@@ -1,7 +1,6 @@
 package app_QLMBX;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,19 +19,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dao.ChiTietHoaDonHang_DAO;
+import dao.CuaHang_DAO;
 import dao.HoaDonHang_DAO;
-import dao.TraGop_DAO;
 import entity.ChiTietHoaDonHang;
 import entity.CuaHang;
-import entity.HoaDonHang;
-import entity.HopDong;
-import entity.PhieuXuat;
-import entity.TraGop;
 
 public class FrmXuatHang extends JDialog implements ActionListener {
 
@@ -40,21 +34,15 @@ public class FrmXuatHang extends JDialog implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] cols = { "STT", "Mã chi tiết hóa đơn hàng", "Tên mặt hàng", "Số lượng" };
+	private String[] cols = { "STT", "Mã chi tiết hóa đơn hàng", "Mã mặt hàng", "Số lượng" };
 	private DefaultTableModel model;
 	private JTable table;
 	private HoaDonHang_DAO hdh_dao = new HoaDonHang_DAO();
 	private ChiTietHoaDonHang_DAO ctHDH_dao = new ChiTietHoaDonHang_DAO();
+	private CuaHang_DAO ch_dao = new CuaHang_DAO();
 	private JTextField txtNgay;
-	private JTextField txtma;
-	private JTextField txtNguoiTra;
-	private JTextField txtLaiSuat;
-	private JTextField txtTinhTrang;
-	private JTextField txtThanhToan;
-	private double tien;
 	private JTextField txtmaHDH;
 	private JTextField txtTenCH;
-	private JTextField txtTenNV;
 	private JButton btnXacNhan;
 
 	public FrmXuatHang(String maHDH) {
@@ -140,11 +128,6 @@ public class FrmXuatHang extends JDialog implements ActionListener {
 		
 	}
 
-	private void clearTable() {
-		while (table.getRowCount() > 0) {
-			model.removeRow(0);
-		}
-	}
 
 	private void loadData(String id) {
 		int i = 0;
@@ -153,16 +136,17 @@ public class FrmXuatHang extends JDialog implements ActionListener {
 			Object[] row = { i, x.getHdh().getMaHDH(), x.getMh().getMaMH(), x.getSoLuong()};
 			model.addRow(row);
 		}
-		CuaHang x = hdh_dao.getCuaHangTheoMaHoaDonHang(id);
-		txtTenCH.setText(x.getTenCuaHang());
+		
+		String maCH = hdh_dao.getCuaHangTheoMaHoaDonHang(id);
+		CuaHang x = ch_dao.getCHTheoMa(maCH);
+		txtTenCH.setText(x.getTenCuaHang().toString());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnXacNhan)) {
-			FrmXuatHang xuatHang = new FrmXuatHang(null);
-			xuatHang.setVisible(false);
+			JOptionPane.showMessageDialog(this, "Phiếu đã được lưu trữ!!");
 		}
 
 	}

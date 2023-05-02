@@ -2,7 +2,6 @@ package dao;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import entity.CuaHang;
-import entity.HopDong;
-import entity.KhachHang;
 import entity.MatHang;
-import entity.NhanVien;
 
 public class MatHang_DAO {
 	public ArrayList<MatHang> getAllMatHang() {

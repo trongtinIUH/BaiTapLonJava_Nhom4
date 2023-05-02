@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.SqlDateModel;
 
 

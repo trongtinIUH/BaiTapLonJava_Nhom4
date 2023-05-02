@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,12 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
 import entity.KhachHang;
-import entity.NhanVien;
 import entity.Regex;
 
 public class FrmKhachHang extends JPanel implements ActionListener, MouseListener {
@@ -49,7 +45,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JTextField txtTen;
 	private JTextField txtMa;
 	private Font font;
-	private JTextField txtPhai;
 	private JTextField txtDiaChi;
 	private JTextField txtSdt;
 	private JComboBox<String> cbTim;

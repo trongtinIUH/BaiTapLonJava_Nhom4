@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.ChiTietHopDong;
 import entity.HopDong;
-import entity.KhachHang;
 import entity.MatHang;
-import entity.Xe;
 
 
 public class ChiTietHopDong_DAO {

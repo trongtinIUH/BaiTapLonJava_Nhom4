@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.CuaHang;
-import entity.KhachHang;
-import entity.NhanVien;
 
 public class CuaHang_DAO {
 	public ArrayList<CuaHang> getAllCuaHang() {

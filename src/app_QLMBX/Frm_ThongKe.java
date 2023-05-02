@@ -8,10 +8,8 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import dao.ThongKe_DAO;
@@ -26,7 +24,7 @@ public class Frm_ThongKe extends JPanel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lblTitle, lblsanPham,lblkhachhang,lblnhanVien, lbldoanhThu;
+	private JLabel lblsanPham,lblkhachhang,lblnhanVien, lbldoanhThu;
 	private JTextField txtsanpham,txtkhachHang,txtnhanVien,txtDoanhThu;
 	private ThongKe_DAO thongke ;
 

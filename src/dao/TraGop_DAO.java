@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import connectDB.ConnectDB;
-import entity.CuaHang;
 import entity.HopDong;
-import entity.KhachHang;
-import entity.NhanVien;
 import entity.TraGop;
 
 public class TraGop_DAO {

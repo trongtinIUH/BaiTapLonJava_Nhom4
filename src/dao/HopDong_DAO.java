@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import entity.ChiTietHopDong;
 import entity.CuaHang;
 import entity.HopDong;
 import entity.KhachHang;

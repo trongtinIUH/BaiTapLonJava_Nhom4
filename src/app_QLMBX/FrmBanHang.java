@@ -7,12 +7,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -29,9 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.SqlDateModel;
 
 import connectDB.ConnectDB;
 import dao.ChiTietHoaDonHang_DAO;
@@ -100,9 +95,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private JLabel lblChucVu;
 	private JComboBox<String> cbxChucVu;
 	private JComboBox<String> cbxSoDT;
-	private SqlDateModel modelNgayKH;
-	private JDatePanelImpl datePanel;
-	private JDatePickerImpl datePicker;
 	private JLabel lblSoDtNhanVien;
 	private JComboBox<String> cbxDongXe;
 	private JLabel lblDongXe;
@@ -302,18 +294,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		pnThongTin.add(lblNgayLapHD = new JLabel("Ngày lập HD: "));
 		lblNgayLapHD.setBounds(350, 0, 100, 20);
-//		modelNgayKH = new SqlDateModel();
-//		p = new Properties();
-//		p.put("text.today", "Today");
-//		p.put("text.month", "Month");
-//		p.put("text.year", "Year");
-//		datePanel = new JDatePanelImpl(modelNgayKH, p);
-//		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-//		datePicker.setBounds(450, 0, 120, 30);
-//		datePicker.setBackground(new Color(248,248,248));
-//		modelNgayKH.setDate(2023,4,5);
-//		modelNgayKH.setSelected(true);
-//		pnThongTin.add(datePicker);
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		java.util.Date date = new java.util.Date();

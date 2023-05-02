@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 import connectDB.ConnectDB;
 import entity.LinhKienPhuTung;
-import entity.Xe;
 
 public class LinhKien_DAO {
 	public boolean addLinhKien(LinhKienPhuTung lk) throws SQLException {

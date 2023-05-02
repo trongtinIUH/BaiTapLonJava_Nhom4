@@ -6,15 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import connectDB.ConnectDB;
-import entity.CuaHang;
 import entity.KhachHang;
-import entity.NhanVien;
 
 public class KhachHang_DAO {
 	public ArrayList<KhachHang> getAllKhachHang() {

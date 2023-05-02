@@ -8,9 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import entity.ChiTietHoaDonHang;
-import entity.HoaDonHang;
-import entity.MatHang;
 import entity.PhieuXuat;
 
 public class PhieuXuat_DAO {
