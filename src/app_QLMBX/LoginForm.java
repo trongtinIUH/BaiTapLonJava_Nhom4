@@ -19,21 +19,24 @@ public class LoginForm extends JFrame implements ActionListener{
 		setTitle("Login Form");
 		setSize(640, 300);
 		setLocationRelativeTo(null);
-		setResizable(false);
+		//setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(240, 240, 240));
+		
+
 
 		lblTitle = new JLabel("User Login");
-		lblTitle.setFont(new Font("Arial", Font.BOLD, 32));
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 35));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setBounds(220, 30, 420, 35);
-		lblTitle.setForeground(Color.blue);
+		lblTitle.setBounds(300, 20, 200, 45);
+		lblTitle.setForeground(Color.red);
 		panel.add(lblTitle);
 
 		lblUsername = new JLabel("Username:");
+		lblUsername.setForeground(Color.white);
 		lblUsername.setFont(new Font("Arial", Font.BOLD, 18));
 		lblUsername.setBounds(270, 95, 150, 25);
 		panel.add(lblUsername);
@@ -44,6 +47,7 @@ public class LoginForm extends JFrame implements ActionListener{
 		panel.add(txtUsername);
 
 		lblPassword = new JLabel("Password:");
+		lblPassword.setForeground(Color.white);
 		lblPassword.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPassword.setBounds(270, 135, 150, 25);
 		panel.add(lblPassword);
@@ -62,10 +66,10 @@ public class LoginForm extends JFrame implements ActionListener{
 		btnExit.setFont(new Font("Arial", Font.PLAIN, 18));
 		panel.add(btnExit);
 
-		ImageIcon icon = new ImageIcon("image\\LoginUI\\Logo_login.png");
-		JLabel label = new JLabel(icon);
-
-		label.setBounds(20, 50, 245, 158);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("image\\login1.jpg"));
+		label.setBounds(0, 0, 640, 300);
 		panel.add(label);
 		add(panel);
 
