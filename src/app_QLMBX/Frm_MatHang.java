@@ -21,9 +21,11 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
+import dao.CuaHang_DAO;
 import dao.HoaDonHang_DAO;
 import dao.MatHang_DAO;
 import dao.NhapHang_DAO;
+import entity.CuaHang;
 import entity.DateLabelFormatter;
 import entity.HoaDonHang;
 import entity.MatHang;
@@ -47,6 +49,7 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 	public int soLuong;
 	public double donGia;
 	private MatHang_DAO sp;
+	private CuaHang_DAO ch_dao;
 	private Frm_Xe xe;
 	private Frm_LinhKien lk;
 	private HoaDonHang_DAO hdh;
@@ -137,7 +140,9 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 	
 	private HoaDonHang revertTextToHoaDonHang() {
 		MatHang mh = revertTextToMatHang();
-		String ch = (String) cboCuaHang.getSelectedItem();
+		ch_dao = new CuaHang_DAO();
+		String maCH = (String) cboCuaHang.getSelectedItem();
+		CuaHang ch = ch_dao.getCHTheoMa(maCH);
 		Date date = (Date) datePicker.getModel().getValue();
 		return new HoaDonHang(maHDH, ch, mh, date);
 	}

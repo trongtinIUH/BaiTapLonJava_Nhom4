@@ -9,11 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.text.DecimalFormat;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
@@ -78,7 +75,6 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 	private KhachHang_DAO khdao;
 	private BaoHanh_DAO bh_dao;
 	private LinhKien_DAO lk_dao;
-	private JComboBox<String> cbloaiHD;
 	private JTextField txtMaPhieu;
 	private JTextField txtLinhKien;
 	private JTextField txtLiDo;
@@ -361,9 +357,6 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		int thangLapBaoHanh = ngaylapBaoHanh.getMonth()+1;
 		@SuppressWarnings("deprecation")
 		int namLapBaoHanh = ngaylapBaoHanh.getYear();
-		@SuppressWarnings("deprecation")
-		int ngayBH = ngaylapBaoHanh.getDate();
-		
 		
 		hd_dao = new HopDong_DAO();	
 		int thoiGianBh = hd_dao.getThoiGianBHTheoMaHD(maHD);
@@ -372,8 +365,6 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		int thangLapHD = ngayLapHD.getMonth()+1;
 		@SuppressWarnings("deprecation")
 		int namLapHD = ngayLapHD.getYear();
-		@SuppressWarnings("deprecation")
-		int ngayHD = ngayLapHD.getDate();
 
 		int doiThang = (namLapBaoHanh - namLapHD) * 12;
 		if((thangLapBaoHanh - thangLapHD) >= 0) {
@@ -480,7 +471,7 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 							bh.getGiaTienSua(),nv.getTenNV(), kh.getTenKH()};
 					model.addRow(row);
 				} else {
-					JOptionPane.showMessageDialog(this, "Không tìm thấy");
+					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin Phiếu bảo hành");
 				}
 			} 
 			else if (selectedIndex == 1) {
@@ -502,7 +493,8 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin Phiếu bảo hành");
 				}
 
-			} else {
+			}
+			else {
 				JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng");
 			}
 		} else {

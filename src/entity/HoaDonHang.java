@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class HoaDonHang {
 	private String maHDH;
-	private String maCH;
+	private CuaHang ch;
 	private MatHang mh;
 	private NhanVien nv;
 	private Date ngayGD;
@@ -16,15 +16,22 @@ public class HoaDonHang {
 		this.ngayGD = ngayGD;
 	}
 
+	public HoaDonHang(String maHDH, CuaHang ch, Date ngayGD) {
+		super();
+		this.maHDH = maHDH;
+		this.ch = ch;
+		this.ngayGD = ngayGD;
+	}
+
 	public HoaDonHang() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public HoaDonHang(String maHDH, String maCH, MatHang mh) {
+	public HoaDonHang(String maHDH, CuaHang ch, MatHang mh) {
 		super();
 		this.maHDH = maHDH;
-		this.maCH = maCH;
+		this.ch = ch;
 		this.mh = mh;
 	}
 	
@@ -36,12 +43,17 @@ public class HoaDonHang {
 		this.mh = mh;
 	}
 
-	public HoaDonHang(String maHDH, String maCH, MatHang mh, Date ngayGD) {
+	public HoaDonHang(String maHDH, CuaHang ch, MatHang mh, Date ngayGD) {
 		super();
 		this.maHDH = maHDH;
-		this.maCH = maCH;
+		this.ch = ch;
 		this.mh = mh;
 		this.ngayGD = ngayGD;
+	}
+
+	public HoaDonHang(String maHDH) {
+		super();
+		this.maHDH = maHDH;
 	}
 
 	public String getMaHDH() {
@@ -52,13 +64,12 @@ public class HoaDonHang {
 		this.maHDH = maHDH;
 	}
 	
-
-	public String getMaCH() {
-		return maCH;
+	public CuaHang getCh() {
+		return ch;
 	}
 
-	public void setMaCH(String maCH) {
-		this.maCH = maCH;
+	public void setCh(CuaHang ch) {
+		this.ch = ch;
 	}
 
 	public MatHang getMh() {

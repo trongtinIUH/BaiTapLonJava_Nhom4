@@ -34,12 +34,12 @@ public class PhieuNhap extends HoaDonHang implements Serializable {
 		this.tenNCC = tenNCC;
 		this.soPhieu = soPhieu;
 	}
-	public PhieuNhap(String maHDH, String maCH, MatHang mh, String tenNCC, String soPhieu) {
+	public PhieuNhap(String maHDH, CuaHang maCH, MatHang mh, String tenNCC, String soPhieu) {
 		super(maHDH, maCH, mh);
 		this.tenNCC = tenNCC;
 		this.soPhieu = soPhieu;
 	}
-	public PhieuNhap(String maHDH, String maCH, MatHang mh, Date ngayGD, String tenNCC, String soPhieu) {
+	public PhieuNhap(String maHDH, CuaHang maCH, MatHang mh, Date ngayGD, String tenNCC, String soPhieu) {
 		super(maHDH, maCH, mh, ngayGD);
 		this.tenNCC = tenNCC;
 		this.soPhieu = soPhieu;

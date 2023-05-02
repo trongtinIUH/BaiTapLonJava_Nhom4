@@ -126,7 +126,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		// Thông tin khách hàng
 		JPanel panelSouth = new JPanel();
 		panelSouth.setBounds(7, 340, 580, 200);
-		panelSouth.setBorder(BorderFactory.createTitledBorder("Thông tin bảo hành"));
+		panelSouth.setBorder(BorderFactory.createTitledBorder("Thông tin hợp đồng"));
 		TitledBorder titledthongtin = (TitledBorder) panelSouth.getBorder();
 		titledthongtin.setTitleColor(Color.blue);
 		panelSouth.setLayout(null);
