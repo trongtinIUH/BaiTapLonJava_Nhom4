@@ -17,8 +17,6 @@ import java.awt.Panel;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;

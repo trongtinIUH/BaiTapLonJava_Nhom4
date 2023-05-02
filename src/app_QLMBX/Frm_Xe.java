@@ -28,7 +28,7 @@ public class Frm_Xe extends JFrame implements ActionListener {
 	private JTextField txtsoKhung, txtSoSuon, txtTb;
 	private JButton btnLuu, btnXoaTrang, btnThoat;
 	private Xe_DAO xe;
-	public String maXe = "X999";
+	private String maXe = "X999";
 	private JComboBox<Integer> cboPK;
 	private JComboBox<String> cboDongXe, cboMauXe, cboXuatXu;
 	private Regex reg;
@@ -148,6 +148,10 @@ public class Frm_Xe extends JFrame implements ActionListener {
 		txtsoKhung.setText("");
 		txtSoSuon.setText("");
 		txtsoKhung.requestFocus();
+	}
+	
+	public void setMaXe(String ma) {
+		maXe = ma;
 	}
 	
 	private void luu() throws SQLException {
