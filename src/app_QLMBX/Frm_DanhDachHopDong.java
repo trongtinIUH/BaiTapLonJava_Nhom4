@@ -463,7 +463,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		}
 	}
 
-	private void clearTable() {
+	public void clearTable() {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
 		}

@@ -409,7 +409,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		}
 	}
 	
-	private void clearTable() {
+	public void clearTable() {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
 		}

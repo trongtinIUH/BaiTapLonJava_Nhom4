@@ -31,25 +31,26 @@ import entity.DateLabelFormatter;
 import entity.NhanVien;
 import entity.Regex;
 
-public class FrmNhanVien extends JPanel implements Serializable,ActionListener,MouseListener {
+public class FrmNhanVien extends JPanel implements Serializable, ActionListener, MouseListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String col[]= {"Mã Nhân Viên", "Tên Nhân Viên", "Giới Tính", "Địa Chỉ", "SDT", "Email","Ngày Vào Làm","Chức Vụ","Lương","Mã Cửa Hàng"};
-	private JLabel lblmaNV,lbltenNV,lblGioiTinh,lbldiaChi,lblsdt,lblemail,lblngayvaolam,lblchucVu,lblluongcoBan,lblmaCH;
-	private JTextField txtmaNV,txttenNV,txtdiaChi,txtsdt,txtemail,txtLuong;
-	private JButton btnThem,btnXoa,btnXoaTrang,btnLuu,btnTimKiem;
+	private String col[] = { "Mã Nhân Viên", "Tên Nhân Viên", "Giới Tính", "Địa Chỉ", "SDT", "Email", "Ngày Vào Làm",
+			"Chức Vụ", "Lương", "Mã Cửa Hàng" };
+	private JLabel lblmaNV, lbltenNV, lblGioiTinh, lbldiaChi, lblsdt, lblemail, lblngayvaolam, lblchucVu, lblluongcoBan,
+			lblmaCH;
+	private JTextField txtmaNV, txttenNV, txtdiaChi, txtsdt, txtemail, txtLuong;
+	private JButton btnThem, btnXoa, btnXoaTrang, btnLuu, btnTimKiem;
 	private JTable tblNhanVien;
 	private DefaultTableModel model;
-	
-	private JComboBox<String> jComboBox_gioitinh;
-	private String[] GioiTinh=  new String[] {"Nam","Nữ"};
-	private JComboBox<String> jComboBox_mach;
-	private String[] cuahang=  new String[] {"CH001","CH003","CH003"};
-	private JComboBox<String> jComboBox_chucvu;
-	private String[] chucVu=  new String[] {"Nhân viên hành chính","Nhân viên kỹ thuật"};
 
+	private JComboBox<String> jComboBox_gioitinh;
+	private String[] GioiTinh = new String[] { "Nam", "Nữ" };
+	private JComboBox<String> jComboBox_mach;
+	private String[] cuahang = new String[] { "CH001", "CH003", "CH003" };
+	private JComboBox<String> jComboBox_chucvu;
+	private String[] chucVu = new String[] { "Nhân viên hành chính", "Nhân viên kỹ thuật" };
 
 	private JLabel lblTimKiem;
 	private JTextField txtTimkiem;
@@ -60,14 +61,14 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 	private JDatePickerImpl datePicker;
 	private Frm_NhapThongTinNhanVien mo;
 	private Regex reg;
-	
-	public String manv_nv= "";
-	
+
+	public String manv_nv = "";
+
 	public FrmNhanVien() {
 		setSize(1000, 600);
-		mo= new Frm_NhapThongTinNhanVien();
-		
-		//hi
+		mo = new Frm_NhapThongTinNhanVien();
+
+		// hi
 		JPanel pnControl = new JPanel();
 		pnControl.setLayout(new BorderLayout());
 		JPanel pnNorth = new JPanel();
@@ -78,79 +79,73 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		pnControl.add(pnNorth, BorderLayout.NORTH);
 		JPanel pnContent = new JPanel();
 		pnContent.setLayout(null);
-		
-		
+
 		int x = 100, y = 50, width = 100, height = 30;
 		pnContent.add(lblmaNV = new JLabel("Mã Nhân Viên:"));
 		lblmaNV.setBounds(x, y, width, height);
-	//y+=30;
+		// y+=30;
 		pnContent.add(lbltenNV = new JLabel("Tên Nhân Viên :"));
 		lbltenNV.setBounds(520, y, width, height);
-		//y+=30;
-		
-		y+=30;
+		// y+=30;
+
+		y += 30;
 		pnContent.add(lblGioiTinh = new JLabel("Giới Tính:"));
 		lblGioiTinh.setBounds(x, y, width, height);
 //	y+=30;
-		
+
 		pnContent.add(lbldiaChi = new JLabel("Địa Chỉ:"));
 		lbldiaChi.setBounds(520, y, width, height);
 
-		y+=30;
+		y += 30;
 		pnContent.add(lblsdt = new JLabel("SDT:"));
 		lblsdt.setBounds(x, y, width, height);
-		
-		
+
 		pnContent.add(lblemail = new JLabel("Email:"));
 		lblemail.setBounds(520, y, width, height);
-		
-		y+=30;
+
+		y += 30;
 		pnContent.add(lblngayvaolam = new JLabel("Ngày Vào Làm:"));
 		lblngayvaolam.setBounds(x, y, width, height);
-		
-		
+
 		pnContent.add(lblchucVu = new JLabel("Chức Vụ:"));
 		lblchucVu.setBounds(520, y, width, height);
-		
-		y+=30;
+
+		y += 30;
 		pnContent.add(lblluongcoBan = new JLabel("Lương:"));
 		lblluongcoBan.setBounds(x, y, width, height);
-		
+
 		pnContent.add(lblmaCH = new JLabel("Mã Cửa Hàng:"));
 		lblmaCH.setBounds(520, y, width, height);
-		
-		y+=30;
+
+		y += 30;
 		pnContent.add(lblTimKiem = new JLabel("Tìm Mã NV:"));
 		lblTimKiem.setBounds(x, y, width, height);
-		
-		
-		
-		
-		
-		x+=100;y = 56;width = 300;height = 20;
+
+		x += 100;
+		y = 56;
+		width = 300;
+		height = 20;
 		pnContent.add(txtmaNV = new JTextField(20));
 		txtmaNV.setBounds(x, y, width, height);
-		
+
 		pnContent.add(txttenNV = new JTextField(20));
-	//y += 30;
+		// y += 30;
 		txttenNV.setBounds(620, y, width, height);
-		
-		
-		y+=30;
-		jComboBox_gioitinh= new JComboBox<String>(GioiTinh);
+
+		y += 30;
+		jComboBox_gioitinh = new JComboBox<String>(GioiTinh);
 		pnContent.add(jComboBox_gioitinh);
 		jComboBox_gioitinh.setBounds(x, y, width, height);
-		//y+=30;
+		// y+=30;
 		pnContent.add(txtdiaChi = new JTextField(20));
 		txtdiaChi.setBounds(620, y, width, height);
-		y+=30;
+		y += 30;
 		pnContent.add(txtsdt = new JTextField(20));
 		txtsdt.setBounds(x, y, width, height);
-		
-		
+
 		pnContent.add(txtemail = new JTextField(20));
 		txtemail.setBounds(620, y, width, height);
-		y+=30;
+		y += 30;
 //		pnContent.add(txtNgayvaolam = new JTextField(20));
 //		txtNgayvaolam.setBounds(x, y, width, height);	
 //		
@@ -162,115 +157,111 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		datePanel = new JDatePanelImpl(modelNgaylap, p);
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.setBounds(x, y, width, height);
-		datePicker.setBackground(new Color(248,248,248));
+		datePicker.setBackground(new Color(248, 248, 248));
 		datePicker.setToolTipText("Chọn ngày sinh");
 		modelNgaylap.setDate(1990, 0, 1);
 		modelNgaylap.setSelected(true);
 		pnContent.add(datePicker);
-	
-		
-	
-		
-		
-		jComboBox_chucvu= new JComboBox<String>(chucVu);
+
+		jComboBox_chucvu = new JComboBox<String>(chucVu);
 		pnContent.add(jComboBox_chucvu);
 		jComboBox_chucvu.setBounds(620, y, width, height);
-		
-		y+=30;
+
+		y += 30;
 		pnContent.add(txtLuong = new JTextField(20));
-		txtLuong.setBounds(x, y, width, height);	
-		
-		jComboBox_mach= new JComboBox<String>(cuahang);
+		txtLuong.setBounds(x, y, width, height);
+
+		jComboBox_mach = new JComboBox<String>(cuahang);
 		pnContent.add(jComboBox_mach);
 		jComboBox_mach.setBounds(620, y, width, height);
-		
+
 		pnContent.add(txtTimkiem = new JTextField(20));
 		y += 30;
 		txtTimkiem.setBounds(x, y, width, height);
-		
+
 		pnContent.add(btnThem = new JButton("Thêm"));
 		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
-		//btnThem.setForeground(Color.BLACK);
-	//	btnThem.setBackground(Color.green);
-		width = 110; height = 30; x = 150;
-		y+=30; 
+		// btnThem.setForeground(Color.BLACK);
+		// btnThem.setBackground(Color.green);
+		width = 110;
+		height = 30;
+		x = 150;
+		y += 30;
 		btnThem.setBounds(x, y, width, height);
-		
+
 		pnContent.add(btnXoa = new JButton("Xóa"));
-		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png")); 
-	//	btnXoa.setForeground(Color.BLACK);
-	//	btnXoa.setBackground(Color.red);
-		x+=120; 
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
+		// btnXoa.setForeground(Color.BLACK);
+		// btnXoa.setBackground(Color.red);
+		x += 120;
 		btnXoa.setBounds(x, y, width, height);
-		
+
 		pnContent.add(btnLuu = new JButton("Lưu"));
 		btnLuu.setIcon(new ImageIcon("image\\luu.png"));
-		x+=120;
+		x += 120;
 		btnLuu.setBounds(x, y, width, height);
 		pnContent.add(btnTimKiem = new JButton("Tìm"));
 		btnTimKiem.setIcon(new ImageIcon("image\\tim.png"));
-		x+=120;
+		x += 120;
 		btnTimKiem.setBounds(x, y, width, height);
 		pnContent.add(btnXoaTrang = new JButton("Xóa Trắng"));
 		btnXoaTrang.setBackground(Color.yellow);
-		x+=120;
+		x += 120;
 		btnXoaTrang.setBounds(x, y, 200, height);
-		
-		
-	
 
 // phần bảng
 		model = new DefaultTableModel(col, 0);
 		tblNhanVien = new JTable(model);
 		tblNhanVien.setBackground(Color.pink);
 		JScrollPane sp = new JScrollPane(tblNhanVien);
-		width = 950; height = 200;
-		y+=50;
+		width = 950;
+		height = 200;
+		y += 50;
 		sp.setBounds(30, y, width, height);
 		pnContent.add(sp);
 		pnContent.setPreferredSize(new Dimension(1000, 500));
 		pnControl.add(pnContent, BorderLayout.SOUTH);
 		this.add(pnControl);
-			
+
 		loadData();
-		//phần sự kiện
+		// phần sự kiện
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnXoaTrang.addActionListener(this);
 		btnLuu.addActionListener(this);
 		btnTimKiem.addActionListener(this);
 		tblNhanVien.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = tblNhanVien.getSelectedRow();
 				txtmaNV.setText(model.getValueAt(row, 0).toString());
 				txttenNV.setText(model.getValueAt(row, 1).toString());
-				//lấy dữ liệu từ bảng của jcombobox về input
+				// lấy dữ liệu từ bảng của jcombobox về input
 				jComboBox_gioitinh.setSelectedItem(model.getValueAt(row, 2));
 				txtdiaChi.setText(model.getValueAt(row, 3).toString());
 				txtsdt.setText(model.getValueAt(row, 4).toString());
@@ -279,178 +270,163 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 				jComboBox_chucvu.setSelectedItem(model.getValueAt(row, 7));
 				txtLuong.setText(model.getValueAt(row, 8).toString());
 				jComboBox_mach.setSelectedItem(model.getValueAt(row, 9));
-				
+
 			}
 		});
-		
-		
+
 	}
 
 	// lỗi chưa load dữ liệu ************************************************#
 	public void loadData() {
 		nv = new NhanVien_DAO();
-		for(NhanVien x : nv.getAllNhanVien()) {
-			Object[] row = {x.getMaNV(), x.getTenNV(), x.getGioiTinh(), x.getDiaChi(), x.getSdt(), x.geteMail(), x.getNgayVaoLam(), x.getChucVu(), x.getLuongCoBan(), x.getMaCH() };
+		for (NhanVien x : nv.getAllNhanVien()) {
+			Object[] row = { x.getMaNV(), x.getTenNV(), x.getGioiTinh(), x.getDiaChi(), x.getSdt(), x.geteMail(),
+					x.getNgayVaoLam(), x.getChucVu(), x.getLuongCoBan(), x.getMaCH() };
 			model.addRow(row);
 		}
 	}
 
-
-
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-				Object o= e.getSource();
-				if(o.equals(btnXoaTrang)) {
-					xoatrang();
+		Object o = e.getSource();
+		if (o.equals(btnXoaTrang)) {
+			xoatrang();
+		} else if (o.equals(btnTimKiem)) {
+			tim();
+		} else if (o.equals(btnThem)) {
+			if (validData()) {
+				try {
+					them();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				if(o.equals(btnTimKiem)) {
-				tim();
-				}
-				if(o.equals(btnThem)) {
-					if(validData()) {
-					try {
-						them();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				if(o.equals(btnXoa)) {
-					try {
-						xoa();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				}
+			}
+		}
+
+		else if (o.equals(btnXoa)) {
+
+			try {
+				xoa();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}
 	}
+	public void clearTable() {
+		while (tblNhanVien.getRowCount() > 0) {
+			model.removeRow(0);
+		}
+	}
+
 	private void xoa() throws SQLException {
 		// TODO Auto-generated method stub
-		int row =tblNhanVien.getSelectedRow();
-		if(row!=-1) {
-			int tb= JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa?","Delete",JOptionPane.YES_NO_OPTION);
-			if(tb==JOptionPane.YES_OPTION) {
-				model.removeRow(row);
+		int row = tblNhanVien.getSelectedRow();
+		if (row != -1) {
+			int tb = JOptionPane.showConfirmDialog(null, "Bạn có muốn xóa?", "Delete", JOptionPane.YES_NO_OPTION);
+			if (tb == JOptionPane.YES_OPTION) {
 				String manv = txtmaNV.getText();
+				model.removeRow(row);
 				nv.DeleteNV(manv);
 				JOptionPane.showMessageDialog(this, "Xoá thành công");
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "chưa chọn dòng xóa!");
 		}
-		else {
-			JOptionPane.showMessageDialog(null,"chưa chọn dòng xóa!");
-		}
-		
+
 	}
+
 	// hàm tìm
 	public void clearTableFrmSanPham() {
 		while (tblNhanVien.getRowCount() > 0) {
 			model.removeRow(0);
 		}
 	}
-	
-	//tìm 
+
+	// tìm
 	private void tim() {
-		if(btnTimKiem.getText().equals("Tìm")) {
+		if (btnTimKiem.getText().equals("Tìm")) {
 			ArrayList<NhanVien> nv1 = nv.Timkiem(txtTimkiem.getText());
-			if(nv1 != null) {
-					btnTimKiem.setText("Hủy Tìm");
-					clearTableFrmSanPham();
-					for(NhanVien mh : nv1) {				
-						if(nv1 != null) {
-							model.addRow(new String[] {mh.getMaNV(), mh.getTenNV(), mh.getGioiTinh(),
-									mh.getDiaChi(), mh.getSdt() + "", mh.geteMail() + "", mh.getNgayVaoLam()+"",mh.getChucVu(),mh.getLuongCoBan()+"",mh.getMaCH()});
-						} 
+			if (nv1 != null) {
+				btnTimKiem.setText("Hủy Tìm");
+				clearTableFrmSanPham();
+				for (NhanVien mh : nv1) {
+					if (nv1 != null) {
+						model.addRow(new String[] { mh.getMaNV(), mh.getTenNV(), mh.getGioiTinh(), mh.getDiaChi(),
+								mh.getSdt() + "", mh.geteMail() + "", mh.getNgayVaoLam() + "", mh.getChucVu(),
+								mh.getLuongCoBan() + "", mh.getMaCH() });
 					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy");
+
 			}
-					else { 
-					JOptionPane.showMessageDialog(this, "Không tìm thấy");
-				
-					}
-					
-		}else {
+
+		} else {
 			clearTableFrmSanPham();
 			loadData();
 			btnTimKiem.setText("Tìm");
 		}
-			}
-	
-	
-	
+	}
+
 	public String getTextFieldValue() {
-	    return txtmaNV.getText();
+		return txtmaNV.getText();
 	}
 
 	private void them() throws NumberFormatException, Exception {
-		String ma=txtmaNV.getText();
-		String ten=txttenNV.getText();
-		String  gioitinh= (String) jComboBox_gioitinh.getSelectedItem();
-		String dc=txtdiaChi.getText();
-		String sdt=txtsdt.getText();
-		String email=txtemail.getText();
-		Date ngaylap =(Date) datePicker.getModel().getValue();
-		String chucvu=(String) jComboBox_chucvu.getSelectedItem();
-		String luong=txtLuong.getText();
-		String mach=(String) jComboBox_mach.getSelectedItem();
-	
-				if(ma.equals("")||ten.equals("")) {
+		String ma = txtmaNV.getText();
+		String ten = txttenNV.getText();
+		String gioitinh = (String) jComboBox_gioitinh.getSelectedItem();
+		String dc = txtdiaChi.getText();
+		String sdt = txtsdt.getText();
+		String email = txtemail.getText();
+		Date ngaylap = (Date) datePicker.getModel().getValue();
+		String chucvu = (String) jComboBox_chucvu.getSelectedItem();
+		String luong = txtLuong.getText();
+		String mach = (String) jComboBox_mach.getSelectedItem();
+
+		if (ma.equals("") || ten.equals("")) {
 			JOptionPane.showMessageDialog(this, "Ban chua nhap day du thong tin");
 		}
-		
-		
-		
-		//thêm ngày *****************
-	
-		
-		NhanVien nhanvien = new NhanVien(ma,ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu, Float.parseFloat(luong), mach);
-		String [] row = {ma,ten,gioitinh,dc,sdt,email,String.valueOf(ngaylap),chucvu,luong,mach};
-		//mo.maNV= nhanvien.getMaNV();
+
+		// thêm ngày *****************
+
+		NhanVien nhanvien = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
+				Float.parseFloat(luong), mach);
+		String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
+		// mo.maNV= nhanvien.getMaNV();
 		try {
 			model.addRow(row);
 			nv.addNhanVien(nhanvien);
@@ -458,15 +434,13 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 			mo.settxtmanv(ma);
 			mo.setchucvu(chucvu);
 			mo.setVisible(true);
-		
-			
-			
-	} catch (Exception e) {
-		JOptionPane.showMessageDialog(this, "Trùng mã lớp");
-		txtmaNV.setText("");
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Trùng mã lớp");
+			txtmaNV.setText("");
 			txtmaNV.requestFocus();
-	}
-		
+		}
+
 	}
 
 	private void xoatrang() {
@@ -478,22 +452,24 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		txtemail.setText("");
 		txtLuong.setText("");
 	}
+
 	// hàm kiểm tra nhập
 	private boolean validData() {
 		reg = new Regex();
-		if(txtmaNV.getText().equals("") || txttenNV.getText().equals("") || txtLuong.getText().equals("") || txtsdt.getText().equals("") ) {
+		if (txtmaNV.getText().equals("") || txttenNV.getText().equals("") || txtLuong.getText().equals("")
+				|| txtsdt.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Các textField không được rỗng");
 			return false;
 		}
-		if(!(txtmaNV.getText().matches("NV\\d{1,3}"))) {
+		if (!(txtmaNV.getText().matches("NV\\d{1,3}"))) {
 			JOptionPane.showMessageDialog(null, "Mã nhân  viên phải theo định dạng NV_xxx vd: NV001");
 			return false;
 		}
-		if(reg.kiemTraTenNV(txttenNV.getText()) == false) {
+		if (reg.kiemTraTenNV(txttenNV.getText()) == false) {
 			JOptionPane.showMessageDialog(null, "VD: Lê Thị Tơ");
 			return false;
 		}
-		if(reg.kiemTraSDT(txtsdt.getText()) == false) {
+		if (reg.kiemTraSDT(txtsdt.getText()) == false) {
 			JOptionPane.showMessageDialog(null, "VD: 0947672098  *SDT 10 số*");
 			return false;
 		}
