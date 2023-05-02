@@ -147,6 +147,7 @@ public class FrmXuatHang extends JDialog implements ActionListener {
 		Object o = e.getSource();
 		if(o.equals(btnXacNhan)) {
 			JOptionPane.showMessageDialog(this, "Phiếu đã được lưu trữ!!");
+			 dispose();
 		}
 
 	}

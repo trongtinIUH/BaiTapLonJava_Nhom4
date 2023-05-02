@@ -311,7 +311,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtMa.setText(code);
 	}
 
-	private void clearTable() {
+	public void clearTable() {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
 		}

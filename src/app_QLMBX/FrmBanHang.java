@@ -346,6 +346,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		lblHinhThucTT.setBounds(350, 5, 140, 20);
 		pnLoaiTT.add(cbxHinhThucTT = new JComboBox<String>());
 		cbxHinhThucTT.setBounds(500, 5, 110, 20);
+		cbxHinhThucTT.addItem("");
 		cbxHinhThucTT.addItem("Trả trực tiếp");
 		cbxHinhThucTT.addItem("Trả góp");
 		pnLoaiTT.add(lblGiam = new JLabel("Phần trăm giảm:"));

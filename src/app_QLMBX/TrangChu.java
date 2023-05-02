@@ -266,10 +266,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Khách Hàng")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			    khachHang.clearTable();
 			khachHang.loadData();
 			setBackground();
 			btnKhachHang.setBackground(Color.pink);
@@ -280,10 +281,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bán Hàng")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			    
 			setBackground();
 			btnBanHang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Bán Hàng\r\n", null, banHang, null);
@@ -293,10 +295,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Hợp Đồng")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			dsHopDong.clearTable();
 			dsHopDong.loadData();
 			setBackground();
 			btnHopDong.setBackground(Color.pink);
@@ -307,10 +310,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Nhân viên")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			    nhanVien.clearTable();
 			nhanVien.loadData();
 			setBackground();
 			btnNhanVien.setBackground(Color.pink);
@@ -321,10 +325,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Nhập Hàng")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			nhapHang.clearTable();
 			nhapHang.loadData();
 			setBackground();
 			btnNhaphang.setBackground(Color.pink);
@@ -335,10 +340,11 @@ public class TrangChu extends JFrame implements ActionListener{
 			 int count = tabbedPane.getTabCount();
 			    for (int i = count - 1; i >= 0; i--) {
 			        String title = tabbedPane.getTitleAt(i);
-			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_sản Phẩm")) {
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
+			    sanPham.clearTableFrmSanPham();
 			sanPham.loadDataFrmSanPham();
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
@@ -353,6 +359,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			            tabbedPane.removeTabAt(i);
 			        }
 			    }  
+			    baohanh.clearTable();
 			baohanh.loadData();
 			setBackground();
 			btnBaoHanh.setBackground(Color.pink);
