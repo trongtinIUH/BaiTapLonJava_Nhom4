@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -107,7 +108,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane pane = new JScrollPane(table);
 		panelCenter.add(pane);
-		pane.setPreferredSize(new Dimension(950, 170));
+		pane.setPreferredSize(new Dimension(950, 165));
 
 		panelCenter.add(lblTitle_ct = new JLabel("Chi tiết"));
 		lblTitle_ct.setFont(new Font("Arial", Font.BOLD, 20));
@@ -119,7 +120,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		table_ct.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane pane_ct = new JScrollPane(table_ct);
 		panelCenter.add(pane_ct);
-		pane_ct.setPreferredSize(new Dimension(950, 50));
+		pane_ct.setPreferredSize(new Dimension(950, 55));
 
 		panelCenter.add(btnTTTraGop = new JButton("Thanh toán trả góp"));
 
@@ -522,13 +523,15 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		txtmaNV.setText(hd.getNvLapHD().getMaNV());
 
 		// chi tiết
-		ChiTietHopDong cthd = cthddao.getCTHDTheoMaHD(txtMa.getText());
+		ArrayList<ChiTietHopDong> dscthd = cthddao.getCTHDTheoMaHD(txtMa.getText());
 		KhachHang kh = khdao.getKHTheoMa(txtmaKH.getText());
 		DecimalFormat df = new DecimalFormat("#.##");
-		String donGia = df.format(cthd.getMatHang().getDonGia());
-		Object[] obj = { cthd.getMaChiTietHD(), cthd.getMatHang().getTenMH(), donGia, cthd.getSoLuong(), kh.getSdt() };
 		clearTable_CT();
-		model_ct.addRow(obj);
+		for (ChiTietHopDong cthd : dscthd) {
+			String donGia = df.format(cthd.getMatHang().getDonGia());
+			Object[] obj = { cthd.getMaChiTietHD(), cthd.getMatHang().getTenMH(), donGia, cthd.getSoLuong(), kh.getSdt() };
+			model_ct.addRow(obj);
+		}
 		
 		if(cbloaiHD.getSelectedItem().equals("Trả góp")) {
 			btnTTTraGop.setEnabled(true);

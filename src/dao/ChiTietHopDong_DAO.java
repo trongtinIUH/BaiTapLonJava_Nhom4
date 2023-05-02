@@ -186,7 +186,8 @@ public class ChiTietHopDong_DAO {
 				return cthd;		
 	}
 	
-	public ChiTietHopDong getCTHDTheoMaHD (String id) {
+	public ArrayList<ChiTietHopDong> getCTHDTheoMaHD (String id) {
+		ArrayList<ChiTietHopDong> dscthd = new ArrayList<ChiTietHopDong>();
 		ChiTietHopDong cthd = new ChiTietHopDong();
 		HopDong hd = new HopDong();
 		MatHang mh = new MatHang();
@@ -209,12 +210,14 @@ public class ChiTietHopDong_DAO {
 				mh = mhdao.getMHTheoMa(maMH);
 				int soluong = rs.getInt("soLuong");
 				cthd = new ChiTietHopDong(hd, maCTHD, mh, soluong);
+				dscthd.add(cthd);
+			}
+			if(dscthd.size() == 0) {
+				return null;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(cthd.getMaChiTietHD() == null)
-			return null;
-		return cthd;
+		return dscthd;
 	}
 }
