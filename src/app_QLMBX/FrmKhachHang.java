@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -88,7 +89,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		panelCenter.add(pane);
 		pane.setPreferredSize(new Dimension(950, 270));
 
-		
 		// Thông tin khách hàng
 		JPanel panelSouth = new JPanel();
 		panelSouth.setBounds(7, 340, 580, 200);
@@ -185,28 +185,33 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblNhapTT.setFont(font);
 		panelChucNang.add(txtTim = new JTextField());
 		txtTim.setFont(font);
-		txtTim.setBounds(140, 70, 220, 23);
+		txtTim.setBounds(140, 65, 220, 23);
 
 		panelChucNang.add(btnTim = new JButton("Tìm kiếm"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		btnTim.setFont(font);
-		btnTim.setBounds(137, 110, 100, 25);
+		btnTim.setBounds(120, 100, 140, 25);
 
 		panelChucNang.add(btnThem = new JButton("Thêm"));
+		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
 		btnThem.setFont(font);
-		btnThem.setBounds(20, 160, 80, 25);
+		btnThem.setBounds(20, 135, 140, 25);
 
 		panelChucNang.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(font);
 		btnXoa.setForeground(Color.red);
-		btnXoa.setBounds(105, 160, 70, 25);
+		btnXoa.setBounds(20, 165, 140, 25);
 
 		panelChucNang.add(btnXoaTrang = new JButton("Xóa trắng"));
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
 		btnXoaTrang.setFont(font);
-		btnXoaTrang.setBounds(180, 160, 105, 25);
+		btnXoaTrang.setBounds(220, 135, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
+		btnSua.setIcon(new ImageIcon("image\\sua.png"));
 		btnSua.setFont(font);
-		btnSua.setBounds(290, 160, 70, 25);
+		btnSua.setBounds(220, 165, 140, 25);
 		loadData();
 
 		btnThem.addActionListener(this);
@@ -272,7 +277,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 
 	private void them() throws SQLException {
 		loadMa();
-		
+
 		String ma = txtMa.getText();
 		String ten = txtTen.getText();
 		String diaChi = txtDiaChi.getText();
@@ -292,7 +297,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 								kh.getGioiTinh(), kh.getDiaChi(), kh.getSdt() });
 						JOptionPane.showMessageDialog(this, "Thêm thành công");
 						xoaTrang();
-					}  else {
+					} else {
 						them();
 					}
 				} else {
@@ -301,7 +306,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		}
 	}
-	
+
 	private void loadMa() {
 		String code;
 		do {
@@ -386,25 +391,34 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	private void sua() {
-		String ma = txtMa.getText();
-		String ten = txtTen.getText();
-		String sdt = txtSdt.getText();
-		String phai = null;
-		if (rdoNam.isSelected())
-			phai = "Nam";
-		else
-			phai = "Nu";
-		String diaChi = txtDiaChi.getText();
-		if (!regex.kiemTraRong(txtTen) && regex.kiemTraRong(txtSdt) && regex.kiemTraRong(txtDiaChi)) {
-			if(!regex.RegexTen(txtTen) && !regex.RegexSDT(txtSdt)) {				
-				KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-				if (khDAO.update(kh)) {
-					clearTable();
-					loadData();
-					JOptionPane.showMessageDialog(this, "Sửa thành công");
-				} else
-					JOptionPane.showMessageDialog(this, "Một số điện thoại chỉ cho một khách hàng");
+		int row = table.getSelectedRow();
+		if(row >= 0) {
+			String ma = txtMa.getText();
+			String ten = txtTen.getText();
+			String sdt = txtSdt.getText();
+			String phai = null;
+			if (rdoNam.isSelected())
+				phai = "Nam";
+			else
+				phai = "Nu";
+			String diaChi = txtDiaChi.getText();
+			if (!regex.kiemTraRong(txtDiaChi) && !regex.kiemTraRong(txtTen) && !regex.kiemTraRong(txtSdt)) {
+				if (!regex.RegexTen(txtTen) && !regex.RegexSDT(txtSdt)) {
+					KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
+					KhachHang khsdt = khDAO.getKHTheoSDT(sdt);
+					KhachHang khma = khDAO.getKHTheoMa(ma);
+					if (khma.getSdt().equals(sdt) || khsdt == null) {
+						if (khDAO.update(kh)) {
+							clearTable();
+							loadData();
+							JOptionPane.showMessageDialog(this, "Sửa thành công");
+						}
+					} else
+						JOptionPane.showMessageDialog(this, "Một số điện thoại chỉ cho một khách hàng");
+				}
 			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Bạn cần chọn dòng để sửa!!");
 		}
 	}
 

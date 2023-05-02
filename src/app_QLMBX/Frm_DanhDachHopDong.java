@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -242,21 +243,25 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		txtTim.setBounds(140, 70, 220, 23);
 
 		panelChucNang.add(btnTim = new JButton("Tìm kiếm"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		btnTim.setFont(font);
-		btnTim.setBounds(137, 110, 100, 25);
+		btnTim.setBounds(112, 110, 140, 25);
 
 		panelChucNang.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(font);
 		btnXoa.setForeground(Color.red);
-		btnXoa.setBounds(30, 160, 70, 25);
+		btnXoa.setBounds(10, 160, 90, 25);
 
 		panelChucNang.add(btnXoaTrang = new JButton("Xóa trắng"));
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
 		btnXoaTrang.setFont(font);
-		btnXoaTrang.setBounds(140, 160, 105, 25);
+		btnXoaTrang.setBounds(115, 160, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
+		btnSua.setIcon(new ImageIcon("image\\sua.png"));
 		btnSua.setFont(font);
-		btnSua.setBounds(280, 160, 70, 25);
+		btnSua.setBounds(265, 160, 100, 25);
 		loadData();
 		
 		btnTTTraGop.setEnabled(false);
@@ -308,32 +313,46 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 	}
 
 	private void sua() {
-//		if (kiemTra()) {
-		String maHD = txtMa.getText();
-		int thoiGian = Integer.parseInt(txtThoiGian.getText());
-		String loaiHD = (String) cbloaiHD.getSelectedItem();
-		String maNV = txtmaNV.getText();
-		String maKH = txtmaKH.getText();
-		String maCH = txtmaCH.getText();
-		Date ngaylap = (Date) datePicker.getModel().getValue();
-
-		KhachHang kh = new KhachHang(maKH);
-		NhanVien nv = new NhanVien(maNV);
-		CuaHang ch = new CuaHang(maCH);
-		HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
-
-		if (hddao.update(hd)) {
-			clearTable();
-			loadData();
-			JOptionPane.showMessageDialog(this, "Sửa thành công");
-		} else {
-			if (nvdao.getNVTheoMa(maNV) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã nhân viên không tồn tại!");
-			else if (chdao.getCHTheoMa(maCH) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã cửa hàng không tồn tại");
-			else if (khdao.getKHTheoMa(maKH) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã khách hàng không tồn tại");
-		}
+		int row = table.getSelectedRow();
+		if(row >= 0) {
+			String maHD = txtMa.getText();
+			int thoiGian = -1;
+			try {
+				thoiGian = Integer.parseInt(txtThoiGian.getText());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ!");
+			}
+			String loaiHD = (String) cbloaiHD.getSelectedItem();
+			String maNV = txtmaNV.getText();
+			String maKH = txtmaKH.getText();
+			String maCH = txtmaCH.getText();
+			Date ngaylap = (Date) datePicker.getModel().getValue();
+			
+			KhachHang kh = new KhachHang(maKH);
+			NhanVien nv = new NhanVien(maNV);
+			CuaHang ch = new CuaHang(maCH);
+			HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
+			
+			if(thoiGian == -1) {
+				
+			}
+			else if(thoiGian > 0) {
+				if (hddao.update(hd)) {
+					clearTable();
+					loadData();
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				} else {
+					if (nvdao.getNVTheoMa(maNV) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã nhân viên không tồn tại!");
+					else if (chdao.getCHTheoMa(maCH) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã cửa hàng không tồn tại");
+					else if (khdao.getKHTheoMa(maKH) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã khách hàng không tồn tại");
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Thời gian bảo hành phải lớn hơn 0");
+		} else 
+			JOptionPane.showMessageDialog(this, "Chọn dòng cần sửa!");
 	}
 
 //	private void them() {
