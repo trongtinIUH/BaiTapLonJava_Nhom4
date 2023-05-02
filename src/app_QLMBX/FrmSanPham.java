@@ -262,14 +262,14 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 				if(mh.getLoaiMH().equals("Xe")) {
 					JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
 					xe = new Frm_Xe();
-					xe.maXe = ma;
+					xe.setMaXe(ma);
 					xe.setVisible(true);
 					themVaoBang();
 				}
 				if(mh.getLoaiMH().equals("Linh Kiện")) {
 					JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
 					lk = new Frm_LinhKien();
-					lk.maLK = ma;
+					lk.setMaLK(ma);
 					lk.setVisible(true);
 					themVaoBang();
 				}
@@ -338,8 +338,8 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 				clearTableFrmSanPham();
 				for(MatHang mh : dsmh) {				
 					if(dsmh != null) {
-						model.addRow(new String[] {mh.getMaMH(), mh.getTenMH(), mh.getDvt(),
-								mh.getMoTa(), mh.getDonGia() + "", mh.getSlTon() + "", mh.getLoaiMH()});
+						model.addRow(new String[] {mh.getMaMH(), mh.getLoaiMH() , mh.getTenMH(), mh.getSlTon() + "" , mh.getDvt(), mh.getDonGia() + "",
+								mh.getMoTa()});
 					} 
 				}
 			} else {

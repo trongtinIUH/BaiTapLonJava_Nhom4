@@ -2,7 +2,6 @@ package app_QLMBX;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,13 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-
-import javax.swing.Box;
-import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,19 +21,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
-
 import dao.NhanVien_DAO;
 import entity.DateLabelFormatter;
 import entity.NhanVien;
+import entity.Regex;
 
 public class FrmNhanVien extends JPanel implements Serializable,ActionListener,MouseListener {
 	/**
@@ -46,8 +38,8 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 	 */
 	private static final long serialVersionUID = 1L;
 	private String col[]= {"Mã Nhân Viên", "Tên Nhân Viên", "Giới Tính", "Địa Chỉ", "SDT", "Email","Ngày Vào Làm","Chức Vụ","Lương","Mã Cửa Hàng"};
-	private JLabel lblmaNV,lbltenNV,lblGioiTinh,lbldiaChi,lblsdt,lblemail,lblngayvaolam,lblchucVu,lblluongcoBan,lblmaCH,lblUser;
-	private JTextField txtmaNV,txttenNV,txtdiaChi,txtsdt,txtemail,txtLuong,txtmaCH,txtNgayvaolam;
+	private JLabel lblmaNV,lbltenNV,lblGioiTinh,lbldiaChi,lblsdt,lblemail,lblngayvaolam,lblchucVu,lblluongcoBan,lblmaCH;
+	private JTextField txtmaNV,txttenNV,txtdiaChi,txtsdt,txtemail,txtLuong;
 	private JButton btnThem,btnXoa,btnXoaTrang,btnLuu,btnTimKiem;
 	private JTable tblNhanVien;
 	private DefaultTableModel model;
@@ -57,22 +49,24 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 	private JComboBox<String> jComboBox_mach;
 	private String[] cuahang=  new String[] {"CH001","CH003","CH003"};
 	private JComboBox<String> jComboBox_chucvu;
-	private String[] chucVu=  new String[] {"Nhân viên hành chính","Nhân viên kỹ thuật","Nhân viên bán hàng","Nhân viên tư vấn/Bảo hành","Quản lý kho hàng","Kế Toán"};
+	private String[] chucVu=  new String[] {"Nhân viên hành chính","Nhân viên kỹ thuật"};
+
 
 	private JLabel lblTimKiem;
 	private JTextField txtTimkiem;
 	private NhanVien_DAO nv;
-	private Component panelSouth;
 	private SqlDateModel modelNgaylap;
 	private Properties p;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
+	private Frm_NhapThongTinNhanVien mo;
+	private Regex reg;
 	
+	public String manv_nv= "";
 	
-
 	public FrmNhanVien() {
 		setSize(1000, 600);
-
+		mo= new Frm_NhapThongTinNhanVien();
 		
 		//hi
 		JPanel pnControl = new JPanel();
@@ -360,6 +354,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 				tim();
 				}
 				if(o.equals(btnThem)) {
+					if(validData()) {
 					try {
 						them();
 					} catch (Exception e1) {
@@ -375,7 +370,7 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 						e1.printStackTrace();
 					}
 				}
-		
+				}
 	}
 	private void xoa() throws SQLException {
 		// TODO Auto-generated method stub
@@ -395,17 +390,44 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		
 	}
 	// hàm tìm
-	private void tim() {
-		int vt= nv.timkiem(txtTimkiem.getText());
-		if(vt==-1) {
-			JOptionPane.showMessageDialog(null,"Không tồn tại nv!");
+	public void clearTableFrmSanPham() {
+		while (tblNhanVien.getRowCount() > 0) {
+			model.removeRow(0);
 		}
-		else {
-			tblNhanVien.setRowSelectionInterval(vt, vt);
-		}
-		
 	}
 	
+	//tìm 
+	private void tim() {
+		if(btnTimKiem.getText().equals("Tìm")) {
+			ArrayList<NhanVien> nv1 = nv.Timkiem(txtTimkiem.getText());
+			if(nv1 != null) {
+					btnTimKiem.setText("Hủy Tìm");
+					clearTableFrmSanPham();
+					for(NhanVien mh : nv1) {				
+						if(nv1 != null) {
+							model.addRow(new String[] {mh.getMaNV(), mh.getTenNV(), mh.getGioiTinh(),
+									mh.getDiaChi(), mh.getSdt() + "", mh.geteMail() + "", mh.getNgayVaoLam()+"",mh.getChucVu(),mh.getLuongCoBan()+"",mh.getMaCH()});
+						} 
+					}
+			}
+					else { 
+					JOptionPane.showMessageDialog(this, "Không tìm thấy");
+				
+					}
+					
+		}else {
+			clearTableFrmSanPham();
+			loadData();
+			btnTimKiem.setText("Tìm");
+		}
+			}
+	
+	
+	
+	public String getTextFieldValue() {
+	    return txtmaNV.getText();
+	}
+
 	private void them() throws NumberFormatException, Exception {
 		String ma=txtmaNV.getText();
 		String ten=txttenNV.getText();
@@ -418,10 +440,10 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		String luong=txtLuong.getText();
 		String mach=(String) jComboBox_mach.getSelectedItem();
 	
-		
-		if(ma.equals("")||ten.equals("")) {
+				if(ma.equals("")||ten.equals("")) {
 			JOptionPane.showMessageDialog(this, "Ban chua nhap day du thong tin");
 		}
+		
 		
 		
 		//thêm ngày *****************
@@ -429,10 +451,16 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		
 		NhanVien nhanvien = new NhanVien(ma,ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu, Float.parseFloat(luong), mach);
 		String [] row = {ma,ten,gioitinh,dc,sdt,email,String.valueOf(ngaylap),chucvu,luong,mach};
+		//mo.maNV= nhanvien.getMaNV();
 		try {
 			model.addRow(row);
 			nv.addNhanVien(nhanvien);
 			JOptionPane.showMessageDialog(this, "Thêm thành công");
+			mo.settxtmanv(ma);
+			mo.setchucvu(chucvu);
+			mo.setVisible(true);
+		
+			
 			
 	} catch (Exception e) {
 		JOptionPane.showMessageDialog(this, "Trùng mã lớp");
@@ -450,5 +478,26 @@ public class FrmNhanVien extends JPanel implements Serializable,ActionListener,M
 		txtdiaChi.setText("");
 		txtemail.setText("");
 		txtLuong.setText("");
+	}
+	// hàm kiểm tra nhập
+	private boolean validData() {
+		reg = new Regex();
+		if(txtmaNV.getText().equals("") || txttenNV.getText().equals("") || txtLuong.getText().equals("") || txtsdt.getText().equals("") ) {
+			JOptionPane.showMessageDialog(null, "Các textField không được rỗng");
+			return false;
+		}
+		if(!(txtmaNV.getText().matches("NV\\d{1,3}"))) {
+			JOptionPane.showMessageDialog(null, "Mã nhân  viên phải theo định dạng NV_xxx vd: NV001");
+			return false;
+		}
+		if(reg.kiemTraTenNV(txttenNV.getText()) == false) {
+			JOptionPane.showMessageDialog(null, "VD: Lê Thị Tơ");
+			return false;
+		}
+		if(reg.kiemTraSDT(txtsdt.getText()) == false) {
+			JOptionPane.showMessageDialog(null, "VD: 0947672098  *SDT 10 số*");
+			return false;
+		}
+		return true;
 	}
 }

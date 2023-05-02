@@ -1,4 +1,9 @@
+/entity/
 /app_QLMBX/
 /dao/
+<<<<<<< HEAD
 /FrmXuatHang.class
 /entity/
+=======
+/connectDB/
+>>>>>>> main
