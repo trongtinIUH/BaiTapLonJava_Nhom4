@@ -18,7 +18,7 @@ public class LinhKien_DAO {
 		String sql ="insert into LinhKienPhuTung(maLinhKien, hangSX) VALUES(?,?)";
 		 try {
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, lk.getMaMH());
+			pst.setString(1, lk.getMaLinhKien());
 			pst.setString(2, lk.getHangSX());
 			return pst.executeUpdate() > 0;
 		} catch (Exception e) {

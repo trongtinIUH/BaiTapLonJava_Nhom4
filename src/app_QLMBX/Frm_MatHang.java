@@ -156,13 +156,13 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 						if(mh.getLoaiMH().equals("Xe")) {
 							JOptionPane.showMessageDialog(null, "Bạn đang thêm một xe mới vui lòng nhập thêm thông tin cho xe!");
 							xe = new Frm_Xe();
-							xe.maXe = maSP;
+							xe.setMaXe(maSP);
 							xe.setVisible(true);
 						}
 						if(mh.getLoaiMH().equals("Linh Kiện")) {
 							JOptionPane.showMessageDialog(null, "Bạn đang thêm một linh kiện mới vui lòng nhập thêm thông tin cho xe!");
 							lk = new Frm_LinhKien();
-							lk.maLK = maSP;
+							lk.setMaLK(maSP);
 							lk.setVisible(true);
 						}
 					}

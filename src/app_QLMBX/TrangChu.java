@@ -17,8 +17,6 @@ import java.awt.Panel;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
@@ -265,36 +263,82 @@ public class TrangChu extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o= e.getSource();
 		if(o.equals(btnKhachHang)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
+			khachHang.loadData();
 			setBackground();
 			btnKhachHang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Khách Hàng\r\n", null, khachHang, null);
 			tabbedPane.setSelectedIndex(getIndex(khachHang));
 		}
 		if(o.equals(btnBanHang)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
 			setBackground();
 			btnBanHang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Bán Hàng\r\n", null, banHang, null);
 			tabbedPane.setSelectedIndex(getIndex(banHang));
 		}
 		if(o.equals(btnHopDong)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
+			dsHopDong.loadData();
 			setBackground();
 			btnHopDong.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Hợp Đồng\r\n", null, dsHopDong, null);
 			tabbedPane.setSelectedIndex(getIndex(dsHopDong));
 		}
 		if(o.equals(btnNhanVien)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
+			nhanVien.loadData();
 			setBackground();
 			btnNhanVien.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Nhân Viên\r\n", null, nhanVien, null);
 			tabbedPane.setSelectedIndex(getIndex(nhanVien));
 		}
 		if(o.equals(btnNhaphang)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
+			nhapHang.loadData();
 			setBackground();
 			btnNhaphang.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Nhập Hàng\r\n", null, nhapHang, null);
 			tabbedPane.setSelectedIndex(getIndex(nhapHang));
 		}
 		if(o.equals(btnSanPham)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    } 
 			sanPham.loadDataFrmSanPham();
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
@@ -302,20 +346,33 @@ public class TrangChu extends JFrame implements ActionListener{
 			tabbedPane.setSelectedIndex(getIndex(sanPham));
 		}
 		if(o.equals(btnBaoHanh)) {
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Bảo Hành")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    }  
+			baohanh.loadData();
 			setBackground();
 			btnBaoHanh.setBackground(Color.pink);
 			tabbedPane.addTab("tab_Bảo Hành\r\n", null,baohanh , null);
 			tabbedPane.setSelectedIndex(getIndex(baohanh));
 		}
 		if(o.equals(btnThongKe)) {
-		  
-		    // thêm tab "Thống kê" mới
-			thongke.loadData();
-		    setBackground();
-		    btnThongKe.setBackground(Color.pink);
-		    tabbedPane.addTab("tab_Thống Kê\r\n", null, thongke, null);
-		 //   tabbedPane.setSelectedIndex(getIndex(thongke));
-		    tabbedPane.setSelectedComponent(thongke);
+			 int count = tabbedPane.getTabCount();
+			    for (int i = count - 1; i >= 0; i--) {
+			        String title = tabbedPane.getTitleAt(i);
+			        if (!title.equals("tab_GioiThieu") && !title.equals("tab_Thống Kê")) {
+			            tabbedPane.removeTabAt(i);
+			        }
+			    }  
+			    thongke.loadData();
+			    setBackground();
+			    btnThongKe.setBackground(Color.pink);
+			    tabbedPane.addTab("tab_Thống Kê\r\n", null, thongke, null);
+			 //   tabbedPane.setSelectedIndex(getIndex(thongke));
+			    tabbedPane.setSelectedComponent(thongke);
 		}
 	}
 

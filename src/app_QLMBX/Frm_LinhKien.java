@@ -22,7 +22,7 @@ public class Frm_LinhKien extends JFrame implements ActionListener {
 	private JLabel lblHangSX;
 	private JComboBox<String> cboHangSX;
 	private JButton btnLuu, btnThoat;
-	public String maLK = "";
+	private String maLK = "LK999";
 	private LinhKien_DAO lk;
 	public Frm_LinhKien() {
 		setSize(300, 200);
@@ -54,6 +54,10 @@ public class Frm_LinhKien extends JFrame implements ActionListener {
 	}
 	public static void main(String[] args) {
 		new Frm_LinhKien().setVisible(true);
+	}
+	
+	public void setMaLK(String ma) {
+		maLK = ma;
 	}
 	
 	private LinhKienPhuTung revertTextToLK() {
