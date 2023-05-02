@@ -35,7 +35,13 @@ public class PhatSinhMa_DAO {
 		return prefix + suffix;
 	}
 
-	
+	public String generateRandomHoaDonXuatHang() {
+		String prefix = "HDH_X";
+		int maxNumber = 999999;
+		int randomNum = new Random().nextInt(maxNumber);
+		String suffix = String.format("%06d", randomNum);
+		return prefix + suffix;
+	}
 
 }
 

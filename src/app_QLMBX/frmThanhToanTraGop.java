@@ -29,6 +29,10 @@ import entity.TraGop;
 
 public class frmThanhToanTraGop extends JDialog implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String[] cols = { "STT", "Mã hợp đồng", "Ngày trả", "Lãi suất", "Người trả", "Số tiền trả" };
 	private DefaultTableModel model;
 	private JTable table;

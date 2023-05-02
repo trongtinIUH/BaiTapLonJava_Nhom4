@@ -9,8 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -33,23 +34,28 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
 import connectDB.ConnectDB;
+import dao.ChiTietHoaDonHang_DAO;
 import dao.ChiTietHopDong_DAO;
 import dao.CuaHang_DAO;
+import dao.HoaDonHang_DAO;
 import dao.HopDong_DAO;
 import dao.KhachHang_DAO;
 import dao.MatHang_DAO;
 import dao.NhanVien_DAO;
 import dao.PhatSinhMa_DAO;
+import dao.PhieuXuat_DAO;
 import dao.TraGop_DAO;
 import dao.TraTrucTiep_DAO;
 import dao.Xe_DAO;
+import entity.ChiTietHoaDonHang;
 import entity.ChiTietHopDong;
 import entity.CuaHang;
-import entity.DateLabelFormatter;
+import entity.HoaDonHang;
 import entity.HopDong;
 import entity.KhachHang;
 import entity.MatHang;
 import entity.NhanVien;
+import entity.PhieuXuat;
 import entity.TraGop;
 import entity.TraTrucTiep;
 import entity.Xe;
@@ -71,9 +77,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 
 	private JButton btnXoaTrang;
 	private JLabel lblTenXe;
-	private JTextField txtSoLuong;
 	private JButton btnThemXe;
-	private String col[] = {"Mã chi tiết hợp đồng", "Tên mặt hàng", "Số lượng", "Đơn gia", "Thành tiền"};
+	private String col[] = {"Mã chi tiết hợp đồng", "Tên mặt hàng", "Số lượng", "Đơn giá", "Thành tiền"};
 	private JScrollPane scrollTable;
 	private DefaultTableModel tblModel;
 	private JTable tblHopDong;
@@ -81,26 +86,25 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private JLabel lblNgayLapHD;
 	private ButtonGroup grbSex;
 	private JLabel lblTenNV;
-	private JComboBox cbxTenNV;
+	private JComboBox<String> cbxTenNV;
 	private JLabel lblTongTT;
 	private JTextField txtTongTT;
 	private JButton btnThemNV;
-	private JComboBox cbxTenXe;
+	private JComboBox<String> cbxTenXe;
 	private JTextField txtMaKH;
 	private JLabel lblHinhThucTT;
-	private JComboBox cbxHinhThucTT;
+	private JComboBox<String> cbxHinhThucTT;
 	private JLabel lblCuaHang;
-	private JComboBox cbxCuaHang;
+	private JComboBox<String> cbxCuaHang;
 	private JTextField txtTenNVTT;
 	private JLabel lblChucVu;
 	private JComboBox<String> cbxChucVu;
 	private JComboBox<String> cbxSoDT;
 	private SqlDateModel modelNgayKH;
-	private Properties p;
 	private JDatePanelImpl datePanel;
 	private JDatePickerImpl datePicker;
 	private JLabel lblSoDtNhanVien;
-	private JComboBox cbxDongXe;
+	private JComboBox<String> cbxDongXe;
 	private JLabel lblDongXe;
 	private DecimalFormat df = new DecimalFormat("#");
 	private JLabel lblTGBH;
@@ -129,14 +133,17 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private JTextField txtLaiSuat;
 	private JLabel lblTienDua;
 	private JTextField txtTienDua;
-	private int flag;
 	private TraGop_DAO traGop_dao;
 	private TraTrucTiep_DAO traTrucTiep_dao;
 	private JRadioButton radCu;
 	private JRadioButton radMoi;
 	private ButtonGroup grbType;
 	private JButton btnLayTTKH;
-	private String maKh;
+	private String maPhieuXuat;
+	private JTextField txtNgay;
+	private HoaDonHang_DAO hdh_dao;
+	private ChiTietHoaDonHang_DAO cthdHang_dao;
+	private PhieuXuat_DAO phieuXuat_dao;
 
 	public FrmBanHang() {
 		
@@ -155,6 +162,9 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		cthd_dao = new ChiTietHopDong_DAO();
 		traGop_dao = new TraGop_DAO();
 		traTrucTiep_dao = new TraTrucTiep_DAO();
+		hdh_dao = new HoaDonHang_DAO();
+		cthdHang_dao = new ChiTietHoaDonHang_DAO();
+		phieuXuat_dao = new PhieuXuat_DAO();
 		
 		setLayout(null);
 		int x = 10, y = 10, width = 400, height = 200;
@@ -292,18 +302,27 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		
 		pnThongTin.add(lblNgayLapHD = new JLabel("Ngày lập HD: "));
 		lblNgayLapHD.setBounds(350, 0, 100, 20);
-		modelNgayKH = new SqlDateModel();
-		p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		datePanel = new JDatePanelImpl(modelNgayKH, p);
-		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		datePicker.setBounds(450, 0, 120, 30);
-		datePicker.setBackground(new Color(248,248,248));
-		modelNgayKH.setDate(2023,4,5);
-		modelNgayKH.setSelected(true);
-		pnThongTin.add(datePicker);
+//		modelNgayKH = new SqlDateModel();
+//		p = new Properties();
+//		p.put("text.today", "Today");
+//		p.put("text.month", "Month");
+//		p.put("text.year", "Year");
+//		datePanel = new JDatePanelImpl(modelNgayKH, p);
+//		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+//		datePicker.setBounds(450, 0, 120, 30);
+//		datePicker.setBackground(new Color(248,248,248));
+//		modelNgayKH.setDate(2023,4,5);
+//		modelNgayKH.setSelected(true);
+//		pnThongTin.add(datePicker);
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		java.util.Date date = new java.util.Date();
+		txtNgay = new JTextField();
+		txtNgay.setText(dateFormat.format(date));
+		pnThongTin.add(txtNgay);
+		txtNgay.setBounds(450, 0, 120, 20);
+		txtNgay.setEditable(false);
+		
 		pnThongTin.add(lblTGBH = new JLabel("TG Bảo hành:"));
 		lblTGBH.setBounds(600, 0, 90, 20);
 		pnThongTin.add(txtBaoHanh = new JTextField());
@@ -337,15 +356,15 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		pnLoaiTT.setLayout(null);
 		pnLoaiTT.setBounds(10, 465, 950, 30);
 		pnLoaiTT.add(lblTongTT = new JLabel("Tổng thành tiền: "));
-		lblTongTT.setForeground(Color.BLUE);
+		lblTongTT.setForeground(Color.RED);
 		lblTongTT.setBounds(10, 5, 120, 20);
 		pnLoaiTT.add(txtTongTT = new JTextField());
-		txtTongTT.setForeground(Color.BLUE);
+		txtTongTT.setForeground(Color.RED);
 		txtTongTT.setBounds(140, 5, 200, 20);
 		txtTongTT.setEditable(false);
 		pnLoaiTT.add(lblHinhThucTT = new JLabel("Chọn loại thanh toán: "));
 		lblHinhThucTT.setBounds(350, 5, 140, 20);
-		pnLoaiTT.add(cbxHinhThucTT = new JComboBox());
+		pnLoaiTT.add(cbxHinhThucTT = new JComboBox<String>());
 		cbxHinhThucTT.setBounds(500, 5, 110, 20);
 		cbxHinhThucTT.addItem("Trả trực tiếp");
 		cbxHinhThucTT.addItem("Trả góp");
@@ -366,22 +385,22 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		pnControl.setBounds(10, 500, 950, 40);
 		pnControl.setLayout(null);
 		pnControl.add(lblTienDua = new JLabel("Tiền phải đưa: "));
-		lblTienDua.setForeground(Color.BLUE);
-		lblTienDua.setBounds(10, 5, 90, 20);
+		lblTienDua.setForeground(Color.RED);
+		lblTienDua.setBounds(10, 15, 90, 20);
 		pnControl.add(txtTienDua = new JTextField());
-		txtTienDua.setForeground(Color.BLUE);
-		txtTienDua.setBounds(140, 5, 200, 20);
+		txtTienDua.setForeground(Color.RED);
+		txtTienDua.setBounds(140, 15, 200, 20);
 		txtTienDua.setEditable(false);
 		pnControl.add(btnXoaDong = new JButton("XÓA SẢN PhẨM"));
 		btnXoaDong.setIcon(new ImageIcon("image\\delete-icon.png"));
-		btnXoaDong.setBounds(460, 0, 170, 30);
+		btnXoaDong.setBounds(460, 10, 170, 30);
 		btnXoaDong.setForeground(Color.red);
 		pnControl.add(btnXoaTrang = new JButton("LÀM MỚI"));
 		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png")); 
-		btnXoaTrang.setBounds(640, 0, 130, 30);
+		btnXoaTrang.setBounds(640, 10, 130, 30);
 		pnControl.add(btnThanhToan = new JButton("THANH TOÁN"));
 		btnThanhToan.setIcon(new ImageIcon("image\\buy.png"));
-		btnThanhToan.setBounds(780, 0, 160, 30);   
+		btnThanhToan.setBounds(780, 10, 160, 30);   
 		add(pnControl);     
 				
 		radCu.addActionListener(this);
@@ -559,7 +578,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			MatHang mh = matHang_DAO.getMatHangTheoTen(tenMH);
 			
 			int slNew = mh.getSlTon() - Integer.parseInt(tblModel.getValueAt(i, 2).toString());
-//			mh = new MatHang(mh.getMaMH());
 			matHang_DAO.updateSLTon(slNew, mh.getMaMH());
 		}
 	}
@@ -572,7 +590,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		}
 		else
 		{
-			Date ngaylap =(Date) datePicker.getModel().getValue();
+			java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 			int tgBH =Integer.parseInt(txtBaoHanh.getText());
 			String loaiHD = cbxHinhThucTT.getSelectedItem().toString();
 			NhanVien nvl = nv_dao.getNhanVienTheoTen(cbxTenNV.getSelectedItem().toString());
@@ -586,7 +604,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				JOptionPane.showMessageDialog(null, "Thời gian bảo hành không hợp lệ");
 			}
 			else {
-				HopDong hd = new HopDong(maHd, ngaylap, tgBH, loaiHD, nvl, cuaHang, kh);
+				HopDong hd = new HopDong(maHd, date, tgBH, loaiHD, nvl, cuaHang, kh);
 				if(hd_dao.createHD(hd))
 					if(loaiHD.equalsIgnoreCase("Trả trực tiếp"))
 						themHDTraTrucTiep();
@@ -598,9 +616,61 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					{
 						themCTHD(i);
 					}
+					
+					//Thêm phiếu xuất hàng
+					xuatHang();
+					
 					capNhatSLTon();
 					JOptionPane.showMessageDialog(this, "Thanh Toán thành công, hợp đồng đã được lưu vào CSDL!!");
 			}
+		}
+	}
+	
+	//thêm vào hóa đơn xuất hàng và chi tiết hóa đơn xuất hàng
+	private void xuatHang() {
+		//Thêm hóa đơn hàng
+		PhatSinhMa_DAO maHDH = new PhatSinhMa_DAO();
+		maPhieuXuat = maHDH.generateRandomHoaDonXuatHang();
+		
+		String tenCH = (String) cbxCuaHang.getSelectedItem();
+		ch_DAO = new CuaHang_DAO();
+		CuaHang ch = ch_DAO.getCuaHangTheoTen(tenCH);
+		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+		HoaDonHang hdh = new HoaDonHang(maPhieuXuat, ch, date); 
+		hdh_dao = new HoaDonHang_DAO();
+		try {
+			hdh_dao.addHoaDonHang(hdh);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Thêm chi tiết hóa đơn hàng
+		int soRow = tblHopDong.getRowCount();
+		for(int i=0;i<soRow;i++)
+		{
+			themCTXH(i);
+		}
+		
+		
+		//Thêm phiêu xuất
+		PhieuXuat px = new PhieuXuat(maPhieuXuat);
+		if(!phieuXuat_dao.createPX(px))
+		{
+			JOptionPane.showMessageDialog(this, "Không tạo được!!");
+		}
+	}
+	
+	//	thêm vào chi tiết phiếu xuất hàng
+	private void themCTXH(int vtRow) {
+		HoaDonHang HDH = new HoaDonHang(maPhieuXuat);
+		String tenT = tblModel.getValueAt(vtRow, 1).toString();
+		int soLuong = Integer.parseInt(tblModel.getValueAt(vtRow,2).toString());
+		MatHang m = matHang_DAO.getMatHangTheoTen(tenT);
+		ChiTietHoaDonHang cthdh = new ChiTietHoaDonHang(HDH, m, soLuong);
+		if(!cthdHang_dao.createHDH(cthdh))   
+		{	
+			JOptionPane.showMessageDialog(this, "Không tạo được!!");
 		}
 	}
 	
@@ -616,15 +686,15 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	//Thêm vào hợp đồng trả góp
 	private void themHDTraGop() {
 		HopDong HD = new HopDong(maHd);
-		Date ngayTra =(Date) datePicker.getModel().getValue();
+		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		double laiSuat = Double.parseDouble(txtLaiSuat.getText());
 		String nguoiTra = txtTenKH.getText() + "-" + txtSoDt.getText();
 		double soTienTra = Double.parseDouble(txtTienDua.getText());
-		TraGop HDTraGop = new TraGop(HD, ngayTra, laiSuat, nguoiTra, soTienTra);
+		TraGop HDTraGop = new TraGop(HD, date, laiSuat, nguoiTra, soTienTra);
 		traGop_dao.createHDTraGop(HDTraGop);
 	}
 
-	//	thêm vào chi tiết 
+	//	thêm vào chi tiết hợp đồng
 	private void themCTHD(int vtRow) {
 		HopDong HD = new HopDong(maHd);
 		String maCTHD = tblModel.getValueAt(vtRow, 0).toString();
@@ -634,7 +704,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		ChiTietHopDong cthd = new ChiTietHopDong(HD, maCTHD, m, soLuong);
 		if(!cthd_dao.createCTHD(cthd) || soLuong<=0)   
 		{	
-			JOptionPane.showMessageDialog(this, "Không tạo được!!");
+			JOptionPane.showMessageDialog(this, "Không tạo được CTHD!!");
 		}
 	}		
 
@@ -770,6 +840,8 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		else if(obj.equals(btnThanhToan))
 		{
 			themhd();
+			FrmXuatHang xuatHang = new FrmXuatHang(maPhieuXuat);
+			xuatHang.setVisible(true);
 		}
 		else if(obj.equals(btnXoaTrang))
 			xoaRong();
