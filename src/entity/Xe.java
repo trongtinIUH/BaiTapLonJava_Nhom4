@@ -1,4 +1,5 @@
 package entity;
+
 import java.util.Objects;
 
 public class Xe extends MatHang{
@@ -57,8 +58,17 @@ public class Xe extends MatHang{
 		this.soSuon = soSuon;
 	}
 	
+	
+	
 	public Xe(String maXe, String dongXe, String soKhung, String mauXe, int soPK, String soSuon, String xuatSu) {
 		super();
+		this.maXe = maXe;
+		this.dongXe = dongXe;
+		this.soKhung = soKhung;
+		this.mauXe = mauXe;
+		this.soPK = soPK;
+		this.soSuon = soSuon;
+		this.xuatSu = xuatSu;
 	}
 	public Xe() {
 		super();

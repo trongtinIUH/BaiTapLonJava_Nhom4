@@ -59,6 +59,31 @@ public class MatHang_DAO {
 		return mh;
 		
 	}
+	
+	public MatHang getMatHangTheoMa(String maMh) {
+		MatHang mh = null;
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from MatHang where maMH = '"+maMh+"'";
+			Statement sta = con.createStatement();
+			ResultSet rs = sta.executeQuery(sql);
+			while(rs.next()) {
+				mh = new MatHang(rs.getString("maMH"), rs.getString("tenMH"), rs.getString("dvt"), rs.getString("moTa"), rs.getDouble("donGia"), rs.getInt("slTon"), rs.getString("loaiMH"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mh;
+		
+	}
+	
 	public boolean addSanPham(MatHang sp) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
@@ -151,5 +176,59 @@ public class MatHang_DAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+
+	public boolean updateSLTon(int sl, String ma) {
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 Connection con = ConnectDB.getConnection();
+		
+		 String sql ="UPDATE MatHang SET slTon = ? WHERE maMH = ?";
+		 try {
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setInt(1, sl);
+			pst.setString(2, ma);
+			return pst.executeUpdate() >0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public MatHang getMHTheoMa(String id) {
+		MatHang mh = new MatHang();
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from MatHang where maMH = '" + id + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				String maMH = rs.getString("maMH");
+				String ten = rs.getString("tenMH");
+				String dvt = rs.getString("dvt");
+				String moTa = rs.getString("moTa");
+				double donGia = rs.getDouble("donGia");
+				int soLuongTon = rs.getInt("slTon");
+				String loaiMH = rs.getString("loaiMH");
+				mh = new MatHang(maMH, ten, dvt, moTa, donGia, soLuongTon, loaiMH);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (mh.getMaMH() == null)
+			return null;
+		return mh;
+
 	}
 }

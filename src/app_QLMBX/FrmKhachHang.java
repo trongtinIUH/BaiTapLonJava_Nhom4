@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +16,7 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -31,9 +31,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import dao.KhachHang_DAO;
-import dao.NhanVien_DAO;
 import entity.KhachHang;
-import entity.NhanVien;
+import entity.Regex;
 
 public class FrmKhachHang extends JPanel implements ActionListener, MouseListener {
 
@@ -47,7 +46,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JTextField txtTen;
 	private JTextField txtMa;
 	private Font font;
-	private JTextField txtPhai;
 	private JTextField txtDiaChi;
 	private JTextField txtSdt;
 	private JComboBox<String> cbTim;
@@ -63,6 +61,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JLabel lblNu;
 	private KhachHang_DAO khDAO = new KhachHang_DAO();
 	private Set<String> generatedCodes = new HashSet<>();
+	private Regex regex = new Regex();
 
 	private static final long serialVersionUID = 1L;
 
@@ -83,6 +82,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// Bảng
 		model = new DefaultTableModel(cols, 0);
 		table = new JTable(model);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.setBackground(Color.pink);
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane pane = new JScrollPane(table);
@@ -107,14 +107,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtMa.setBounds(150, 50, 150, 23);
 		txtMa.setFont(font);
 		txtMa.setEditable(false);
-		String code;
-		do {
-			code = generateRandomCode();
-		} while (generatedCodes.contains(code));
-		generatedCodes.add(code);
-
-		// Đặt giá trị cho JTextField
-		txtMa.setText(code);
+		loadMa();
 
 		JLabel lblTen = new JLabel("Tên:");
 		panelSouth.add(lblTen);
@@ -192,28 +185,33 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblNhapTT.setFont(font);
 		panelChucNang.add(txtTim = new JTextField());
 		txtTim.setFont(font);
-		txtTim.setBounds(140, 70, 220, 23);
+		txtTim.setBounds(140, 65, 220, 23);
 
 		panelChucNang.add(btnTim = new JButton("Tìm kiếm"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		btnTim.setFont(font);
-		btnTim.setBounds(137, 110, 100, 25);
+		btnTim.setBounds(120, 100, 140, 25);
 
 		panelChucNang.add(btnThem = new JButton("Thêm"));
+		btnThem.setIcon(new ImageIcon("image\\add-icon.png"));
 		btnThem.setFont(font);
-		btnThem.setBounds(20, 160, 80, 25);
+		btnThem.setBounds(20, 135, 140, 25);
 
 		panelChucNang.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(font);
 		btnXoa.setForeground(Color.red);
-		btnXoa.setBounds(105, 160, 70, 25);
+		btnXoa.setBounds(20, 165, 140, 25);
 
 		panelChucNang.add(btnXoaTrang = new JButton("Xóa trắng"));
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
 		btnXoaTrang.setFont(font);
-		btnXoaTrang.setBounds(180, 160, 105, 25);
+		btnXoaTrang.setBounds(220, 135, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
+		btnSua.setIcon(new ImageIcon("image\\sua.png"));
 		btnSua.setFont(font);
-		btnSua.setBounds(290, 160, 70, 25);
+		btnSua.setBounds(220, 165, 140, 25);
 		loadData();
 
 		btnThem.addActionListener(this);
@@ -234,7 +232,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			xoaTrang();
 		} else if (o.equals(btnXoaTrang)) {
 			xoaTrang();
 		} else if (o.equals(btnXoa)) {
@@ -279,6 +276,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	private void them() throws SQLException {
+		loadMa();
+
 		String ma = txtMa.getText();
 		String ten = txtTen.getText();
 		String diaChi = txtDiaChi.getText();
@@ -288,24 +287,36 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			phai = "Nam";
 		else
 			phai = "Nu";
-		KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-		if (khDAO.createKH(kh)) {
-			model.addRow(new Object[] { model.getRowCount() + 1, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
-					kh.getDiaChi(), kh.getSdt() });
-			JOptionPane.showMessageDialog(this, "Thêm thành công");
-		} else {
-			JOptionPane.showMessageDialog(this, "Trùng mã hoặc số điện thoại");
+		KhachHang khsdt = khDAO.getKHTheoSDT(sdt);
+		if (!regex.kiemTraRong(txtDiaChi) && !regex.kiemTraRong(txtTen) && !regex.kiemTraRong(txtSdt)) {
+			if (!regex.RegexTen(txtTen) && !regex.RegexSDT(txtSdt)) {
+				if (khsdt == null) {
+					KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
+					if (khDAO.createKH(kh)) {
+						model.addRow(new Object[] { model.getRowCount() + 1, kh.getMaKH(), kh.getTenKH(),
+								kh.getGioiTinh(), kh.getDiaChi(), kh.getSdt() });
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+						xoaTrang();
+					} else {
+						them();
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Một số điện thoại chỉ được đăng ký cho một khách hàng");
+				}
+			}
 		}
+	}
+
+	private void loadMa() {
 		String code;
 		do {
 			code = generateRandomCode();
 		} while (generatedCodes.contains(code));
 		generatedCodes.add(code);
-
 		txtMa.setText(code);
 	}
 
-	private void clearTable() {
+	public void clearTable() {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
 		}
@@ -320,9 +331,12 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					JOptionPane.YES_OPTION);
 			if (tl == JOptionPane.YES_OPTION) {
 				int index = table.getSelectedRow();
-				khDAO.xoa(model.getValueAt(table.getSelectedRow(), 1).toString());
-				model.removeRow(index);
-				JOptionPane.showMessageDialog(this, "Xóa thành công");
+				if (khDAO.xoa(model.getValueAt(table.getSelectedRow(), 1).toString())) {
+					model.removeRow(index);
+					JOptionPane.showMessageDialog(this, "Xóa thành công");
+				} else {
+					JOptionPane.showMessageDialog(this, "Xóa không thành công. Lỗi không xác định");
+				}
 			}
 		}
 	}
@@ -331,38 +345,41 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		int selectedIndex = cbTim.getSelectedIndex();
 		int i = 0;
 		if (btnTim.getText().equals("Tìm kiếm")) {
-			if (selectedIndex == 0) {
-//				ArrayList<KhachHang> dskh = khDAO.getKHTheoMa(txtTim.getText());
-				KhachHang kh = khDAO.getKHTheoMa(txtTim.getText());
-				if (kh != null) {
-					btnTim.setText("Hủy tìm");
-					clearTable();
-					model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
-							kh.getSdt() });
-				} else {
-					JOptionPane.showMessageDialog(this, "Không tìm thấy");
-				}
-			} else if (selectedIndex == 1) {
-				KhachHang kh = khDAO.getKHTheoSDT(txtTim.getText());
-				if (kh != null) {
-					btnTim.setText("Hủy tìm");
-					clearTable();
-					model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
-							kh.getSdt() });
-				} else {
-					JOptionPane.showMessageDialog(this, "Không tìm thấy");
-				}
-			} else if (selectedIndex == 2) {
-				ArrayList<KhachHang> dskh = khDAO.getKHTheoTen(txtTim.getText());
-				if (dskh != null) {
-					btnTim.setText("Hủy tìm");
-					clearTable();
-					for (KhachHang kh : dskh) {
+			if (txtTim.getText().equals("")) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin cần tìm");
+			} else {
+				if (selectedIndex == 0) {
+					KhachHang kh = khDAO.getKHTheoMa(txtTim.getText());
+					if (kh != null) {
+						btnTim.setText("Hủy tìm");
+						clearTable();
 						model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
 								kh.getSdt() });
+					} else {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy");
 					}
-				} else {
-					JOptionPane.showMessageDialog(this, "Không tìm thấy");
+				} else if (selectedIndex == 1) {
+					KhachHang kh = khDAO.getKHTheoSDT(txtTim.getText());
+					if (kh != null) {
+						btnTim.setText("Hủy tìm");
+						clearTable();
+						model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(), kh.getDiaChi(),
+								kh.getSdt() });
+					} else {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy");
+					}
+				} else if (selectedIndex == 2) {
+					ArrayList<KhachHang> dskh = khDAO.getKHTheoTen(txtTim.getText());
+					if (dskh != null) {
+						btnTim.setText("Hủy tìm");
+						clearTable();
+						for (KhachHang kh : dskh) {
+							model.addRow(new Object[] { ++i, kh.getMaKH(), kh.getTenKH(), kh.getGioiTinh(),
+									kh.getDiaChi(), kh.getSdt() });
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Không tìm thấy");
+					}
 				}
 			}
 		} else {
@@ -374,23 +391,35 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	private void sua() {
-//		if (kiemTra()) {
-		String ma = txtMa.getText();
-		String ten = txtTen.getText();
-		String sdt = txtSdt.getText();
-		String phai = null;
-		if (rdoNam.isSelected())
-			phai = "Nam";
-		else
-			phai = "Nu";
-		String diaChi = txtDiaChi.getText();
-		KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
-		if (khDAO.update(kh)) {
-			clearTable();
-			loadData();
-			JOptionPane.showMessageDialog(this, "Sửa thành công");
-		} else
-			JOptionPane.showMessageDialog(this, "Mã khách hàng không tồn tại");
+		int row = table.getSelectedRow();
+		if(row >= 0) {
+			String ma = txtMa.getText();
+			String ten = txtTen.getText();
+			String sdt = txtSdt.getText();
+			String phai = null;
+			if (rdoNam.isSelected())
+				phai = "Nam";
+			else
+				phai = "Nu";
+			String diaChi = txtDiaChi.getText();
+			if (!regex.kiemTraRong(txtDiaChi) && !regex.kiemTraRong(txtTen) && !regex.kiemTraRong(txtSdt)) {
+				if (!regex.RegexTen(txtTen) && !regex.RegexSDT(txtSdt)) {
+					KhachHang kh = new KhachHang(ma, ten, phai, diaChi, sdt);
+					KhachHang khsdt = khDAO.getKHTheoSDT(sdt);
+					KhachHang khma = khDAO.getKHTheoMa(ma);
+					if (khma.getSdt().equals(sdt) || khsdt == null) {
+						if (khDAO.update(kh)) {
+							clearTable();
+							loadData();
+							JOptionPane.showMessageDialog(this, "Sửa thành công");
+						}
+					} else
+						JOptionPane.showMessageDialog(this, "Một số điện thoại chỉ cho một khách hàng");
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Bạn cần chọn dòng để sửa!!");
+		}
 	}
 
 	@Override

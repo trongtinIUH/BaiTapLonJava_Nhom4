@@ -8,10 +8,8 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import dao.ThongKe_DAO;
@@ -26,7 +24,7 @@ public class Frm_ThongKe extends JPanel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lblTitle, lblsanPham,lblkhachhang,lblnhanVien, lbldoanhThu;
+	private JLabel lblsanPham,lblkhachhang,lblnhanVien, lbldoanhThu;
 	private JTextField txtsanpham,txtkhachHang,txtnhanVien,txtDoanhThu;
 	private ThongKe_DAO thongke ;
 
@@ -55,35 +53,9 @@ public class Frm_ThongKe extends JPanel implements Serializable {
 			pnContent.setLayout(null);
 			pnContent.setPreferredSize(new Dimension(990, 600));
 			
-//			pnContent.add(lblTitle= new JLabel("THỐNG KÊ TỔNG QUÁT"));
-//			lblTitle.setForeground(Color.black);
-//			lblTitle.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
-//			lblTitle.setBounds(330, 10, 400, 40);
 
 			int x = 300, y = 200, width = 70, height = 50;
-			
-//			pnContent.add(lblsanPham = new JLabel(""));
-//			lblsanPham.setIcon(new ImageIcon("image\\thongkesanpham.png"));
-//			lblsanPham.setBounds(x, y, width, height);
-//		//y+=30;
-//			pnContent.add(lblkhachhang = new JLabel(""));
-//			lblkhachhang.setIcon(new ImageIcon("image\\thongKeKhachHang.png"));
-//			lblkhachhang.setBounds(520, y, width, height);
-//			//y+=30;
-//			
-//			y+=250;
-//			pnContent.add(lblnhanVien = new JLabel(""));
-//			lblnhanVien.setIcon(new ImageIcon("image\\thongKeNhanVien.png"));
-//			lblnhanVien.setBounds(x, y, width, height);
-//			lblnhanVien.setForeground(Color.white);
-//			
-//			
-//			pnContent.add(lbldoanhThu = new JLabel(""));
-//			lbldoanhThu.setIcon(new ImageIcon("image\\thongKeDoanhThu.png"));
-//			lbldoanhThu.setBounds(520, y, width, height);
-//			
-			
-		//	x+=200;y = 200;width = 70;height = 50;
+
 			pnContent.add(txtsanpham = new JTextField(10));
 			txtsanpham.setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
 			txtsanpham.setEnabled(false);

@@ -1,7 +1,6 @@
 package entity;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class NV_HanhChinh extends NhanVien {
@@ -9,16 +8,33 @@ public class NV_HanhChinh extends NhanVien {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String tenPB;
 	private String hocVan;
+
 	
 	
+
+
+
+
 
 	public NV_HanhChinh() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	
+	public NV_HanhChinh(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
+			Date ngayVaoLam, String chucVu, float luongCoBan, String maCH, String tenPB, String hocVan) {
+		super(maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan, maCH);
+		this.tenPB = tenPB;
+		this.hocVan = hocVan;
+	}
+
+
+
 
 	public NV_HanhChinh(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
 			Date ngayVaoLam, String chucVu, float luongCoBan, String maCH) {
@@ -28,10 +44,31 @@ public class NV_HanhChinh extends NhanVien {
 
 
 
-	public NV_HanhChinh(String maNV, String tenNV, String gioiTinh, String diaChi, String sdt, String eMail,
-			Date ngayVaoLam, String chucVu, float luongCoBan, String maCH, String hocVan) {
-		super(maNV, tenNV, gioiTinh, diaChi, sdt, eMail, ngayVaoLam, chucVu, luongCoBan, maCH);
-		this.hocVan = hocVan;
+
+	public NV_HanhChinh(String tenNV, String chucVu, String sdt) {
+		super(tenNV, chucVu, sdt);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+	public NV_HanhChinh(String maNV) {
+		super(maNV);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+	public String getTenPB() {
+		return tenPB;
+	}
+
+
+
+	public void setTenPB(String tenPB) {
+		this.tenPB = tenPB;
 	}
 
 
@@ -68,9 +105,13 @@ public class NV_HanhChinh extends NhanVien {
 		return Objects.equals(hocVan, other.hocVan);
 	}
 
+
+
 	@Override
 	public String toString() {
-		return String.format("NhanVienKyThuat [hocVan=%s]", hocVan);
+		return String.format("NV_HanhChinh [hocVan=%s, tenPB=%s]", hocVan, tenPB);
 	}
+
+
 	
 }

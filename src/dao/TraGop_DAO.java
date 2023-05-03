@@ -70,4 +70,33 @@ public class TraGop_DAO {
 		}
 		return n>0;
 	}
+	
+	public ArrayList<TraGop> getTraGopTheoMa(String id) {
+		ArrayList<TraGop> dstg = new ArrayList<TraGop>();
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from TraGop where maHD = '" + id + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				String maHD = rs.getString("maHD");
+				Date ngayTra = rs.getDate("ngayTra");
+				Double laisuat = rs.getDouble("laiSuat");
+				String nguoiTra = rs.getString("nguoiTra");
+				Double soTienTra = rs.getDouble("soTienTra");
+				HopDong hd = new HopDong(maHD);
+				TraGop tg = new TraGop(hd, ngayTra, laisuat, nguoiTra, soTienTra);
+				dstg.add(tg);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dstg;
+	}
 }

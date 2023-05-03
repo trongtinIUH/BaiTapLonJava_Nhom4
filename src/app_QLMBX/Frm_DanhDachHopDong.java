@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.Random;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -33,10 +35,12 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 
+import dao.ChiTietHopDong_DAO;
 import dao.CuaHang_DAO;
 import dao.HopDong_DAO;
 import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
+import entity.ChiTietHopDong;
 import entity.CuaHang;
 import entity.DateLabelFormatter;
 import entity.HopDong;
@@ -53,6 +57,10 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 	private DefaultTableModel model;
 	private String[] cols = { "STT", "Mã hợp đồng", "Ngày lập", "Thời gian", "Loại hợp đồng", "Tên nhân viên",
 			"Tên cửa hàng", "Tên khách hàng" };
+	private String[] cols_ct = { "Mã chi tiết hợp đồng", "Tên mặt hàng", "Đơn giá", "Số lượng",
+			"Số điện thoại khách hàng" };
+	private JTable table_ct;
+	private DefaultTableModel model_ct;
 	private JTextField txtMa;
 	private Font font;
 	private JTextField txtThoiGian;
@@ -61,7 +69,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 	private JComboBox<String> cbTim;
 	private JTextField txtTim;
 	private JButton btnTim;
-	private JButton btnThem;
+	private JButton btnTTTraGop;
 	private JButton btnXoa;
 	private JButton btnXoaTrang;
 	private JButton btnSua;
@@ -76,6 +84,8 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 	private KhachHang_DAO khdao;
 	private HopDong_DAO hddao = new HopDong_DAO();
 	private JComboBox<String> cbloaiHD;
+	private JLabel lblTitle_ct;
+	private ChiTietHopDong_DAO cthddao = new ChiTietHopDong_DAO();
 
 	public Frm_DanhDachHopDong() {
 		setLayout(null);
@@ -83,7 +93,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		add(panelNorth);
 		panelNorth.setBounds(0, 0, 970, 50);
 		JLabel lblTitle;
-		panelNorth.add(lblTitle = new JLabel("Quản lý thông tin bảo hành"));
+		panelNorth.add(lblTitle = new JLabel("Quản lý thông tin hợp đồng"));
 		lblTitle.setFont(new Font("Arial", Font.BOLD, 25));
 		lblTitle.setForeground(new Color(0, 40, 255));
 
@@ -98,12 +108,26 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		JScrollPane pane = new JScrollPane(table);
 		panelCenter.add(pane);
-		pane.setPreferredSize(new Dimension(950, 270));
+		pane.setPreferredSize(new Dimension(950, 165));
+
+		panelCenter.add(lblTitle_ct = new JLabel("Chi tiết"));
+		lblTitle_ct.setFont(new Font("Arial", Font.BOLD, 20));
+		lblTitle_ct.setForeground(new Color(0, 40, 255));
+
+		model_ct = new DefaultTableModel(cols_ct, 0);
+		table_ct = new JTable(model_ct);
+		table_ct.setBackground(Color.pink);
+		table_ct.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		JScrollPane pane_ct = new JScrollPane(table_ct);
+		panelCenter.add(pane_ct);
+		pane_ct.setPreferredSize(new Dimension(950, 55));
+
+		panelCenter.add(btnTTTraGop = new JButton("Thanh toán trả góp"));
 
 		// Thông tin khách hàng
 		JPanel panelSouth = new JPanel();
 		panelSouth.setBounds(7, 340, 580, 200);
-		panelSouth.setBorder(BorderFactory.createTitledBorder("Thông tin bảo hành"));
+		panelSouth.setBorder(BorderFactory.createTitledBorder("Thông tin hợp đồng"));
 		TitledBorder titledthongtin = (TitledBorder) panelSouth.getBorder();
 		titledthongtin.setTitleColor(Color.blue);
 		panelSouth.setLayout(null);
@@ -219,41 +243,41 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		txtTim.setBounds(140, 70, 220, 23);
 
 		panelChucNang.add(btnTim = new JButton("Tìm kiếm"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		btnTim.setFont(font);
-		btnTim.setBounds(137, 110, 100, 25);
-
-		panelChucNang.add(btnThem = new JButton("Thêm"));
-		btnThem.setFont(font);
-		btnThem.setBounds(20, 160, 80, 25);
+		btnTim.setBounds(112, 110, 140, 25);
 
 		panelChucNang.add(btnXoa = new JButton("Xóa"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(font);
 		btnXoa.setForeground(Color.red);
-		btnXoa.setBounds(105, 160, 70, 25);
+		btnXoa.setBounds(10, 160, 90, 25);
 
 		panelChucNang.add(btnXoaTrang = new JButton("Xóa trắng"));
+		btnXoaTrang.setIcon(new ImageIcon("image\\icons8_x_24px.png"));
 		btnXoaTrang.setFont(font);
-		btnXoaTrang.setBounds(180, 160, 105, 25);
+		btnXoaTrang.setBounds(115, 160, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
+		btnSua.setIcon(new ImageIcon("image\\sua1.png"));
 		btnSua.setFont(font);
-		btnSua.setBounds(290, 160, 70, 25);
+		btnSua.setBounds(265, 160, 100, 25);
 		loadData();
+		
+		btnTTTraGop.setEnabled(false);
 
 		table.addMouseListener(this);
-		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnTim.addActionListener(this);
 		btnXoaTrang.addActionListener(this);
+		btnTTTraGop.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o.equals(btnThem)) {
-			them();
-		} else if (o.equals(btnXoaTrang)) {
+		if (o.equals(btnXoaTrang)) {
 			xoaTrang();
 		} else if (o.equals(btnXoa)) {
 			xoa();
@@ -261,9 +285,12 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 			tim();
 		} else if (o.equals(btnSua)) {
 			sua();
+		} else if (o.equals(btnTTTraGop)) {
+			frmThanhToanTraGop TTTraGop = new frmThanhToanTraGop(txtMa.getText());
+			TTTraGop.setVisible(true);
 		}
 	}
-	
+
 	private void xoa() {
 		if (table.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Hãy chọn hợp đồng cần xóa");
@@ -284,74 +311,89 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 			}
 		}
 	}
-	
+
 	private void sua() {
-//		if (kiemTra()) {
-		String maHD = txtMa.getText();
-		int thoiGian = Integer.parseInt(txtThoiGian.getText());
-		String loaiHD = (String) cbloaiHD.getSelectedItem();
-		String maNV = txtmaNV.getText();
-		String maKH = txtmaKH.getText();
-		String maCH = txtmaCH.getText();
-		Date ngaylap = (Date) datePicker.getModel().getValue();
-		
-		KhachHang kh = new KhachHang(maKH);
-		NhanVien nv = new NhanVien(maNV);
-		CuaHang ch = new CuaHang(maCH);
-		HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
-		
-		if (hddao.update(hd)) {
-			clearTable();
-			loadData();
-			JOptionPane.showMessageDialog(this, "Sửa thành công");
-		} else {
-			if(nvdao.getNVTheoMa(maNV) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã nhân viên không tồn tại!");
-			else if(chdao.getCHTheoMa(maCH) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã cửa hàng không tồn tại");
-			else if(khdao.getKHTheoMa(maKH) == null)
-				JOptionPane.showMessageDialog(this, "Sửa không thành công mã khách hàng không tồn tại");
-		}		
+		int row = table.getSelectedRow();
+		if(row >= 0) {
+			String maHD = txtMa.getText();
+			int thoiGian = -1;
+			try {
+				thoiGian = Integer.parseInt(txtThoiGian.getText());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ!");
+			}
+			String loaiHD = (String) cbloaiHD.getSelectedItem();
+			String maNV = txtmaNV.getText();
+			String maKH = txtmaKH.getText();
+			String maCH = txtmaCH.getText();
+			Date ngaylap = (Date) datePicker.getModel().getValue();
+			
+			KhachHang kh = new KhachHang(maKH);
+			NhanVien nv = new NhanVien(maNV);
+			CuaHang ch = new CuaHang(maCH);
+			HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
+			
+			if(thoiGian == -1) {
+				
+			}
+			else if(thoiGian > 0) {
+				if (hddao.update(hd)) {
+					clearTable();
+					loadData();
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				} else {
+					if (nvdao.getNVTheoMa(maNV) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã nhân viên không tồn tại!");
+					else if (chdao.getCHTheoMa(maCH) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã cửa hàng không tồn tại");
+					else if (khdao.getKHTheoMa(maKH) == null)
+						JOptionPane.showMessageDialog(this, "Sửa không thành công mã khách hàng không tồn tại");
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Thời gian bảo hành phải lớn hơn 0");
+		} else 
+			JOptionPane.showMessageDialog(this, "Chọn dòng cần sửa!");
 	}
 
-	private void them() {
-		Set<String> generatedCodes = new HashSet<>();
-		String code;
-		do {
-			code = generateRandomCode();
-		} while (generatedCodes.contains(code));
-		generatedCodes.add(code);
-
-		// Đặt giá trị cho JTextField
-		txtMa.setText(code);
-
-		String maHD = txtMa.getText();
-		int thoiGian = Integer.parseInt(txtThoiGian.getText());
-		String loaiHD = (String) cbloaiHD.getSelectedItem();
-		String maNV = txtmaNV.getText();
-		String maKH = txtmaKH.getText();
-		String maCH = txtmaCH.getText();
-		Date ngaylap = (Date) datePicker.getModel().getValue();
-
-		KhachHang kh = new KhachHang(maKH);
-		NhanVien nv = new NhanVien(maNV);
-		CuaHang ch = new CuaHang(maCH);
-		HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
-
-		if (hddao.createHD(hd)) {
-				model.addRow(new Object[] { model.getRowCount() + 1, maHD, ngaylap, thoiGian, loaiHD, nvdao.getNVTheoMa(maNV).getTenNV(),
-						chdao.getCHTheoMa(maCH).getTenCuaHang(), khdao.getKHTheoMa(maKH).getTenKH() });
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
-		} else {
-			if(nvdao.getNVTheoMa(maNV) == null)
-				JOptionPane.showMessageDialog(this, "Thêm không thành công mã nhân viên không tồn tại!");
-			else if(chdao.getCHTheoMa(maCH) == null)
-				JOptionPane.showMessageDialog(this, "Thêm không thành công mã cửa hàng không tồn tại");
-			else if(khdao.getKHTheoMa(maKH) == null)
-				JOptionPane.showMessageDialog(this, "Thêm không thành công mã khách hàng không tồn tại");
-		}
-
-	}
+//	private void them() {
+//		Set<String> generatedCodes = new HashSet<>();
+//		String code;
+//		do {
+//			code = generateRandomCode();
+//		} while (generatedCodes.contains(code));
+//		generatedCodes.add(code);
+//
+//		// Đặt giá trị cho JTextField
+//		txtMa.setText(code);
+//
+//		String maHD = txtMa.getText();
+//		int thoiGian = Integer.parseInt(txtThoiGian.getText());
+//		String loaiHD = (String) cbloaiHD.getSelectedItem();
+//		String maNV = txtmaNV.getText();
+//		String maKH = txtmaKH.getText();
+//		String maCH = txtmaCH.getText();
+//		Date ngaylap = (Date) datePicker.getModel().getValue();
+//
+//		KhachHang kh = new KhachHang(maKH);
+//		NhanVien nv = new NhanVien(maNV);
+//		CuaHang ch = new CuaHang(maCH);
+//		HopDong hd = new HopDong(maHD, ngaylap, thoiGian, loaiHD, nv, ch, kh);
+//
+//		if (hddao.createHD(hd)) {
+//			model.addRow(new Object[] { model.getRowCount() + 1, maHD, ngaylap, thoiGian, loaiHD,
+//					nvdao.getNVTheoMa(maNV).getTenNV(), chdao.getCHTheoMa(maCH).getTenCuaHang(),
+//					khdao.getKHTheoMa(maKH).getTenKH() });
+//			JOptionPane.showMessageDialog(this, "Thêm thành công");
+//		} else {
+//			if (nvdao.getNVTheoMa(maNV) == null)
+//				JOptionPane.showMessageDialog(this, "Thêm không thành công mã nhân viên không tồn tại!");
+//			else if (chdao.getCHTheoMa(maCH) == null)
+//				JOptionPane.showMessageDialog(this, "Thêm không thành công mã cửa hàng không tồn tại");
+//			else if (khdao.getKHTheoMa(maKH) == null)
+//				JOptionPane.showMessageDialog(this, "Thêm không thành công mã khách hàng không tồn tại");
+//		}
+//
+//	}
 
 	private void xoaTrang() {
 		txtMa.setText("");
@@ -440,9 +482,15 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		}
 	}
 
-	private void clearTable() {
+	public void clearTable() {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
+		}
+	}
+
+	private void clearTable_CT() {
+		while (table_ct.getRowCount() > 0) {
+			model_ct.removeRow(0);
 		}
 	}
 
@@ -476,7 +524,6 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		hddao = new HopDong_DAO();
 		// TODO Auto-generated method stub
 		int row = table.getSelectedRow();
 		HopDong hd = hddao.getHopDongTheoMa(model.getValueAt(row, 1).toString());
@@ -486,14 +533,29 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		txtThoiGian.setText(model.getValueAt(row, 3).toString());
 		if (model.getValueAt(row, 4).toString().equals("Trả trực tiếp")) {
 			cbloaiHD.setSelectedIndex(0);
-			;
 		} else {
 			cbloaiHD.setSelectedIndex(1);
-			;
 		}
 		txtmaKH.setText(hd.getKhachHang().getMaKH());
 		txtmaCH.setText(hd.getCuaHang().getMaCH());
 		txtmaNV.setText(hd.getNvLapHD().getMaNV());
+
+		// chi tiết
+		ArrayList<ChiTietHopDong> dscthd = cthddao.getCTHDTheoMaHD(txtMa.getText());
+		KhachHang kh = khdao.getKHTheoMa(txtmaKH.getText());
+		DecimalFormat df = new DecimalFormat("#.##");
+		clearTable_CT();
+		for (ChiTietHopDong cthd : dscthd) {
+			String donGia = df.format(cthd.getMatHang().getDonGia());
+			Object[] obj = { cthd.getMaChiTietHD(), cthd.getMatHang().getTenMH(), donGia, cthd.getSoLuong(), kh.getSdt() };
+			model_ct.addRow(obj);
+		}
+		
+		if(cbloaiHD.getSelectedItem().equals("Trả góp")) {
+			btnTTTraGop.setEnabled(true);
+		}else {
+			btnTTTraGop.setEnabled(false);
+		}
 	}
 
 	@Override
@@ -520,4 +582,3 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 
 	}
 }
-	

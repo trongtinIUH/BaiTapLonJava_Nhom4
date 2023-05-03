@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import entity.ChiTietHopDong;
 import entity.CuaHang;
 import entity.HopDong;
 import entity.KhachHang;
@@ -19,7 +18,7 @@ public class HopDong_DAO {
 	public boolean update(HopDong hd){
 		try {
 			ConnectDB.getInstance();
-		} catch (SQLException e1) {
+		} catch (SQLException e1) { 
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -67,7 +66,6 @@ public class HopDong_DAO {
 			stmt = con.prepareStatement("insert into HopDong values (?,?,?,?,?,?,?)  ");
 			stmt.setString(1, hd.getMaHD());
 			stmt.setDate(2, (Date) hd.getNgaylapHD());
-			;
 			stmt.setInt(3, hd.getThoiGianBH());
 			stmt.setString(4, hd.getLoaiHD());
 			stmt.setString(5, hd.getNvLapHD().getMaNV());
@@ -233,28 +231,69 @@ public class HopDong_DAO {
 		return n > 0;
 	}
 
-//	public ArrayList<HoaDon> getHDTheoMaKH(String maKH){
-//		ArrayList<HoaDon> dsHD = new ArrayList<HoaDon>();
-//		
-//		ConnectDB.getInstance();
-//		Connection con = ConnectDB.getConnection();
-//		try {
-//			String sql = "select * from HoaDon where  maKh = '"+maKH+"'";
-//			Statement stm = con.createStatement();
-//			ResultSet rs = stm.executeQuery(sql);
-//			while(rs.next()) {
-//				String maHD = rs.getString(1);
-//				Date ngaylap =  rs.getDate(2);
-//				NhanVien nv = new NhanVien(rs.getString(3));
-//				KhachHang kh = new KhachHang(rs.getString(4));
-//				ChiTietHoaDon ct = new ChiTietHoaDon(rs.getString(5));
-//				HoaDon hd = new HoaDon(maHD, ngaylap, nv, kh, ct);
-//				dsHD.add(hd);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			// TODO: handle exception
-//		}
-//		return dsHD;
-//	}
+	public int getThoiGianBHTheoMaHD(String maHD) {
+		int thoiGianBH = 0;
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select thoiGianBH from HopDong where maHD = '" + maHD + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				thoiGianBH = rs.getInt("thoiGianBH");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return thoiGianBH;
+	}
+	
+	public Date getNgayLapTheoMaHD(String maHD) {
+		Date NgayLap = null;
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select ngayLapHD from HopDong where maHD = '" + maHD + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				NgayLap =  rs.getDate("ngayLapHD");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return NgayLap;
+	}
+	
+	public String getMaKHTheoMaHD(String maHD) {
+		String maKH = "";
+		try {
+			ConnectDB.getInstance();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select maKH from HopDong where maHD = '" + maHD + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				maKH = rs.getString("maKH");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maKH;
+	}
 }
