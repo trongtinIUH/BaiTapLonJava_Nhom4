@@ -94,8 +94,8 @@ CREATE TABLE HopDong
 	ngayLapHD date not null,
 	thoiGianBH int not null,
 	loaiHD nvarchar(50) not null,
-	maNV varchar(20) not null FOREIGN KEY REFERENCES NhanVien(maNV),
-	maCH varchar(20) not null FOREIGN KEY REFERENCES CuaHang(maCH),
+	maNV varchar(20) not null FOREIGN KEY REFERENCES NhanVien(maNV) on delete cascade,
+	maCH varchar(20) not null FOREIGN KEY REFERENCES CuaHang(maCH)  on delete cascade,
 	maKH varchar(20) not null FOREIGN KEY REFERENCES KhachHang(maKH)  on delete cascade
 )
 go
