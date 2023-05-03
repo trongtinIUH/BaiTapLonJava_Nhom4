@@ -99,7 +99,7 @@ public class Frm_NhapThongTinNhanVien extends JFrame implements Serializable,Act
 	
 		pnContent.add(btnxacnhan = new JButton("Xác Nhận"));
 		btnxacnhan.setIcon(new ImageIcon("image\\check-icon.png"));
-		btnxacnhan.setBounds(330,80, 120, 30);
+		btnxacnhan.setBounds(330,80, 130, 30);
 		btnxacnhan.addActionListener(this);
 		y+=40;
 		
@@ -108,25 +108,25 @@ public class Frm_NhapThongTinNhanVien extends JFrame implements Serializable,Act
 		pnContent.add(txtmaNV = new JTextField(10));
 		txtmaNV.setText(maNV);
 		txtmaNV.setEditable(false);
-		txtmaNV.setBounds(x, y, width, height);
+		txtmaNV.setBounds(x, y, 340, height);
 		y+=40;
 		
 		
 		jComboBox_tenpb= new JComboBox<String>(phongban);
 		pnContent.add(jComboBox_tenpb);
-		jComboBox_tenpb.setBounds(x, y, width, height);
+		jComboBox_tenpb.setBounds(x, y, 340, height);
 		y+=40;
 		
 		jComboBox_hocvan= new JComboBox<String>(hocvan);
 		pnContent.add(jComboBox_hocvan);
-		jComboBox_hocvan.setBounds(x, y, width, height);
+		jComboBox_hocvan.setBounds(x, y, 340, height);
 		y+=40;
 		jComboBox_bactho= new JComboBox<String>(bactho);
 		pnContent.add(jComboBox_bactho);
-		jComboBox_bactho.setBounds(x, y, width, height);
+		jComboBox_bactho.setBounds(x, y, 340, height);
 		y+=40;
 		pnContent.add(txtsoNamKN = new JTextField());
-		txtsoNamKN.setBounds(x, y, width, height);
+		txtsoNamKN.setBounds(x, y, 340, height);
 		y+=40;
 		
 		pnContent.add(btnLuu = new JButton("Lưu"));

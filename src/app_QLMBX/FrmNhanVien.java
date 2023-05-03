@@ -12,7 +12,11 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Random;
+import java.util.Set;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,14 +45,14 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 	private JLabel lblmaNV, lbltenNV, lblGioiTinh, lbldiaChi, lblsdt, lblemail, lblngayvaolam, lblchucVu, lblluongcoBan,
 			lblmaCH;
 	private JTextField txtmaNV, txttenNV, txtdiaChi, txtsdt, txtemail, txtLuong;
-	private JButton btnThem, btnXoa, btnXoaTrang, btnLuu, btnTimKiem;
+	private JButton btnThem, btnXoa, btnXoaTrang, btnTimKiem;
 	private JTable tblNhanVien;
 	private DefaultTableModel model;
 
 	private JComboBox<String> jComboBox_gioitinh;
 	private String[] GioiTinh = new String[] { "Nam", "Nữ" };
 	private JComboBox<String> jComboBox_mach;
-	private String[] cuahang = new String[] { "CH001", "CH003", "CH003" };
+	private String[] cuahang = new String[] { "CH001", "CH002", "CH003" };
 	private JComboBox<String> jComboBox_chucvu;
 	private String[] chucVu = new String[] { "Nhân viên hành chính", "Nhân viên kỹ thuật" };
 
@@ -61,6 +65,7 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 	private JDatePickerImpl datePicker;
 	private Frm_NhapThongTinNhanVien mo;
 	private Regex reg;
+	private Set<String> generatedCodes = new HashSet<>();
 
 	public String manv_nv = "";
 
@@ -126,7 +131,9 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		width = 300;
 		height = 20;
 		pnContent.add(txtmaNV = new JTextField(20));
+		loadMa();
 		txtmaNV.setBounds(x, y, width, height);
+		txtmaNV.setEditable(false);
 
 		pnContent.add(txttenNV = new JTextField(20));
 		// y += 30;
@@ -159,7 +166,7 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		datePicker.setBounds(x, y, width, height);
 		datePicker.setBackground(new Color(248, 248, 248));
 		datePicker.setToolTipText("Chọn ngày sinh");
-		modelNgaylap.setDate(1990, 0, 1);
+		modelNgaylap.setDate(2023, 4, 5);
 		modelNgaylap.setSelected(true);
 		pnContent.add(datePicker);
 
@@ -196,10 +203,6 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		x += 120;
 		btnXoa.setBounds(x, y, width, height);
 
-		pnContent.add(btnLuu = new JButton("Lưu"));
-		btnLuu.setIcon(new ImageIcon("image\\luu.png"));
-		x += 120;
-		btnLuu.setBounds(x, y, width, height);
 		pnContent.add(btnTimKiem = new JButton("Tìm"));
 		btnTimKiem.setIcon(new ImageIcon("image\\tim.png"));
 		x += 120;
@@ -228,7 +231,6 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnXoaTrang.addActionListener(this);
-		btnLuu.addActionListener(this);
 		btnTimKiem.addActionListener(this);
 		tblNhanVien.addMouseListener(new MouseListener() {
 
@@ -325,24 +327,17 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 			tim();
 		} else if (o.equals(btnThem)) {
 			if (validData()) {
-				try {
-					them();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				them();
 			}
 		}
 
 		else if (o.equals(btnXoa)) {
-
 			try {
 				xoa();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
 		}
 	}
 	public void clearTable() {
@@ -400,12 +395,30 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 			btnTimKiem.setText("Tìm");
 		}
 	}
+	
+	private void loadMa() {
+		String code;
+		do {
+			code = generateRandomCode();
+		} while (generatedCodes.contains(code));
+		generatedCodes.add(code);
+		txtmaNV.setText(code);
+	}
+	
+	private String generateRandomCode() {
+		String prefix = "NV";
+		int maxNumber = 999999;
+		int randomNum = new Random().nextInt(maxNumber);
+		String suffix = String.format("%06d", randomNum);
+		return prefix + suffix;
+	}
 
 	public String getTextFieldValue() {
 		return txtmaNV.getText();
 	}
 
-	private void them() throws NumberFormatException, Exception {
+	private void them(){
+		loadMa();
 		String ma = txtmaNV.getText();
 		String ten = txttenNV.getText();
 		String gioitinh = (String) jComboBox_gioitinh.getSelectedItem();
@@ -415,32 +428,30 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		Date ngaylap = (Date) datePicker.getModel().getValue();
 		String chucvu = (String) jComboBox_chucvu.getSelectedItem();
 		String luong = txtLuong.getText();
+		double salary = Double.valueOf(luong);
 		String mach = (String) jComboBox_mach.getSelectedItem();
 
-		if (ma.equals("") || ten.equals("")) {
-			JOptionPane.showMessageDialog(this, "Ban chua nhap day du thong tin");
+		if (ma.length() > 0 || ten.length() > 0 || salary > 0) {
+			NhanVien nhanvien = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
+					Float.parseFloat(luong), mach);
+			String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
+			// mo.maNV= nhanvien.getMaNV();
+			try {
+				model.addRow(row);
+				nv.addNhanVien(nhanvien);
+				JOptionPane.showMessageDialog(this, "Thêm thành công");
+				mo.settxtmanv(ma);
+				mo.setchucvu(chucvu);
+				mo.setVisible(true);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Trùng mã lớp");
+				txtmaNV.setText("");
+				txtmaNV.requestFocus();
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Nhập sai dữ liệu");
 		}
-
-		// thêm ngày *****************
-
-		NhanVien nhanvien = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
-				Float.parseFloat(luong), mach);
-		String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
-		// mo.maNV= nhanvien.getMaNV();
-		try {
-			model.addRow(row);
-			nv.addNhanVien(nhanvien);
-			JOptionPane.showMessageDialog(this, "Thêm thành công");
-			mo.settxtmanv(ma);
-			mo.setchucvu(chucvu);
-			mo.setVisible(true);
-
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Trùng mã lớp");
-			txtmaNV.setText("");
-			txtmaNV.requestFocus();
-		}
-
 	}
 
 	private void xoatrang() {
@@ -461,10 +472,6 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 			JOptionPane.showMessageDialog(null, "Các textField không được rỗng");
 			return false;
 		}
-		if (!(txtmaNV.getText().matches("NV\\d{1,3}"))) {
-			JOptionPane.showMessageDialog(null, "Mã nhân  viên phải theo định dạng NV_xxx vd: NV001");
-			return false;
-		}
 		if (reg.kiemTraTenNV(txttenNV.getText()) == false) {
 			JOptionPane.showMessageDialog(null, "VD: Lê Thị Tơ");
 			return false;
@@ -473,6 +480,9 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 			JOptionPane.showMessageDialog(null, "VD: 0947672098  *SDT 10 số*");
 			return false;
 		}
+//		if(reg.kiemTraSoDouble(txtLuong) == false) {
+//			return false;
+//		}
 		return true;
 	}
 }

@@ -477,7 +477,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					gioiTinh="Nam";
 				else
 					gioiTinh="Nữ";
-				KhachHang kh = new KhachHang(makh.generateRandomKH(), tenKH, gioiTinh, diaChi, sDT);
 				if(txtTenKH.getText().equals("") || txtSoDt.getText().equals("") || txtDiaChi.getText().equals("") || (!radNam.isSelected() && !radNu.isSelected()))
 				{
 					JOptionPane.showMessageDialog(null, "Bạn chưa nhập đầy đủ thông tin khách hàng!!");
@@ -485,6 +484,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				else
 				{
 					if (!regex.RegexTen(txtTenKH) && !regex.RegexSDT(txtSoDt)) {
+						KhachHang kh = new KhachHang(makh.generateRandomKH(), tenKH, gioiTinh, diaChi, sDT);
 						if(kh_dao.getKHTheoSDT(sDT) == null) {
 							if(kh_dao.createKH(kh)) {
 								JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
