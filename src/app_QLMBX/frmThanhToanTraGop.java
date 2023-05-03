@@ -25,6 +25,7 @@ import java.util.Date;
 
 import dao.TraGop_DAO;
 import entity.HopDong;
+import entity.Regex;
 import entity.TraGop;
 
 public class frmThanhToanTraGop extends JDialog implements ActionListener {
@@ -45,6 +46,7 @@ public class frmThanhToanTraGop extends JDialog implements ActionListener {
 	private JTextField txtThanhToan;
 	private JButton btnThanhToan;
 	private double tien;
+	private Regex regex = new Regex();
 
 	public frmThanhToanTraGop(String maHD) {
 		// TODO Auto-generated constructor stub
@@ -199,14 +201,15 @@ public class frmThanhToanTraGop extends JDialog implements ActionListener {
 			Double lai = Double.parseDouble(txtLaiSuat.getText());
 			java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 			TraGop tg = new TraGop(hd, date, lai, txtNguoiTra.getText(), tien);
-			if(tragopdao.createHDTraGop(tg)) {				
-				JOptionPane.showMessageDialog(this, "Thanh toán thành công");
-				clearTable();
-				loadData(hd.getMaHD());
-			} else {
-				JOptionPane.showMessageDialog(this, "Cùng một hợp đồng không thể trả góp 2 lần trong một ngày");
+			if(!regex.kiemTraRong(txtNguoiTra)) {
+				if(tragopdao.createHDTraGop(tg)) {				
+					JOptionPane.showMessageDialog(this, "Thanh toán thành công");
+					clearTable();
+					loadData(hd.getMaHD());
+				} else {
+					JOptionPane.showMessageDialog(this, "Cùng một hợp đồng không thể trả góp 2 lần trong một ngày");
+				}
 			}
-			
 		}
 
 	}
