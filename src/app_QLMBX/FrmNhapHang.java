@@ -123,7 +123,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		txtTim = new JTextField();
 		txtTim.setColumns(10);
 		btnTim = new JButton("Tìm");
-		btnTim.setIcon(new ImageIcon("image\\Search-icon.png"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
