@@ -758,6 +758,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 			cbxCuaHang.addItem(n.getTenCuaHang());;
 		}
 		
+		cbxHinhThucTT.setSelectedIndex(0);
 	}
 
 
