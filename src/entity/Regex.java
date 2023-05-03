@@ -133,6 +133,19 @@ public class Regex implements Serializable{
 			return true;
 		}
 	}
+	
+	public boolean kiemTraSoDouble1(Double txtTuoi2) {
+		try {
+			if (txtTuoi2<0) {
+				JOptionPane.showMessageDialog(null, "Nhập sai dữ liệu lương (Phải lớn hơn 0)");
+				return true;
+			}
+			return false;
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Nhập sai kiểu dữ liệu lương (phải nhập số)");
+			return true;
+		}
+	}
 
 	public boolean RegexSDT(JTextField txtSDT) {
 		String input = txtSDT.getText();

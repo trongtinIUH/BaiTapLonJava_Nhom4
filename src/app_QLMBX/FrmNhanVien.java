@@ -32,6 +32,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
 import dao.NhanVien_DAO;
 import entity.DateLabelFormatter;
+import entity.MatHang;
 import entity.NhanVien;
 import entity.Regex;
 
@@ -326,8 +327,13 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		} else if (o.equals(btnTimKiem)) {
 			tim();
 		} else if (o.equals(btnThem)) {
-			if (validData()) {
-				them();
+			if(validData()) {
+				try {
+					them();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 
@@ -417,7 +423,49 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		return txtmaNV.getText();
 	}
 
-	private void them(){
+	
+	private NhanVien revertTextToNV() {
+		NhanVien mh = null;
+		String luong = txtLuong.getText();
+		Double salary = Double.valueOf(luong);
+		if(salary>0) {
+			String ma = txtmaNV.getText();
+			String ten = txttenNV.getText();
+			String gioitinh = (String) jComboBox_gioitinh.getSelectedItem();
+			String dc = txtdiaChi.getText();
+			String sdt = txtsdt.getText();
+			String email = txtemail.getText();
+			Date ngaylap = (Date) datePicker.getModel().getValue();
+			String chucvu = (String) jComboBox_chucvu.getSelectedItem();
+			//String luong = txtLuong.getText();
+		//	double salary = Double.valueOf(luong);
+			String mach = (String) jComboBox_mach.getSelectedItem();
+			
+				 mh = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
+						Float.parseFloat(luong), mach);
+		} else {
+			JOptionPane.showMessageDialog(null, "Lương phải là số và không nhỏ hơn 0");
+		}
+		return mh;
+	}
+
+	private void themVaoBang() {
+		String ma = txtmaNV.getText();
+		String ten = txttenNV.getText();
+		String gioitinh = (String) jComboBox_gioitinh.getSelectedItem();
+		String dc = txtdiaChi.getText();
+		String sdt = txtsdt.getText();
+		String email = txtemail.getText();
+		Date ngaylap = (Date) datePicker.getModel().getValue();
+		String chucvu = (String) jComboBox_chucvu.getSelectedItem();
+		String luong = txtLuong.getText();
+	//	double salary = Double.valueOf(luong);
+		String mach = (String) jComboBox_mach.getSelectedItem();
+		String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
+		model.addRow(row);
+	}
+	
+	private void them() throws SQLException {
 		loadMa();
 		String ma = txtmaNV.getText();
 		String ten = txttenNV.getText();
@@ -428,31 +476,62 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 		Date ngaylap = (Date) datePicker.getModel().getValue();
 		String chucvu = (String) jComboBox_chucvu.getSelectedItem();
 		String luong = txtLuong.getText();
-		double salary = Double.valueOf(luong);
+	//	double salary = Double.valueOf(luong);
 		String mach = (String) jComboBox_mach.getSelectedItem();
-
-		if (ma.length() > 0 || ten.length() > 0 || salary > 0) {
-			NhanVien nhanvien = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
-					Float.parseFloat(luong), mach);
-			String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
-			// mo.maNV= nhanvien.getMaNV();
-			try {
-				model.addRow(row);
-				nv.addNhanVien(nhanvien);
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
-				mo.settxtmanv(ma);
-				mo.setchucvu(chucvu);
-				mo.setVisible(true);
-
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Trùng mã lớp");
-				txtmaNV.setText("");
-				txtmaNV.requestFocus();
+		NhanVien nhanvien = revertTextToNV();
+		if(nhanvien != null) {
+			themVaoBang();
+			nv.addNhanVien(nhanvien);
+			JOptionPane.showMessageDialog(this, "Thêm thành công");
+			mo.settxtmanv(ma);
+			mo.setchucvu(chucvu);
+			mo.setVisible(true);
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Thêm không thành công do nhập không đúng dữ liệu");
 			}
-		}else {
-			JOptionPane.showMessageDialog(null, "Nhập sai dữ liệu");
-		}
+		
 	}
+	
+	
+	
+	
+//	private void them() throws SQLException{
+//		loadMa();
+//		String ma = txtmaNV.getText();
+//		String ten = txttenNV.getText();
+//		String gioitinh = (String) jComboBox_gioitinh.getSelectedItem();
+//		String dc = txtdiaChi.getText();
+//		String sdt = txtsdt.getText();
+//		String email = txtemail.getText();
+//		Date ngaylap = (Date) datePicker.getModel().getValue();
+//		String chucvu = (String) jComboBox_chucvu.getSelectedItem();
+//		String luong = txtLuong.getText();
+//	//	double salary = Double.valueOf(luong);
+//		String mach = (String) jComboBox_mach.getSelectedItem();
+//		
+//			NhanVien nhanvien = new NhanVien(ma, ten, gioitinh, dc, sdt, email, (java.sql.Date) ngaylap, chucvu,
+//					Float.parseFloat(luong), mach);
+//			String[] row = { ma, ten, gioitinh, dc, sdt, email, String.valueOf(ngaylap), chucvu, luong, mach };
+//			// mo.maNV= nhanvien.getMaNV();
+//		
+//			try {
+//				model.addRow(row);
+//				nv.addNhanVien(nhanvien);
+//				JOptionPane.showMessageDialog(this, "Thêm thành công");
+//				mo.settxtmanv(ma);
+//				mo.setchucvu(chucvu);
+//				mo.setVisible(true);
+//
+//			} catch (Exception e) {
+//				JOptionPane.showMessageDialog(this, "Trùng mã ");
+//				txtmaNV.setText("");
+//				txtmaNV.requestFocus();
+//			}
+//		
+//		}
+//	
+	
 
 	private void xoatrang() {
 		txtmaNV.setText("");
@@ -480,7 +559,9 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 			JOptionPane.showMessageDialog(null, "VD: 0947672098  *SDT 10 số*");
 			return false;
 		}
-//		if(reg.kiemTraSoDouble(txtLuong) == false) {
+//		String luong = txtLuong.getText();
+//		Double salary = Double.valueOf(luong);
+//		if(reg.kiemTraSoDouble1(salary)==false) {
 //			return false;
 //		}
 		return true;
