@@ -51,6 +51,7 @@ import entity.KhachHang;
 import entity.MatHang;
 import entity.NhanVien;
 import entity.PhieuXuat;
+import entity.Regex;
 import entity.TraGop;
 import entity.TraTrucTiep;
 import entity.Xe;
@@ -136,6 +137,7 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 	private HoaDonHang_DAO hdh_dao;
 	private ChiTietHoaDonHang_DAO cthdHang_dao;
 	private PhieuXuat_DAO phieuXuat_dao;
+	private Regex regex = new Regex();
 
 	public FrmBanHang() {
 		
@@ -482,16 +484,18 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 				}
 				else
 				{
-					if(kh_dao.getKHTheoSDT(sDT) == null)
-						if(kh_dao.createKH(kh)) {
-							JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
-							txtMaKH.setText(kh.getMaKH());
-							
-						} else
-							JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
-					
-					else 
-						JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại");
+					if (!regex.RegexTen(txtTenKH) && !regex.RegexSDT(txtSoDt)) {
+						if(kh_dao.getKHTheoSDT(sDT) == null) {
+							if(kh_dao.createKH(kh)) {
+								JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!");
+								txtMaKH.setText(kh.getMaKH());
+
+							} else
+								JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
+						}
+						else 
+							JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại");
+					}
 				}
 			}	
 		}	
