@@ -270,7 +270,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
-			    khachHang.clearTable();
+			khachHang.clearTable();
 			khachHang.loadData();
 			setBackground();
 			btnKhachHang.setBackground(Color.pink);
@@ -314,7 +314,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
-			    nhanVien.clearTable();
+			nhanVien.clearTable();
 			nhanVien.loadData();
 			setBackground();
 			btnNhanVien.setBackground(Color.pink);
@@ -344,7 +344,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			            tabbedPane.removeTabAt(i);
 			        }
 			    } 
-			    sanPham.clearTableFrmSanPham();
+			sanPham.clearTableFrmSanPham();
 			sanPham.loadDataFrmSanPham();
 			setBackground();
 			btnSanPham.setBackground(Color.pink);
@@ -359,7 +359,7 @@ public class TrangChu extends JFrame implements ActionListener{
 			            tabbedPane.removeTabAt(i);
 			        }
 			    }  
-			    baohanh.clearTable();
+			baohanh.clearTable();
 			baohanh.loadData();
 			setBackground();
 			btnBaoHanh.setBackground(Color.pink);

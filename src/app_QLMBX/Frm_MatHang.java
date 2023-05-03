@@ -90,6 +90,7 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 		pnContent.add(cboLoaiMH = new JComboBox<String>());
 		cboLoaiMH.addItem("Linh Kiện");
 		cboLoaiMH.addItem("Xe");
+		cboLoaiMH.setEnabled(false);
 		y+=50;
 		cboLoaiMH.setBounds(x, y, width, height);
 		pnContent.add(txtDVT = new JTextField());
@@ -145,6 +146,15 @@ public class Frm_MatHang extends JFrame implements ActionListener {
 		CuaHang ch = ch_dao.getCHTheoMa(maCH);
 		Date date = (Date) datePicker.getModel().getValue();
 		return new HoaDonHang(maHDH, ch, mh, date);
+	}
+	
+	public void setComboBox(String ten) {
+		if(tenNhaCC.equals("Công ty cung ứng xe Bảo Long")) {
+			cboLoaiMH.setSelectedItem("Xe");
+		}
+		if(tenNhaCC.equals("Công ty phụ tùng xe Phước Đại")) {
+			cboLoaiMH.setSelectedItem("Linh Kiện");
+		}
 	}
 	
 	private void luu() throws HeadlessException, SQLException {

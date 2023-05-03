@@ -12,7 +12,9 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,6 +42,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	private String[] cols = {"Mã SP", "Loại SP", "Tên SP", "Số lượng", "Đơn Vị Tính", "Đơn Giá", "Mô tả"};
 	private JButton btnThem, btnXoa, btnTim, btnSua, btnRefresh;
 	private JComboBox<String> cboLoaiSP;
+	private Set<String> generatedCodes = new HashSet<>();
 	private MatHang_DAO sp;
 	private Frm_Xe xe;
 	private Frm_LinhKien lk;
@@ -255,6 +258,7 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 	}
 
 	private void luu() throws SQLException {
+		loadMa();
 		MatHang mh = revertTextToMatHang();
 		if(mh != null) {
 			String ma = txtMaSP.getText();
@@ -277,6 +281,15 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 				JOptionPane.showMessageDialog(null, "Trùng mã mặt hàng!");
 			}
 		}
+	}
+	
+	private void loadMa() {
+		String code;
+		do {
+			code = generateRandomCode((String) cboLoaiSP.getSelectedItem());
+		} while (generatedCodes.contains(code));
+		generatedCodes.add(code);
+		txtMaSP.setText(code);
 	}
 	
 	private void xoa() throws SQLException {

@@ -17,6 +17,9 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -60,6 +63,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	private NhapHang_DAO nh;
 	private MatHang_DAO mhDao;
 	private Frm_MatHang mh;
+	private Set<String> generatedCodes = new HashSet<>();
 	private Regex reg;
 	public FrmNhapHang() {
 		frame = new JFrame();
@@ -187,6 +191,8 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		
 		txtMaPhieu = new JTextField();
 		txtMaPhieu.setColumns(10);
+		txtMaPhieu.setEditable(false);
+		loadMa();
 		
 
 		txtSoLuong = new JTextField();
@@ -253,6 +259,8 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		
 		txtMaSp = new JTextField();
 		txtMaSp.setColumns(10);
+		txtMaSp.setEditable(false);
+		loadMaSP();
 		
 		JLabel lblNewLabel_3 = new JLabel("Tên sản phẩm:");
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -350,6 +358,49 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		table.addMouseListener(this);
 	}
 	
+	private void loadMa() {
+		String code;
+		do {
+			code = generateRandomCodeMaHDH();
+		} while (generatedCodes.contains(code));
+		generatedCodes.add(code);
+		txtMaPhieu.setText(code);
+	}
+	
+	private void loadMaSP() {
+		String code;
+		do {
+			code = generateRandomCode((String) cboNCC.getSelectedItem());
+		} while (generatedCodes.contains(code));
+		generatedCodes.add(code);
+		txtMaSp.setText(code);
+	}
+	
+	private String generateRandomCodeMaHDH() {
+		String prefix = "HDH_N";
+		int maxNumber = 999999;
+		int randomNum = new Random().nextInt(maxNumber);
+		String suffix = String.format("%06d", randomNum);
+		return prefix + suffix;
+	}
+	private String generateRandomCode(String tenNCC) {
+		String prefix = "";
+		String suffix = "";
+		if(tenNCC.equals("Công ty phụ tùng xe Phước Đại")) {
+			prefix = "LK";
+			int maxNumber = 999999;
+			int randomNum = new Random().nextInt(maxNumber);
+			suffix = String.format("%06d", randomNum);
+		}
+		if(tenNCC.equals("Công ty cung ứng xe Bảo Long")) {
+			prefix = "X";
+			int maxNumber = 999999;
+			int randomNum = new Random().nextInt(maxNumber);
+			suffix = String.format("%06d", randomNum);
+		}
+		return prefix + suffix;
+	}
+
 	public void loadData() {
 		DecimalFormat df = new DecimalFormat("#.##");
 		for(PhieuNhap x : nh.getAllNhapHang()) {
@@ -404,6 +455,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 	
 	private void unEnabled() {
+		loadMaSP();
 		if(btnNhap.getText().equals("Chọn nhập")) {
 			txtMaSp.setEditable(false);
 			txtTenSp.setEditable(false);
@@ -431,6 +483,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 	}
 	
 	private void luu() throws SQLException {
+		loadMa();
 		mh = new Frm_MatHang();
 		mh.maHDH = txtMaPhieu.getText();
 		mh.maSP = txtMaSp.getText();
@@ -439,6 +492,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 			mh.soLuong = Integer.parseInt(txtSoLuong.getText());
 			mh.donGia = Double.valueOf(txtDonGia.getText());
 			mh.tenNhaCC = (String)cboNCC.getSelectedItem();
+			mh.setComboBox((String)cboNCC.getSelectedItem());
 			mh.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(null, "Số lượng và đơn giá phải là số và không nhỏ hơn 0");
