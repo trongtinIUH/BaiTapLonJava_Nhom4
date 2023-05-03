@@ -1,4 +1,5 @@
-/dao/
-/entity/
 /app_QLMBX/
 /connectDB/
+/dao/
+/entity/
+/.gitignore
