@@ -259,7 +259,7 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		btnXoaTrang.setBounds(115, 160, 140, 25);
 
 		panelChucNang.add(btnSua = new JButton("Sửa"));
-		btnSua.setIcon(new ImageIcon("image\\sua.png"));
+		btnSua.setIcon(new ImageIcon("image\\sua1.png"));
 		btnSua.setFont(font);
 		btnSua.setBounds(265, 160, 100, 25);
 		loadData();

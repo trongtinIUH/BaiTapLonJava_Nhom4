@@ -117,11 +117,11 @@ public class FrmSanPham extends JPanel implements ActionListener, MouseListener{
 		x+=120; 
 		btnXoa.setBounds(x, y, width, height);
 		pnContent.add(btnTim = new JButton("Tìm"));
-		btnTim.setIcon(new ImageIcon("image\\Search-icon.png"));
+		btnTim.setIcon(new ImageIcon("image\\tim.png"));
 		x+=120;
 		btnTim.setBounds(x, y, width, height);
 		pnContent.add(btnSua = new JButton("Sửa(chỉ sửa số lượng và đơn giá)"));
-		btnSua.setIcon(new ImageIcon("image\\Pencil-icon.png"));
+		btnSua.setIcon(new ImageIcon("image\\sua1.png"));
 		x+=120;
 		btnSua.setBounds(x, y, 280, height);
 		pnContent.add(btnRefresh = new JButton("Làm mới"));
