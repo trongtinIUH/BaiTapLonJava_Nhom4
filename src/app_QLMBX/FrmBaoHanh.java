@@ -549,7 +549,11 @@ public class FrmBaoHanh extends JPanel implements ActionListener, MouseListener 
 		PhieuBaoHanh bh = bh_dao.getPhieuBaoHanhTheoMa(model.getValueAt(row, 1).toString());
 		txtMaPhieu.setText(model.getValueAt(row, 1).toString());
 		
-		modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 4));
+		try {
+			modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 4));
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 		txtLiDo.setText(model.getValueAt(row, 5).toString());
 		txtLoi.setText(model.getValueAt(row, 6).toString());
 		txtTienSua.setText(model.getValueAt(row, 7).toString());

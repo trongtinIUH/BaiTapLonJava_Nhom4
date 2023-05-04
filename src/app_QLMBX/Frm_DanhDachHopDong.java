@@ -529,7 +529,11 @@ public class Frm_DanhDachHopDong extends JPanel implements ActionListener, Mouse
 		HopDong hd = hddao.getHopDongTheoMa(model.getValueAt(row, 1).toString());
 
 		txtMa.setText(model.getValueAt(row, 1).toString());
-		modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 2));
+		try {
+			modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 2));
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 		txtThoiGian.setText(model.getValueAt(row, 3).toString());
 		if (model.getValueAt(row, 4).toString().equals("Trả trực tiếp")) {
 			cbloaiHD.setSelectedIndex(0);

@@ -607,8 +607,13 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 					
 					capNhatSLTon();
 					JOptionPane.showMessageDialog(this, "Thanh Toán thành công, hợp đồng đã được lưu vào CSDL!!");
+
+					xoaRong();
+					FrmXuatHang xuatHang = new FrmXuatHang(maPhieuXuat);
+					xuatHang.setVisible(true);
 			}
 		}
+		
 	}
 	
 	//thêm vào hóa đơn xuất hàng và chi tiết hóa đơn xuất hàng
@@ -826,8 +831,6 @@ public class FrmBanHang extends JPanel implements ActionListener, ItemListener, 
 		else if(obj.equals(btnThanhToan))
 		{
 			themhd();
-			FrmXuatHang xuatHang = new FrmXuatHang(maPhieuXuat);
-			xuatHang.setVisible(true);
 		}
 		else if(obj.equals(btnXoaTrang))
 			xoaRong();

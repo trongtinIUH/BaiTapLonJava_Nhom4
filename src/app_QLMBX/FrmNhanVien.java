@@ -269,7 +269,11 @@ public class FrmNhanVien extends JPanel implements Serializable, ActionListener,
 				txtdiaChi.setText(model.getValueAt(row, 3).toString());
 				txtsdt.setText(model.getValueAt(row, 4).toString());
 				txtemail.setText(model.getValueAt(row, 5).toString());
-				modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 6));
+				try {
+					modelNgaylap.setValue((java.sql.Date) model.getValueAt(row, 6));
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 				jComboBox_chucvu.setSelectedItem(model.getValueAt(row, 7));
 				txtLuong.setText(model.getValueAt(row, 8).toString());
 				jComboBox_mach.setSelectedItem(model.getValueAt(row, 9));
