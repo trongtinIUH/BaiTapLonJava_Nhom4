@@ -44,6 +44,7 @@ public class LoginForm extends JFrame implements ActionListener{
 		txtUsername = new JTextField(20);
 		txtUsername.setBounds(380, 95, 200, 25);
 		txtUsername.setFont(new Font("Arial", Font.PLAIN, 18));
+		txtUsername.setText("123");
 		panel.add(txtUsername);
 
 		lblPassword = new JLabel("Password:");
@@ -54,6 +55,7 @@ public class LoginForm extends JFrame implements ActionListener{
 
 		txtPassword = new JPasswordField(20);
 		txtPassword.setBounds(380, 135, 200, 25);
+		txtPassword.setText("123");
 		panel.add(txtPassword);
 
 		btnLogin = new JButton("Login");

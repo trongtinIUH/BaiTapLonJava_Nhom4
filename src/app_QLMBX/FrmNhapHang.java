@@ -199,11 +199,11 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		txtSoLuong.setColumns(10);
 		
 		btnXoa = new JButton("Xóa");
-		btnXoa.setIcon(new ImageIcon("D:\\BaiTapLonJava_Nhom4\\image\\delete-icon.png"));
+		btnXoa.setIcon(new ImageIcon("image\\delete-icon.png"));
 		btnXoa.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		
 		btnXacNhan = new JButton("Xác nhận");
-		btnXacNhan.setIcon(new ImageIcon("D:\\BaiTapLonJava_Nhom4\\image\\check-icon.png"));
+		btnXacNhan.setIcon(new ImageIcon("image\\check-icon.png"));
 		btnXacNhan.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
@@ -281,7 +281,7 @@ public class FrmNhapHang extends JPanel implements ActionListener, MouseListener
 		txtDonGia.setColumns(10);
 		
 		btnNhap = new JButton("Chọn nhập");
-		btnNhap.setIcon(new ImageIcon("D:\\BaiTapLonJava_Nhom4\\image\\check-icon.png"));
+		btnNhap.setIcon(new ImageIcon("image\\check-icon.png"));
 		btnNhap.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
